@@ -57,8 +57,8 @@ def mixing(sf, vy, show_fit=False):
     samples = samples[200:, :]  # burning in
 
     w1 = samples[:, 1]
-    w2 = samples[:, 5200]
-    w3 = samples[:, 1200]
+    w2 = samples[:, 3]
+    w3 = samples[:, 9]
     plt.figure()
 
     N = samples.shape[0]
