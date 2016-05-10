@@ -1,0 +1,68 @@
+#% Do not delete the line below; configure depends on this
+#  \DeclareLaTeXClass[IIBproject]{IIB Project Report}
+# IIB project report definition file
+# Adapted from article.layout by Tim Gale, teg28@cam.ac.uk
+# Author : Matthias Ettrich <ettrich@informatik.uni-tuebingen.de>
+# Transposed by Pascal André <andre@via.ecp.fr>
+# Heavily modifed and enhanced by serveral developers.
+
+Format 11
+Input stdclass.inc
+
+SecNumDepth             3
+TocDepth                3
+
+# Style for frontmatter
+Style "Project Group"
+	CopyStyle	"Author"
+	Category	FrontMatter
+	InTitle		1
+	LatexType	Command
+	LatexName	projectgroup
+	LeftMargin	Groupx
+	LabelSep	x
+	LabelType	Static
+	LabelString	"Group "
+	Align		Center
+End
+
+# Rename the abstract as the summary
+Style "Summary"
+	CopyStyle	"Abstract"
+	LabelString	"Summary"
+
+	# If we use Babel, and British is enabled, then this is necessary to make
+	# the renaming work
+	Preamble
+	\AtBeginDocument{%
+	\addto\captionsbritish{%
+	\renewcommand{\abstractname}{Summary}%
+	}}
+	EndPreamble
+End
+
+NoStyle Abstract
+NoStyle Chapter
+NoStyle Chapter*
+
+Style Part
+	Align                 Left
+	AlignPossible         Left
+	TopSep                2
+	BottomSep             1.5
+	Font
+	  Size                Larger
+	EndFont
+End
+
+
+Style Part*
+	Align                 Left
+	AlignPossible         Left
+	TopSep                2
+	BottomSep             1.5
+	Font
+	  Size                Larger
+	EndFont
+End
+
