@@ -18,6 +18,10 @@ def objective(x):
     return (np.sin(x * 7) + np.cos(x * 17))
 
 
+# def objective(x):
+#     return (-1) * np.cos(3 * x)
+
+
 def acquisition_UCB(m, s, k=0.2):
     a = m - k * s
     return a

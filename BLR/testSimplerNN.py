@@ -6,7 +6,7 @@ from scipy.interpolate import UnivariateSpline
 import cPickle as pickle
 
 
-def mixing(sf, vy, show_fit=False):
+def mixing(sf, vy, show_fit=False, showPost=False):
     '''
 
     :param sf: scale factor for precisions
@@ -54,23 +54,24 @@ def mixing(sf, vy, show_fit=False):
 
     analyse_samples(samples, X_train, y_train, hWidths=hWidths, burnin=200, display=True)
 
-    samples = samples[200:, :]  # burning in
+    if (showPost):
+        samples = samples[200:, :]  # burning in
 
-    w1 = samples[:, 1]
-    w2 = samples[:, 3]
-    w3 = samples[:, 9]
-    plt.figure()
+        w1 = samples[:, 1]
+        w2 = samples[:, 3]
+        w3 = samples[:, 9]
+        plt.figure()
 
-    N = samples.shape[0]
-    n = N / 10
+        N = samples.shape[0]
+        n = N / 10
 
-    plt.hist(w1, bins=n)  # bin it into n = N/10 bins
-    plt.figure()
+        plt.hist(w1, bins=n)  # bin it into n = N/10 bins
+        plt.figure()
 
-    plt.hist(w2, bins=n)  # bin it into n = N/10 bins
-    plt.figure()
+        plt.hist(w2, bins=n)  # bin it into n = N/10 bins
+        plt.figure()
 
-    plt.hist(w3, bins=n)  # bin it into n = N/10 bins
+        plt.hist(w3, bins=n)  # bin it into n = N/10 bins
 
 
 if __name__ == '__main__':
@@ -83,6 +84,6 @@ if __name__ == '__main__':
     #
     # mixing(1,1,show_fit=True)
     # mixing(1,10,show_fit=True)
-    mixing(1, 100, show_fit=True)
-    # mixing(10,1,show_fit=True)
+    mixing(1, 100, show_fit=True, )
+    mixing(10, 100, show_fit=True)
     plt.show()
