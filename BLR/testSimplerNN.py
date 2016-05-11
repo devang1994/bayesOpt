@@ -84,6 +84,6 @@ if __name__ == '__main__':
     #
     # mixing(1,1,show_fit=True)
     # mixing(1,10,show_fit=True)
-    mixing(1, 100, show_fit=True, )
+    mixing(1, 100, show_fit=True)
     mixing(10, 100, show_fit=True)
     plt.show()

@@ -4,9 +4,11 @@ from math import sqrt
 import matplotlib.pyplot as plt
 from scipy.interpolate import UnivariateSpline
 import cPickle as pickle
+# from find_effective_sampleSize import RCodaTools
+from MAPnet import mlp_synthetic
 
 
-def mixing(sf, vy, show_fit=False):
+def mixing(sf, vy, show_fit=False, show_post=False):
     '''
 
     :param sf: scale factor for precisions
@@ -19,20 +21,36 @@ def mixing(sf, vy, show_fit=False):
     # print X_train.shape
     y_train = objective(X_train) + np.random.randn(ntrain, 1) * sqrt(noise_var)
 
+    ntest = 1000
+    X_test = np.linspace(-1., 1., ntest)
+    y_test = objective(X_test)
+    X_test = X_test.reshape(ntest, 1)
+    y_test = y_test.reshape(ntest, 1)
+
+
     # precisions = [0.6125875773048164, 0.03713439386866191, 14.22759780450891, 5.72501724650353]
     # vy = 4.631095917555727
 
     precisions = [1, 1, 1, 1]
 
     precisions = [sf * x for x in precisions]
-
-
     hWidths = [50, 50, 50]
+
+    mlp_synthetic(X_train, X_test, y_train, y_test, precision=precisions[0], vy=vy, hWidths=hWidths, display=True)
+
+    plt.show()
 
     train_err, test_err, samples, train_op_samples = sampler_on_BayesNN(burnin=0, n_samples=1000, precisions=precisions,
                                                                         vy=vy,
                                                                         X_train=X_train, y_train=y_train,
                                                                         hWidths=hWidths, target_acceptance_rate=0.9)
+
+    # print RCodaTools.ess_coda_vec(np.transpose(samples))
+
+    # print 'effective sample sizes'
+    # a= RCodaTools.ess_coda_vec(samples)
+    # print np.mean(a)
+    # print np.min(a)
 
     w1 = samples[:, 1]
     w2 = samples[:, 5200]
@@ -55,24 +73,24 @@ def mixing(sf, vy, show_fit=False):
 
     analyse_samples(samples, X_train, y_train, hWidths=[50, 50, 50], burnin=200, display=True)
 
+    if (show_post):
+        samples = samples[200:, :]  # burning in
 
-    samples = samples[200:, :]  # burning in
+        w1 = samples[:, 1]
+        w2 = samples[:, 5200]
+        w3 = samples[:, 1200]
+        plt.figure()
 
-    w1 = samples[:, 1]
-    w2 = samples[:, 5200]
-    w3 = samples[:, 1200]
-    plt.figure()
+        N = samples.shape[0]
+        n = N / 10
 
-    N = samples.shape[0]
-    n = N / 10
+        plt.hist(w1, bins=n)  # bin it into n = N/10 bins
+        plt.figure()
 
-    plt.hist(w1, bins=n)  # bin it into n = N/10 bins
-    plt.figure()
+        plt.hist(w2, bins=n)  # bin it into n = N/10 bins
+        plt.figure()
 
-    plt.hist(w2, bins=n)  # bin it into n = N/10 bins
-    plt.figure()
-
-    plt.hist(w3, bins=n)  # bin it into n = N/10 bins
+        plt.hist(w3, bins=n)  # bin it into n = N/10 bins
 
 
 def mixing_from_pickle():
@@ -139,6 +157,6 @@ if __name__ == '__main__':
     #
     # mixing(1,1,show_fit=True)
     # mixing(1,10,show_fit=True)
-    mixing(1, 100, show_fit=True)
+    mixing(10, 100, show_fit=True)
     # mixing(10,1,show_fit=True)
     plt.show()
