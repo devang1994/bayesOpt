@@ -28,7 +28,7 @@ def mixing(sf, vy, show_fit=False, showPost=False):
 
     hWidths = [100]
 
-    train_err, test_err, samples, train_op_samples = sampler_on_BayesNN(burnin=0, n_samples=1000, precisions=precisions,
+    train_err, test_err, samples, train_op_samples = sampler_on_BayesNN(burnin=0, n_samples=5000, precisions=precisions,
                                                                         vy=vy,
                                                                         X_train=X_train, y_train=y_train,
                                                                         hWidths=hWidths, target_acceptance_rate=0.9)

@@ -15,7 +15,7 @@ def mixing(sf, vy, show_fit=False, show_post=False):
     :param vy: precision of noise
     :return:
     '''
-    ntrain = 20
+    ntrain = 2
     noise_var = 0.01
     X_train = np.random.uniform(low=-1.0, high=1.0, size=ntrain).reshape(ntrain, 1)
     # print X_train.shape
@@ -32,19 +32,23 @@ def mixing(sf, vy, show_fit=False, show_post=False):
     # vy = 4.631095917555727
 
     precisions = [1, 1, 1, 1]
+    precisions = [1, 1]
 
     precisions = [sf * x for x in precisions]
-    hWidths = [50, 50, 50]
+    # hWidths = [50, 50, 50]
+
+    hWidths =[100]
 
     a, b, init_MAP = mlp_synthetic(X_train, X_test, y_train, y_test, precision=precisions[0], vy=vy, hWidths=hWidths,
                                    display=False, epochs=1000)
     # plt.show()
     print 'finished MAP'
 
-    train_err, test_err, samples, train_op_samples = sampler_on_BayesNN(burnin=0, n_samples=5000, precisions=precisions,
+    train_err, test_err, samples, train_op_samples = sampler_on_BayesNN(burnin=0, n_samples=10000, precisions=precisions,
                                                                         vy=vy,
                                                                         X_train=X_train, y_train=y_train,
-                                                                        hWidths=hWidths, target_acceptance_rate=0.5)
+                                                                        hWidths=hWidths, target_acceptance_rate=0.5,stepsize=0.001,
+                                                                        init_theta=init_MAP,n_steps=30)
 
     # print RCodaTools.ess_coda_vec(np.transpose(samples))
     # , init_theta=init_MAP
@@ -53,10 +57,15 @@ def mixing(sf, vy, show_fit=False, show_post=False):
     # print np.mean(a)
     # print np.min(a)
 
+    # w1 = samples[:, 1]
+    # w2 = samples[:, 5200]
+    # w3 = samples[:, 1200]
+    # w4 = samples[:, 200]
+
     w1 = samples[:, 1]
-    w2 = samples[:, 5200]
-    w3 = samples[:, 1200]
-    w4 = samples[:, 200]
+    w2 = samples[:, 200]
+    w3 = samples[:, 251]
+    # w4 = samples[:, 200]
 
     plt.figure()
     plt.plot(w1, label='w1')
@@ -72,7 +81,7 @@ def mixing(sf, vy, show_fit=False, show_post=False):
 
     print samples.shape
 
-    analyse_samples(samples, X_train, y_train, hWidths=[50, 50, 50], burnin=200, display=True)
+    analyse_samples(samples, X_train, y_train, hWidths=hWidths, burnin=200, display=True)
 
     if (show_post):
         samples = samples[200:, :]  # burning in

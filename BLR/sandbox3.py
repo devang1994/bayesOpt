@@ -289,9 +289,7 @@ def hmc_updates(positions, stepsize, avg_acceptance_rate, final_pos, accept,
     _new_stepsize = TT.switch(avg_acceptance_rate > target_acceptance_rate,
                               stepsize * stepsize_inc, stepsize * stepsize_dec)
     # maintain stepsize in [stepsize_min, stepsize_max]
-
-    # new_stepsize = TT.clip(_new_stepsize, stepsize_min, stepsize_max)
-    new_stepsize=stepsize # TODO remove for adaptive step sizes
+    new_stepsize = TT.clip(_new_stepsize, stepsize_min, stepsize_max)
 
     # end-snippet-7 start-snippet-6
     ## ACCEPT RATE UPDATES ##
@@ -333,7 +331,7 @@ class HMC_sampler(object):
         energy_fn,
         initial_stepsize=0.01,
         target_acceptance_rate=.9,
-        n_steps=50,
+        n_steps=20,
         stepsize_dec=0.98,
         stepsize_min=0.001,
         stepsize_max=0.25,
