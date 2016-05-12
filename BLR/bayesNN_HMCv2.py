@@ -283,10 +283,11 @@ def sampler_on_BayesNN(burnin, n_samples, precisions, vy, hWidths, X_train, y_tr
         position = init_theta.astype(theano.config.floatX)
     position = theano.shared(position)
 
+    print 'position {}'.format(position)
     # Create HMC sampler
     sampler = HMC_sampler.new_from_shared_positions(position, NN_energy,
-                                                    initial_stepsize=0.01, stepsize_max=0.5,
-                                                    target_acceptance_rate=target_acceptance_rate)
+                                                    initial_stepsize=0.0005, stepsize_max=0.5,
+                                                    target_acceptance_rate=target_acceptance_rate, stepsize_min=0.0001)
 
     # Start with a burn-in process
     # print 'about to sample'
@@ -365,6 +366,11 @@ def sampler_on_BayesNN(burnin, n_samples, precisions, vy, hWidths, X_train, y_tr
 
     # print 'samples shape {}, train_op_samples {}'.format(samples.shape,train_op_samples.shape)
     # samples shape (10, 5251), train_op_samples (10, 100)
+
+    print('****** HMC INTERNALS ******')
+    print('final stepsize', sampler.stepsize.get_value())
+    print('final acceptance_rate', sampler.avg_acceptance_rate.get_value())
+
     return train_err, test_err, samples, train_op_samples
 
 def test_hmc():

@@ -36,17 +36,18 @@ def mixing(sf, vy, show_fit=False, show_post=False):
     precisions = [sf * x for x in precisions]
     hWidths = [50, 50, 50]
 
-    mlp_synthetic(X_train, X_test, y_train, y_test, precision=precisions[0], vy=vy, hWidths=hWidths, display=True)
+    a, b, init_MAP = mlp_synthetic(X_train, X_test, y_train, y_test, precision=precisions[0], vy=vy, hWidths=hWidths,
+                                   display=False, epochs=1000)
+    # plt.show()
+    print 'finished MAP'
 
-    plt.show()
-
-    train_err, test_err, samples, train_op_samples = sampler_on_BayesNN(burnin=0, n_samples=1000, precisions=precisions,
+    train_err, test_err, samples, train_op_samples = sampler_on_BayesNN(burnin=0, n_samples=5000, precisions=precisions,
                                                                         vy=vy,
                                                                         X_train=X_train, y_train=y_train,
-                                                                        hWidths=hWidths, target_acceptance_rate=0.9)
+                                                                        hWidths=hWidths, target_acceptance_rate=0.5)
 
     # print RCodaTools.ess_coda_vec(np.transpose(samples))
-
+    # , init_theta=init_MAP
     # print 'effective sample sizes'
     # a= RCodaTools.ess_coda_vec(samples)
     # print np.mean(a)
@@ -157,6 +158,6 @@ if __name__ == '__main__':
     #
     # mixing(1,1,show_fit=True)
     # mixing(1,10,show_fit=True)
-    mixing(10, 100, show_fit=True)
+    mixing(1, 100, show_fit=True)
     # mixing(10,1,show_fit=True)
     plt.show()
