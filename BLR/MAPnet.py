@@ -35,7 +35,7 @@ def unpack_theta(theta, hWidths, input_size, output_size, index=0):
     cur = 0
 
     for i in range(len(widths) - 1):
-        w = theta[index, cur:cur + widths[i] * widths[i + 1]].reshape((widths[i], widths[i + 1]))
+        w = theta[index, cur:cur + widths[i] * widths[i + 1]].reshape((widths[i], widths[i + 1]))  # TODO error here
         cur = cur + widths[i] * widths[i + 1]
         weights.append(w)
         b = theta[index, cur: cur + widths[i + 1]]
@@ -100,7 +100,7 @@ def mlp_synthetic(X_train, X_test, y_train, y_test, precision, vy, hWidths, mini
 
     input_size = X_train.shape[1]
     initial_params = theano.shared(floatX(rng.randn(1, dim).astype(theano.config.floatX)))
-    params = initial_params
+    params = [initial_params]
     op = model(X, params, hWidths, input_size, output_size)
 
     cost = T.sum(T.sqr(op - Y)) * (vy * 0.5) + T.sum(T.sqr(params ** 2)) * (precision * 0.5)
