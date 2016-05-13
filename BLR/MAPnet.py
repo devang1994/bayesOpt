@@ -110,7 +110,7 @@ def mlp_synthetic(X_train, X_test, y_train, y_test, precision, vy, hWidths, mini
     op = model(X, params, hWidths, input_size, output_size)
 
     cost = T.sum(T.sqr(op - Y)) * (vy * 0.5) + T.sum(T.sqr(params)) * (precision * 0.5)
-    updates = sgd(cost, params, lr=0.00001)
+    updates = sgd(cost, params, lr=0.000001)
     # updates=Adam(cost,params)
     train = theano.function(inputs=[X, Y], outputs=cost,
                             updates=updates, allow_input_downcast=True,

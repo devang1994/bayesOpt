@@ -437,7 +437,8 @@ def test_hmc():
     pickle.dump(trains, open("logs/BNN_logs/trains.p", "wb"))
     plt.show()
 
-def analyse_samples(samples, X_train, y_train, hWidths, burnin=0, display=False):
+
+def analyse_samples(samples, X_train, y_train, hWidths, burnin=0, display=False, title=None):
     '''
 
     :param samples:
@@ -495,11 +496,11 @@ def analyse_samples(samples, X_train, y_train, hWidths, burnin=0, display=False)
     if (display):
         plt.figure()
         sample_plot(X_train, y_train, X_test, y_test, test_pred, test_sd)
-
-        plt.figure()
-        plt.plot(train_errs, label='train')
-        plt.plot(test_errs, label='test')
-        plt.legend()
+        plt.title(title)
+        # plt.figure()
+        # plt.plot(train_errs, label='train')
+        # plt.plot(test_errs, label='test')
+        # plt.legend()
 
     return test_pred, test_sd
 
@@ -509,7 +510,7 @@ def sample_plot(X_train, y_train, X_test, y_test, y_pred_test, y_sd_test):
     plt.plot(X_test, y_pred_test + 2 * y_sd_test, label='Credible', color='blue')
     plt.plot(X_test, y_pred_test - 2 * y_sd_test, label='Interval', color='blue')
     plt.plot(X_test, y_pred_test, label='Prediction', color='green')
-
+    plt.axis([-1, 1, -4, 4])
     # plt.plot(X_train,y_pred)
     plt.legend()
 
@@ -544,10 +545,6 @@ def bayes_opt(func, initial_random=2, k=0.2, num_it=20):
     xtest = np.linspace(-1., 2., ntest)
     xtest = xtest.reshape(ntest, 1)
     ytest = func(xtest)
-    plt.figure(1)  # the first figure
-
-    plt.plot(xtest, func(xtest), color='black')
-    plt.plot(xtrain, ytrain, 'ro')
 
     for i in range(num_it):
         print 'it:{}'.format(i)

@@ -4,7 +4,7 @@ from math import sqrt
 import matplotlib.pyplot as plt
 from scipy.interpolate import UnivariateSpline
 import cPickle as pickle
-# from find_effective_sampleSize import RCodaTools
+from find_effective_sampleSize import RCodaTools
 from MAPnet import mlp_synthetic
 
 
@@ -39,23 +39,26 @@ def mixing(sf, vy, show_fit=False, show_post=False):
 
     hWidths = [50, 50, 50]
 
-    a, b, init_MAP = mlp_synthetic(X_train, X_test, y_train, y_test, precision=precisions[0], vy=vy, hWidths=hWidths,
-                                   display=False, epochs=1000)
+    # a, b, init_MAP = mlp_synthetic(X_train, X_test, y_train, y_test, precision=precisions[0], vy=vy, hWidths=hWidths,
+    #                                display=True, epochs=4000)
+    # # plt.show()
+    # print 'finished MAP'
+    # analyse_samples(init_MAP,X_train, y_train, hWidths=hWidths, burnin=0, display=True,title='MAP')
     # plt.show()
-    print 'finished MAP'
-
     train_err, test_err, samples, train_op_samples = sampler_on_BayesNN(burnin=0, n_samples=1000, precisions=precisions,
                                                                         vy=vy,
                                                                         X_train=X_train, y_train=y_train,
-                                                                        hWidths=hWidths, target_acceptance_rate=0.5,stepsize=0.001,
-                                                                        init_theta=init_MAP,n_steps=30)
+                                                                        hWidths=hWidths, target_acceptance_rate=0.9,
+                                                                        stepsize=0.001,
+                                                                        n_steps=30)
 
     # print RCodaTools.ess_coda_vec(np.transpose(samples))
     # , init_theta=init_MAP
-    # print 'effective sample sizes'
-    # a= RCodaTools.ess_coda_vec(samples)
-    # print np.mean(a)
-    # print np.min(a)
+
+    print 'effective sample sizes'
+    a = RCodaTools.ess_coda_vec(samples)
+    print np.mean(a)
+    print np.min(a)
 
     # w1 = samples[:, 1]
     # w2 = samples[:, 5200]
@@ -81,7 +84,13 @@ def mixing(sf, vy, show_fit=False, show_post=False):
 
     print samples.shape
 
-    analyse_samples(samples, X_train, y_train, hWidths=hWidths, burnin=200, display=True)
+    analyse_samples(samples, X_train, y_train, hWidths=hWidths, burnin=200, display=True, title='Averaged')
+
+    # analyse_samples((samples[1750,:]).reshape(1,-1),X_train, y_train, hWidths=hWidths, burnin=0, display=True,title='sample=1750')
+
+    analyse_samples((samples[240, :]).reshape(1, -1), X_train, y_train, hWidths=hWidths, burnin=0, display=True,
+                    title='sample=240')
+    # analyse_samples((samples[4000, :]).reshape(1,-1), X_train, y_train, hWidths=hWidths, burnin=0, display=True,title='sample=4000')
 
     if (show_post):
         samples = samples[200:, :]  # burning in

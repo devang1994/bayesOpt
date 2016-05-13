@@ -290,8 +290,8 @@ def hmc_updates(positions, stepsize, avg_acceptance_rate, final_pos, accept,
                               stepsize * stepsize_inc, stepsize * stepsize_dec)
     # maintain stepsize in [stepsize_min, stepsize_max]
 
-    # new_stepsize = TT.clip(_new_stepsize, stepsize_min, stepsize_max)
-    new_stepsize=stepsize # TODO remove for adaptive step sizes
+    new_stepsize = TT.clip(_new_stepsize, stepsize_min, stepsize_max)
+    # new_stepsize=stepsize # TODO remove for adaptive step sizes
 
     # end-snippet-7 start-snippet-6
     ## ACCEPT RATE UPDATES ##
