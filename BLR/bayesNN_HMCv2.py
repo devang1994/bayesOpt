@@ -287,7 +287,8 @@ def sampler_on_BayesNN(burnin, n_samples, precisions, vy, hWidths, X_train, y_tr
     # Create HMC sampler
     sampler = HMC_sampler.new_from_shared_positions(position, NN_energy,
                                                     initial_stepsize=stepsize, stepsize_max=0.5,
-                                                    target_acceptance_rate=target_acceptance_rate, stepsize_min=0.0001,n_steps=n_steps)
+                                                    target_acceptance_rate=target_acceptance_rate, stepsize_min=0.00001,
+                                                    n_steps=n_steps)
 
     # Start with a burn-in process
     # print 'about to sample'
@@ -438,7 +439,7 @@ def test_hmc():
     plt.show()
 
 
-def analyse_samples(samples, X_train, y_train, hWidths, burnin=0, display=False, title=None):
+def analyse_samples(samples, X_train, y_train, X_test, y_test, hWidths, burnin=0, display=False, title=None):
     '''
 
     :param samples:
@@ -483,11 +484,11 @@ def analyse_samples(samples, X_train, y_train, hWidths, burnin=0, display=False,
         return op_samples, errs, y_pred, y_sd
 
     train_preds, train_errs, train_pred, train_sd = make_predictions_from_NNsamples(X_train, samples, y_train)
-    ntest = 1000
-    X_test = np.linspace(-1., 1., ntest)
-    y_test = objective(X_test)
-    X_test = X_test.reshape(ntest, 1)
-    y_test = y_test.reshape(ntest, 1)
+    # ntest = 1000
+    # X_test = np.linspace(-1., 1., ntest)
+    # y_test = objective(X_test)
+    # X_test = X_test.reshape(ntest, 1)
+    # y_test = y_test.reshape(ntest, 1)
     test_preds, test_errs, test_pred, test_sd = make_predictions_from_NNsamples(X_test, samples, y_test)
     # print train_errs
 
