@@ -95,6 +95,8 @@ def bayes_opt(func, hWidths, precisions, vy, initial_random=2, k=0.2, num_it=20,
 
     plt.figure()
     plt.plot(best_vals)
+    plt.figure()
+    plt.plot(np.abs(best_vals + 1.96729))
     plt.show()
     return best_vals
 
@@ -102,5 +104,5 @@ def bayes_opt(func, hWidths, precisions, vy, initial_random=2, k=0.2, num_it=20,
 if __name__ == '__main__':
     func = objective
 
-    bayes_opt(func, initial_random=10, num_it=25, k=2, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100,
-              show_evo=True)
+    bayes_opt(func, initial_random=10, num_it=15, k=2, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100,
+              show_evo=False)
