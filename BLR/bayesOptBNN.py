@@ -69,7 +69,7 @@ def bayes_opt(func, hWidths, precisions, vy, initial_random=2, k=0.2, num_it=20,
         if (func(next_query) < cur_miny):
             cur_miny = func(next_query)
             cur_minx = next_query
-
+        print 'cur miny {}'.format(cur_miny)
         best_vals.append(cur_miny)
         s = sd  # standard deviations
 
@@ -95,8 +95,12 @@ def bayes_opt(func, hWidths, precisions, vy, initial_random=2, k=0.2, num_it=20,
 
     plt.figure()
     plt.plot(best_vals)
+
     plt.figure()
+    best_vals = np.asarray(best_vals)
     plt.plot(np.abs(best_vals + 1.96729))
+    plt.ylabel('Optimality Gap')
+    plt.xlabel('Num Iterations')
     plt.show()
     return best_vals
 

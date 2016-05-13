@@ -283,7 +283,7 @@ def sampler_on_BayesNN(burnin, n_samples, precisions, vy, hWidths, X_train, y_tr
         position = init_theta.astype(theano.config.floatX)
     position = theano.shared(position)
 
-    print 'position {}'.format(position)
+    # print 'position {}'.format(position)
     # Create HMC sampler
     sampler = HMC_sampler.new_from_shared_positions(position, NN_energy,
                                                     initial_stepsize=stepsize, stepsize_max=0.5,
