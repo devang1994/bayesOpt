@@ -15,7 +15,7 @@ def mixing(sf, vy, show_fit=False, show_post=False):
     :param vy: precision of noise
     :return:
     '''
-    ntrain = 2
+    ntrain = 20
     noise_var = 0.01
     X_train = np.random.uniform(low=-1.0, high=1.0, size=ntrain).reshape(ntrain, 1)
     # print X_train.shape
@@ -32,19 +32,19 @@ def mixing(sf, vy, show_fit=False, show_post=False):
     # vy = 4.631095917555727
 
     precisions = [1, 1, 1, 1]
-    precisions = [1, 1]
+    # precisions = [1, 1]
 
     precisions = [sf * x for x in precisions]
     # hWidths = [50, 50, 50]
 
-    hWidths =[100]
+    hWidths = [50, 50, 50]
 
     a, b, init_MAP = mlp_synthetic(X_train, X_test, y_train, y_test, precision=precisions[0], vy=vy, hWidths=hWidths,
                                    display=False, epochs=1000)
     # plt.show()
     print 'finished MAP'
 
-    train_err, test_err, samples, train_op_samples = sampler_on_BayesNN(burnin=0, n_samples=10000, precisions=precisions,
+    train_err, test_err, samples, train_op_samples = sampler_on_BayesNN(burnin=0, n_samples=1000, precisions=precisions,
                                                                         vy=vy,
                                                                         X_train=X_train, y_train=y_train,
                                                                         hWidths=hWidths, target_acceptance_rate=0.5,stepsize=0.001,
@@ -170,3 +170,14 @@ if __name__ == '__main__':
     mixing(1, 100, show_fit=True)
     # mixing(10,1,show_fit=True)
     plt.show()
+
+"""
+Summary
+
+sf 1 , vy 100 . no gibbs
+
+try out BayesOpt with this
+
+To confirm that this multi mode mixing thing is correct, pull out a few samples from different parts in the trace
+and show that they have the same fit
+"""
