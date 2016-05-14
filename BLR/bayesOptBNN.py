@@ -143,6 +143,6 @@ if __name__ == '__main__':
     xr = [-5, 10, 0, 15]  # generalized to multiD (2d)
     actual_min = 0.397887
 
-    print 'lower minstepsize synth sin with 10, evo, k=10 '
+    print 'lower minstepsize brannin with 30, evo, k=10 '
     bayes_opt(func, xr, initial_random=10, num_it=30, k=10, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100,
               show_evo=False, actual_min=actual_min)
