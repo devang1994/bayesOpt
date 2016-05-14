@@ -1,2 +1,4 @@
 BLR/.idea/*
 *.pyc
+*.xml
+*.iml
