@@ -2,3 +2,7 @@ BLR/.idea/*
 *.pyc
 *.xml
 *.iml
+*$py.class
+*.py[cod]
+
+BLR/.idea/
