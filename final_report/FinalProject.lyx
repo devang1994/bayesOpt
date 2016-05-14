@@ -114,43 +114,114 @@ Bayesian Optimisation is a very interesting problem.
  Neural networks can be used for dimensionality reduction and can be used
  for feature selection.
  It is not trivial how to build probabilitic models using Neural Networks.
- Several different options are available 
+ Several different options are available and two particualat ones were explored
+ in this report.
+ Using a pragamatic approach ....
+ .
+ Alternatively a full Bayesian Neural network was used ....
+ .
+ These functions can be very useful for non-stationary functions.
 \end_layout
 
 \begin_layout Section
-Theory and Design of Experiment
+Neural Networks
 \end_layout
 
 \begin_layout Standard
-Just a test Just a test Just a test Just a test Just a test Just a test
- Just a test Just a test Just a test Just a test Just a test Just a test
- ust a test Just a test Just a test Just a test Just a test Just a test
- Just a test Just a test Just a test Just a test Just a test Just a test
+Neural networks represent multiple non-linear transforms of the input data
+ .
+ Excellent at Feature Selection 
+\end_layout
+
+\begin_layout Subsection
+Intriguing properties of Neural Networks 
+\end_layout
+
+\begin_layout Standard
+Some interesting properties of neural networks have been recently investigated.
  
 \end_layout
 
 \begin_layout Section
-Apparatus and Experimental Results
+Bayesian Optimisation
 \end_layout
 
 \begin_layout Standard
-Just a test Just a test Just a test Just a test Just a test Just a test
- Just a test Just a test Just a test Just a test Just a test Just a test
- ust a test Just a test Just a test Just a test Just a test Just a test
- Just a test Just a test Just a test Just a test Just a test Just a test
+Bayesian Optimisation is the model based optimisation of black box functions.
  
+\end_layout
+
+\begin_layout Subsection
+High Dimesnional Bayesian Optimisation 
+\end_layout
+
+\begin_layout Standard
+An original goal of this project was to explore Bayesian Optimisation in
+ high dimensions .
+ This has not been thorighly explored in the available literature.
+ However two good papers have tried to tackle this problem 
+\end_layout
+
+\begin_layout Subsubsection
+Rembo
+\end_layout
+
+\begin_layout Standard
+Developed by Ziyu wang ..
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Add-GP-UCB
+\end_layout
+
+\begin_layout Standard
+Was developed at CMU by ..
 \end_layout
 
 \begin_layout Section
-Results and Discussion
+Bayesian Optimisation with Neural Networks
+\end_layout
+
+\begin_layout Subsection
+Using a hybrid model
 \end_layout
 
 \begin_layout Standard
-Just a test Just a test Just a test Just a test Just a test Just a test
- Just a test Just a test Just a test Just a test Just a test Just a test
- ust a test Just a test Just a test Just a test Just a test Just a test
- Just a test Just a test Just a test Just a test Just a test Just a test
+A model where the last layer of hidden units are fed to the BLR to obtain
  
+\end_layout
+
+\begin_layout Subsubsection
+Results 
+\end_layout
+
+\begin_layout Subsection
+Using a full bayesian neural network
+\end_layout
+
+\begin_layout Standard
+A full Bayesian neural network was implemented based on ..
+\end_layout
+
+\begin_layout Subsubsection
+Results 
+\end_layout
+
+\begin_layout Subsection
+Potential Applications
+\end_layout
+
+\begin_layout Standard
+Robotic system design 
+\end_layout
+
+\begin_layout Section
+Conclusions
+\end_layout
+
+\begin_layout Standard
+The results are very promising 
 \end_layout
 
 \begin_layout Section
