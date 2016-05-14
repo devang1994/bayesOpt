@@ -82,8 +82,7 @@ F-
 \end_layout
 
 \begin_layout Summary
-Just a test Just a test Just a test Just a test Just a test Just a test
- Just a test Just a test Just a test Just a test Just a test Just a test
+This project explored the use of neural networks for Bayesian Optimisation.
  No more than 100 words.
  
 \end_layout
@@ -109,19 +108,13 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Just a test Just a test Just a test Just a test Just a test Just a test
- Just a test Just a test Just a test Just a test Just a test Just a test
- ust a test Just a test Just a test Just a test Just a test Just a test
- Just a test Just a test Just a test Just a test Just a test Just a test
- 
-\end_layout
-
-\begin_layout Subsection
-Hello
-\end_layout
-
-\begin_layout Subsubsection
-hey
+Bayesian Optimisation is a very interesting problem.
+ It has been used in ..
+ .
+ Neural networks can be used for dimensionality reduction and can be used
+ for feature selection.
+ It is not trivial how to build probabilitic models using Neural Networks.
+ Several different options are available 
 \end_layout
 
 \begin_layout Section
