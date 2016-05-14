@@ -45,3 +45,7 @@ if __name__ == '__main__':
         print 'f'
     else:
         print 'd'
+
+    fun = objectives.rosenbrock_2D
+
+    print fun.func_name

@@ -15,6 +15,7 @@ from sklearn.metrics import mean_squared_error as MSE
 import matplotlib.pyplot as plt
 import cPickle as pickle
 import bayesNNexplorePostfromIp
+import pylab
 import objectives
 np.random.seed(42)
 
@@ -40,6 +41,9 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
     '''function to do bayesOpt on and number of initial random evals
     noise is artificially added to objective function calls when training
     '''
+
+    print 'init_rand {}, k {}, num_it {}, func {}'.format(initial_random, k, num_it, func.func_name)
+
     noise_var = 0.01
     ntest = 500
     ntrain = initial_random  # number of initial random function evals
@@ -48,9 +52,9 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
     xtrain = np.hstack((x1, x2))  # shape (ntrain,2)
     input_size = xtrain.shape[1]
     # xtrain = np.random.uniform(low=xr[0], high=xr[1], size=(ntrain, 1))
-    print xtrain.shape
+    # print xtrain.shape
     ytrain = func(xtrain) + np.random.randn(ntrain, 1) * sqrt(noise_var)
-    print ytrain.shape
+    # print ytrain.shape
     # print ytrain
 
     x1 = np.linspace(xr[0], xr[1], ntest)
@@ -64,8 +68,8 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
 
     ytest = func(xtest)
 
-    print xtest.shape
-    print ytest.shape
+    # print xtest.shape
+    # print ytest.shape
     ytrain_pure = func(xtrain)
     cur_min_index = np.argmin(ytrain_pure)
 
@@ -98,6 +102,7 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
         if (next_y_pure < cur_miny):
             cur_miny = next_y_pure
             cur_minx = next_query
+        print 'query pt {}'.format(next_query)
         print 'cur miny {} , cur_y {} '.format(cur_miny, next_y_pure)
         # print 'nexty pure.shape {}, cur_miny.shape {}'.format(next_y_pure.shape,cur_miny.shape)
 
@@ -126,15 +131,19 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
         ytrain = np.vstack((ytrain, next_y))
 
     plt.figure()
-    plt.plot(best_vals)
+    plt.plot(best_vals, '-o')
     plt.xlabel('Num Iterations')
     plt.ylabel('Best Value')
+    plt.title('{}'.format(func.func_name))
+    pylab.grid(True)
 
     plt.figure()
     best_vals = np.asarray(best_vals)
-    plt.plot(np.abs(best_vals - actual_min))
+    plt.plot(np.abs(best_vals - actual_min), '-o')
     plt.ylabel('Optimality Gap')
     plt.xlabel('Num Iterations')
+    plt.title('{}'.format(func.func_name))
+    pylab.grid(True)
     plt.show()
     return best_vals
 
@@ -147,10 +156,22 @@ if __name__ == '__main__':
     # xr=[0,1]
     # actual_min=-6.02074
 
-    func = objectives.brannin_hoo
-    xr = [-5, 10, 0, 15]  # generalized to multiD (2d)
-    actual_min = 0.397887
+    # func = objectives.brannin_hoo
+    # xr = [-5, 10, 0, 15]  # generalized to multiD (2d)
+    # actual_min = 0.397887
 
-    print 'lower minstepsize brannin with 30, evo, k=10 '
-    bayes_opt(func, xr, initial_random=2, num_it=40, k=10, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100,
+    # func = objectives.rosenbrock_2D
+    # xr = [-2, 2, -2, 2]  # generalized to multiD (2d)
+    # actual_min = 0
+
+
+    func = objectives.modified_rescaled_brannin_hoo
+    xr = [0, 1, 0, 1]  # generalized to multiD (2d)
+    actual_min = -0.5214
+
+
+
+
+    # print 'lower minstepsize brannin with 30, evo, k=10 '
+    bayes_opt(func, xr, initial_random=5, num_it=8, k=10, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100,
               show_evo=False, actual_min=actual_min)
