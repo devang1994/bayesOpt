@@ -106,7 +106,6 @@ def find_dim_theta(hWidths, input_size, output_size):
     dim = dim + hWidths[0] * input_size
     dim = dim + hWidths[-1] * output_size
     return dim
-    pass
 
 
 # TODO burnin WRT to gibbs
@@ -252,6 +251,7 @@ def sampler_on_BayesNN(burnin, n_samples, precisions, vy, hWidths, X_train, y_tr
     batchsize = 1
 
     input_size = X_train.shape[1]
+    print 'input_size {}'.format(input_size)
     output_size = y_train.shape[1]
 
     rng = numpy.random.RandomState(123)
@@ -273,10 +273,10 @@ def sampler_on_BayesNN(burnin, n_samples, precisions, vy, hWidths, X_train, y_tr
         return prior_comp + data_comp
 
     # Declared shared random variable for positions
-    input_size = 1
-    output_size = 1
+
 
     dim = find_dim_theta(hWidths, input_size, output_size)
+    print dim
     if init_theta is None:
         position = rng.randn(batchsize, dim).astype(theano.config.floatX)
     else:

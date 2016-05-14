@@ -27,6 +27,7 @@ def produce_mu_and_sd(n_samples, hWidths, xtrain, ytrain, xtest, ytest, precisio
                                                                         hWidths=hWidths,
                                                                         stepsize=0.001,
                                                                         n_steps=30)
+    print 'sampling worked'
 
     ntrain = xtrain.shape[0]
     test_pred, test_sd = analyse_samples(samples, xtrain, ytrain, hWidths=hWidths, burnin=burnin, display=False,
@@ -40,21 +41,40 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
     noise is artificially added to objective function calls when training
     '''
     noise_var = 0.01
-    ntest = 1000
+    ntest = 500
     ntrain = initial_random  # number of initial random function evals
-    xtrain = np.random.uniform(low=xr[0], high=xr[1], size=(ntrain, 1))
+    x1 = np.random.uniform(low=xr[0], high=xr[1], size=(ntrain, 1))
+    x2 = np.random.uniform(low=xr[2], high=xr[3], size=(ntrain, 1))
+    xtrain = np.hstack((x1, x2))  # shape (ntrain,2)
+    input_size = xtrain.shape[1]
+    # xtrain = np.random.uniform(low=xr[0], high=xr[1], size=(ntrain, 1))
     print xtrain.shape
     ytrain = func(xtrain) + np.random.randn(ntrain, 1) * sqrt(noise_var)
     print ytrain.shape
-    xtest = np.linspace(xr[0], xr[1], ntest)
-    xtest = xtest.reshape(ntest, 1)
+    # print ytrain
+
+    x1 = np.linspace(xr[0], xr[1], ntest)
+    x1 = x1.reshape(ntest, 1)
+
+    x2 = np.linspace(xr[2], xr[3], ntest)
+    x2 = x2.reshape(ntest, 1)
+
+    xtest = np.hstack((x1, x2))
+
+
     ytest = func(xtest)
+
+    print xtest.shape
+    print ytest.shape
     ytrain_pure = func(xtrain)
     cur_min_index = np.argmin(ytrain_pure)
+
     cur_miny = ytrain_pure[cur_min_index]
     cur_minx = xtrain[cur_min_index]
 
+
     best_vals = [cur_miny]
+
     for i in range(num_it):
         print 'it:{}'.format(i)
 
@@ -64,7 +84,12 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
         alpha = acquisition_UCB(mu, sd, k=k)
 
         index = np.argmin(alpha)
+
         next_query = xtest[index]
+        next_query = next_query.reshape(1, input_size)
+        print 'index {}, nextq {}, nextq.shape {}'.format(index, next_query, next_query.shape)
+
+
         next_y = func(next_query) + np.random.randn(1, 1) * sqrt(noise_var)
         if (func(next_query) < cur_miny):
             cur_miny = func(next_query)
@@ -114,9 +139,9 @@ if __name__ == '__main__':
     # xr=[0,1]
     # actual_min=-6.02074
 
-    func = objectives.syntheticSinusoidal
-    xr = [5, 10]
-    actual_min = -54.5299
+    func = objectives.brannin_hoo
+    xr = [-5, 10, 0, 15]  # generalized to multiD (2d)
+    actual_min = 0.397887
 
     print 'lower minstepsize synth sin with 10, evo, k=10 '
     bayes_opt(func, xr, initial_random=10, num_it=10, k=10, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100,
