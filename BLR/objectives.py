@@ -36,7 +36,7 @@ def brannin_hoo(x, a=1.0, b=5.1 / (4.0 * pi_sqr), c=5.0 / (pi), r=6.0, s=10.0, t
 
     [1,1] is first data pt etc
     x[:,0] acceses the first co-ordinate of each pt
-    x[0,:] accesses all the coordinates of the second data-pt
+    x[0,:] accesses all the coordinates of the first data-pt
     shape(x) (numTP,numD), numD =2
 
 

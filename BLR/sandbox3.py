@@ -28,6 +28,20 @@ def bayes_opt(func, hWidths, precisions, vy, initial_random=2, k=0.2, num_it=20)
 
 
 if __name__ == '__main__':
-    func = objectives.objectiveGramacyLee
-    xr = [0.5, 2.5]  # range in which to do bayesopt Think about multiD later
-    bayes_opt(func, xr, initial_random=5, num_it=30, k=2, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100, )
+    # func = objectives.objectiveGramacyLee
+    # xr = [0.5, 2.5]  # range in which to do bayesopt Think about multiD later
+    # bayes_opt(func, xr, initial_random=5, num_it=30, k=2, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100, )
+
+    a = np.arange(1)
+    a[0] = 2
+    b = (np.arange(1)).reshape(1, 1)
+
+    print a.shape
+    print b.shape
+    print a
+    print b
+
+    if (a < b):
+        print 'f'
+    else:
+        print 'd'

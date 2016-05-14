@@ -27,7 +27,7 @@ def produce_mu_and_sd(n_samples, hWidths, xtrain, ytrain, xtest, ytest, precisio
                                                                         hWidths=hWidths,
                                                                         stepsize=0.001,
                                                                         n_steps=30)
-    print 'sampling worked'
+    # print 'sampling worked'
 
     ntrain = xtrain.shape[0]
     test_pred, test_sd = analyse_samples(samples, xtrain, ytrain, hWidths=hWidths, burnin=burnin, display=False,
@@ -70,8 +70,10 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
     cur_min_index = np.argmin(ytrain_pure)
 
     cur_miny = ytrain_pure[cur_min_index]
+    # print type(cur_miny)
     cur_minx = xtrain[cur_min_index]
 
+    print 'original min {}'.format(cur_miny)
 
     best_vals = [cur_miny]
 
@@ -85,16 +87,20 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
 
         index = np.argmin(alpha)
 
-        next_query = xtest[index]
+        next_query = xtest[index, :]
         next_query = next_query.reshape(1, input_size)
-        print 'index {}, nextq {}, nextq.shape {}'.format(index, next_query, next_query.shape)
+        # print 'index {}, nextq {} '.format(index, next_query)
 
 
         next_y = func(next_query) + np.random.randn(1, 1) * sqrt(noise_var)
-        if (func(next_query) < cur_miny):
-            cur_miny = func(next_query)
+        next_y_pure = func(next_query)
+
+        if (next_y_pure < cur_miny):
+            cur_miny = next_y_pure
             cur_minx = next_query
-        print 'cur miny {}'.format(cur_miny)
+        print 'cur miny {} , cur_y {} '.format(cur_miny, next_y_pure)
+        # print 'nexty pure.shape {}, cur_miny.shape {}'.format(next_y_pure.shape,cur_miny.shape)
+
         best_vals.append(cur_miny)
         s = sd  # standard deviations
 
@@ -121,6 +127,8 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
 
     plt.figure()
     plt.plot(best_vals)
+    plt.xlabel('Num Iterations')
+    plt.ylabel('Best Value')
 
     plt.figure()
     best_vals = np.asarray(best_vals)
@@ -144,5 +152,5 @@ if __name__ == '__main__':
     actual_min = 0.397887
 
     print 'lower minstepsize brannin with 30, evo, k=10 '
-    bayes_opt(func, xr, initial_random=10, num_it=30, k=10, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100,
+    bayes_opt(func, xr, initial_random=2, num_it=40, k=10, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100,
               show_evo=False, actual_min=actual_min)
