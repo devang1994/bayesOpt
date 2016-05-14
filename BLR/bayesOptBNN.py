@@ -118,6 +118,6 @@ if __name__ == '__main__':
     xr = [5, 10]
     actual_min = -54.5299
 
-    print 'lower minstepsize synth sin with 17, evo, k=12, added block=False '
-    bayes_opt(func, xr, initial_random=10, num_it=17, k=12, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100,
-              show_evo=True, actual_min=actual_min)
+    print 'lower minstepsize synth sin with 10, evo, k=10 '
+    bayes_opt(func, xr, initial_random=10, num_it=10, k=10, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100,
+              show_evo=False, actual_min=actual_min)
