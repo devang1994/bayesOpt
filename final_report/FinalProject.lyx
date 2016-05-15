@@ -129,6 +129,12 @@ Neural Networks
 
 \begin_layout Standard
 Neural networks represent multiple non-linear transforms of the input data
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bengio-et-al-2015-Book"
+
+\end_inset
+
  .
  Excellent at Feature Selection 
 \end_layout
@@ -159,7 +165,8 @@ High Dimesnional Bayesian Optimisation
 An original goal of this project was to explore Bayesian Optimisation in
  high dimensions .
  This has not been thorighly explored in the available literature.
- However two good papers have tried to tackle this problem 
+ However two good papers have tried to tackle this problem.
+ 
 \end_layout
 
 \begin_layout Subsubsection
@@ -201,7 +208,7 @@ Using a full bayesian neural network
 \end_layout
 
 \begin_layout Standard
-A full Bayesian neural network was implemented based on ..
+A full Bayesian neural net
 \end_layout
 
 \begin_layout Subsubsection
@@ -209,11 +216,11 @@ Results
 \end_layout
 
 \begin_layout Subsection
-Potential Applications
+Results and Discussion
 \end_layout
 
 \begin_layout Standard
-Robotic system design 
+Maybe like this
 \end_layout
 
 \begin_layout Section
@@ -224,9 +231,51 @@ Conclusions
 The results are very promising 
 \end_layout
 
+\begin_layout Subsection
+Potential applications/Future work
+\end_layout
+
+\begin_layout Standard
+This system promises to provide better results for high-dimensional functions.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintAll"
+bibfiles "bibliography"
+options "bibtotoc,plain"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 \start_of_appendix
-Extra Stuff
+Risk Assesment Retrospective
+\end_layout
+
+\begin_layout Standard
+The risk assesment submitted at the start of the project identified frequent
+ computer use as the main potential hazard.
+ This assessment was accurate and no other hazards were encountered during
+ the execution of the project.
+ To avoid repetitive stress injury from excessive computer use, frequent
+ breaks were taken by the author.
+ Several exercises and best practices
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dugan2011healthy"
+
+\end_inset
+
+ were employed to reduce the risk further.
+ If the project is to be carried out again, the risk assessment will remain
+ the same
 \end_layout
 
 \end_body
