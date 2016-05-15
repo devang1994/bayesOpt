@@ -332,7 +332,7 @@ detailed balance
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-T(\theta'|\theta)Q(\theta)=T(\theta|\theta')Q(\theta')
+T(\theta'|\theta)Q(\theta)=T(\theta|\theta')Q(\theta')\label{eq:deTAILed balance}
 \end{equation}
 
 \end_inset
@@ -446,31 +446,175 @@ and then deciding whether or not to accept that state based on its probability
 \begin_inset Formula $Q.$
 \end_inset
 
- If accepted, the candidate state becomes the next state of the Markov chain;
- if it is instead rejected, the new state remains the same as the old state.
+ If accepted, the candidate state, becomes the next state of the Markov
+ chain; if it is instead rejected, the new state remains the same as the
+ old state.
  
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-put in algorithm box.
- or put it off till HMC 
 \end_layout
 
+\begin_layout Standard
+In detail, the transition from 
+\begin_inset Formula $\theta^{(t)}$
 \end_inset
 
-The proposal distribution may depend on the current state with density given
- by 
+ to 
+\begin_inset Formula $\theta^{(t+1)}$
+\end_inset
+
+ is defined as follows:
+\end_layout
+
+\begin_layout Enumerate
+Generate a candidate state, 
+\begin_inset Formula $\theta^{*}$
+\end_inset
+
+, from a proposal distribution.
+ The proposal distribution may depend on the current state, its density
+ is by 
 \begin_inset Formula $S(\theta^{*}\,|\,\theta^{(t)})$
 \end_inset
 
 .
- The proposal distribution must be symmetrical, satisfying the condition
- 
-\begin_inset Formula $S(\theta^{*}\,|\,\theta)=S(\theta\,|\,\theta^{*})$
+ It is noted that the proposal distribution must be symmetrical, satisfying
+ the condition 
+\begin_inset Formula $S(\theta'\,|\,\theta)=S(\theta\,|\,\theta')$
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $Q(\theta^{*})\geq Q(\theta^{t})$
+\end_inset
+
+, accept the candidate state; otherwise accept the candidate state with
+ probability 
+\begin_inset Formula $Q(\theta')/Q(\theta)$
+\end_inset
+
+.
+ For 
+\begin_inset Formula $\theta'\neq\theta$
+\end_inset
+
+, the overall transition probability is then given by:
+\begin_inset Formula 
+\begin{equation}
+T(\theta'|\theta)=S(\theta'\,|\,\theta)min(1,Q(\theta')/Q(\theta))\label{eq:overallTransitionmetropolis}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+If the candidate state is accepted, let 
+\begin_inset Formula $\theta^{t+1}=\theta^{*}$
+\end_inset
+
+.
+ However if it was not accepted, then set 
+\begin_inset Formula $\theta^{(t+1)}=\theta^{(t)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Following the overall transition probability in equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:overallTransitionmetropolis"
+
+\end_inset
+
+), the detailed balance condition (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:deTAILed balance"
+
+\end_inset
+
+) can be verified as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+T(\theta'|\theta)Q(\theta) & =S(\theta'\,|\,\theta)min(1,Q(\theta')/Q(\theta))Q(\theta)\\
+ & =S(\theta'\,|\,\theta)min(Q(\theta),Q(\theta'))\\
+ & =S(\theta\,|\,\theta')min(Q(\theta'),Q(\theta))\\
+ & =S(\theta\,|\,\theta')min(1,Q(\theta)/Q(\theta'))Q(\theta')\\
+ & =T(\theta|\theta')Q(\theta')
+\end{align*}
+
+\end_inset
+
+Therefore the Metropolis updates leave 
+\begin_inset Formula $Q$
+\end_inset
+
+ invariant.
+ 
+\end_layout
+
+\begin_layout Standard
+Many choices are available for the proposal distribution of the Metropolis
+ algorithm.
+ One simple and popular choice is a Gaussian distribution centred on 
+\begin_inset Formula $\theta^{(t)},$
+\end_inset
+
+with the variance chosen so that the probability of the candidate being
+ accepted is reasonably high.
+ Very low acceptance rates can be bad as they lead to successive samples
+ being highly dependent.
+ When sampling from a complex, high-dimensional distribution, the standard
+ deviation of of the proposal distributions typically has to be very small
+ to comapred to the extent of 
+\begin_inset Formula $Q.$
+\end_inset
+
+ This is because large changes will almost certainly lead to regions of
+ low probability.
+ A large number of steps will be required to move to a distant point in
+ the distribution.
+ The problem is made worse by the fact that these movements will take the
+ form of a random walk, rather than a systematic traversal.
+\end_layout
+
+\begin_layout Standard
+Simple forms of the Metropolis algorithm can be very slow when applied to
+ problems such as Bayesian learning for neural networks
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neal1996bayesian"
+
+\end_inset
+
+.
+ As will be seen 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+add correct chapter
+\end_layout
+
+\end_inset
+
+ , this problem can be alleviated by using the hybrid Monte Carlo algorithm
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DUANE1987216"
+
+\end_inset
+
+, in which candidate states are generated by a dynamical method which can
+ avoid the random walk aspect of the exploration.
 \end_layout
 
 \begin_layout Section
@@ -613,7 +757,7 @@ Potential applications/Future work
 
 \begin_layout Standard
 This system promises to provide better results for high-dimensional functions.
- 
+ Add Nileshs paper to this 
 \begin_inset Newpage newpage
 \end_inset
 
