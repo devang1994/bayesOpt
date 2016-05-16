@@ -111,14 +111,47 @@ Bayesian Optimisation is a very interesting problem.
  .
  Neural networks can be used for dimensionality reduction and can be used
  for feature selection.
- It is not trivial how to build probabilitic models using Neural Networks.
- Several different options are available and two particualat ones were explored
+ It is not trivial how to build probabilistic models using Neural Networks.
+ Several different options are available and two particular ones were explored
  in this report.
- Using a pragamatic approach ....
+ Using a pragmatic approach ....
  .
  Alternatively a full Bayesian Neural network was used ....
  .
  These functions can be very useful for non-stationary functions.
+\end_layout
+
+\begin_layout Section
+Neural Networks
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Neural-Networks"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Neural networks represent multiple non-linear transforms of the input data
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bengio-et-al-2015-Book"
+
+\end_inset
+
+ .
+ Excellent at Feature Selection 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+can also use radfords book 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -135,10 +168,10 @@ key "andrieu2003introduction,neal1996bayesian"
 \end_inset
 
 .
- A markov chain is constructed with the desired distribution as its equilibrium
+ A Markov chain is constructed with the desired distribution as its equilibrium
  distribution.
  These models are widely applied to Bayesian models in statistics.
- MCMC methods make no assumtions about the about the form of the underlying
+ MCMC methods make no assumptions about the about the form of the underlying
  distribution.
  In theory they can take account of multiple modes and the possibility that
  the main contribution to the integral may come from areas not in the vicinity
@@ -337,7 +370,7 @@ T(\theta'|\theta)Q(\theta)=T(\theta|\theta')Q(\theta')\label{eq:deTAILed balance
 
 \end_inset
 
-A chain staisfying detailed balance is said to be 
+A chain satisfying detailed balance is said to be 
 \emph on
 reversible.
 \end_layout
@@ -412,6 +445,13 @@ Page 25 maybe write more
 
 \begin_layout Subsection
 The Metropolis algorithm
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:The-Metropolis-algorithm"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -574,7 +614,7 @@ with the variance chosen so that the probability of the candidate being
  being highly dependent.
  When sampling from a complex, high-dimensional distribution, the standard
  deviation of of the proposal distributions typically has to be very small
- to comapred to the extent of 
+ to compared to the extent of 
 \begin_inset Formula $Q.$
 \end_inset
 
@@ -596,17 +636,14 @@ key "neal1996bayesian"
 \end_inset
 
 .
- As will be seen 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-add correct chapter
-\end_layout
+ As will be seen in section (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:The-hybrid-Monte"
 
 \end_inset
 
- , this problem can be alleviated by using the hybrid Monte Carlo algorithm
+) , this problem can be alleviated by using the hybrid Monte Carlo algorithm
 \begin_inset CommandInset citation
 LatexCommand cite
 key "DUANE1987216"
@@ -617,25 +654,142 @@ key "DUANE1987216"
  avoid the random walk aspect of the exploration.
 \end_layout
 
-\begin_layout Section
-Neural Networks
-\end_layout
-
-\begin_layout Standard
-Neural networks represent multiple non-linear transforms of the input data
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Bengio-et-al-2015-Book"
+\begin_layout Subsection
+The hybrid Monte Carlo algorithm
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:The-hybrid-Monte"
 
 \end_inset
 
- .
- Excellent at Feature Selection 
+
+\end_layout
+
+\begin_layout Standard
+The hybrid Monte Carlo algorithm was originally developed by Duane et.al.
+ for application in quantum chromodynamics
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DUANE1987216"
+
+\end_inset
+
+.
+ Radford Neal in his book on Bayesian Learning for Neural Networks
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neal1996bayesian"
+
+\end_inset
+
+successfully applies this technique to Bayesian learning.
+ The algorithm merges the Metropolis algorithm (reviewed in sec 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:The-Metropolis-algorithm"
+
+\end_inset
+
+) with sampling techniques based on dynamical simulation.
+ It generates a sample of points drawn from some specified distribution
+ which can then be used to form Monte Carlo estimates for the expectations
+ of various functions with respect to this distribution.
+ 
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-can also use radfords book 
+maybe remove.
+ maybe include reference to a relevant equation where this is important
+\end_layout
+
+\end_inset
+
+ For Bayesian learning, we often wish to sample from the posterior distribution
+ given the training data, and are interested in estimating the expectations
+ needed to make predictions for test cases.
+\end_layout
+
+\begin_layout Standard
+The hybrid Monte Carlo algorithm is expressed in terms of sampling from
+ the 
+\emph on
+canonical 
+\emph default
+(or 
+\emph on
+Boltzmann
+\emph default
+) ditribution for the state of a physical system, which is defined in terms
+ of an energy function.
+ The algorithm can be used to sample from any distribution for a set of
+ real-valued variables for which the derivatives of the probability density
+ can be computed.
+ For describing the formulation of this algorithm it is convenient to retain
+ the physical terminology even in non-physical contexts.
+ The problem can then be described in terms of an energy function for a
+ fictitious physical system.
+ 
+\end_layout
+
+\begin_layout Standard
+Accordingly, suppose we wish to sample from some distribution for a 
+\begin_inset Quotes eld
+\end_inset
+
+position
+\begin_inset Quotes erd
+\end_inset
+
+ variable, 
+\begin_inset Formula $\mathbf{q}$
+\end_inset
+
+, which has 
+\begin_inset Formula $n$
+\end_inset
+
+ real-valued components, 
+\begin_inset Formula $q_{i}$
+\end_inset
+
+.
+ When used for Bayesian neural networks in section (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Using-a-full_BNN"
+
+\end_inset
+
+) , 
+\begin_inset Formula $\mathbf{q}$
+\end_inset
+
+ will be the set of network parameters.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+MAybe include figures about HMC 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Framework of Hamiltonian dynamics is exploited by casting the probabilistic
+ simulation in the form of a Hamiltonian system.
+ 
 \end_layout
 
 \end_inset
@@ -662,13 +816,13 @@ Bayesian Optimisation is the model based optimisation of black box functions.
 \end_layout
 
 \begin_layout Subsection
-High Dimesnional Bayesian Optimisation 
+High Dimensional Bayesian Optimisation 
 \end_layout
 
 \begin_layout Standard
 An original goal of this project was to explore Bayesian Optimisation in
  high dimensions .
- This has not been thoroghly explored in the available literature.
+ This has not been thoroughly explored in the available literature.
  However two good papers have tried to tackle this problem.
  
 \end_layout
@@ -708,18 +862,68 @@ Results
 \end_layout
 
 \begin_layout Subsection
-Using a full bayesian neural network
+Using a full Bayesian neural network
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Using-a-full_BNN"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-A full Bayesian neural net 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+when creating probabilistic models with neural networks, full bayesian neural
+ networks are a very natural choice
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status collapsed
 
 \begin_layout Plain Layout
-add illustration of neural network from neal pg17.
+add illustration of neural network from Neal pg17.
  Prior just show 10 random NN's .
  Then train using HMC then draw 10 randomNN's 
+\end_layout
+
+\end_inset
+
+Neural networks discussed in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Neural-Networks"
+
+\end_inset
+
+, used maximum likelihood to determine the network parameters.
+ Regularized maximum likelihood can be interpreted as MAP (maximum a posteriori)
+ approach in which the regularizer can be viewed as the logarithm of a prior
+ parameter distribution.
+ However, a full Bayesian treatment of neural networks, requires us to marginali
+ze over the posterior distribution of parameters
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bishop2006pattern"
+
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+tHEANO WAS used
 \end_layout
 
 \end_inset
@@ -757,7 +961,7 @@ Potential applications/Future work
 
 \begin_layout Standard
 This system promises to provide better results for high-dimensional functions.
- Add Nileshs paper to this 
+ Add Nilesh's paper to this 
 \begin_inset Newpage newpage
 \end_inset
 
@@ -784,11 +988,11 @@ options "bibtotoc,plain"
 
 \begin_layout Section
 \start_of_appendix
-Risk Assesment Retrospective
+Risk Assessment Retrospective
 \end_layout
 
 \begin_layout Standard
-The risk assesment submitted at the start of the project identified frequent
+The risk assessment submitted at the start of the project identified frequent
  computer use as the main potential hazard.
  This assessment was accurate and no other hazards were encountered during
  the execution of the project.
