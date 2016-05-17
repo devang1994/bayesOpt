@@ -719,7 +719,7 @@ canonical
 \emph on
 Boltzmann
 \emph default
-) ditribution for the state of a physical system, which is defined in terms
+) distribution for the state of a physical system, which is defined in terms
  of an energy function.
  The algorithm can be used to sample from any distribution for a set of
  real-valued variables for which the derivatives of the probability density
@@ -896,7 +896,7 @@ masses
 \end_inset
 
  associated with each component.
- It is possible to adjust the masses for each component to impeove efficiency,
+ It is possible to adjust the masses for each component to improve efficiency,
  however for the rest of the report and project we take all of them to be
  one.
  
@@ -1060,7 +1060,7 @@ The length in fictitious time of the trajectories is an adjustable parameter.
 \begin_inset Formula $\boldsymbol{q}$
 \end_inset
 
- to avoid the random walk like effects that would result from radmomizing
+ to avoid the random walk like effects that would result from randomizing
  the momentum after every short trajectory.
  
 \end_layout
@@ -1083,7 +1083,7 @@ Maybe include details rather than say refer to the book
 status open
 
 \begin_layout Plain Layout
-MAybe include figures about HMC 
+Maybe include figures about HMC 
 \end_layout
 
 \end_inset
@@ -1110,7 +1110,7 @@ Framework of Hamiltonian dynamics is exploited by casting the probabilistic
 In practice, Hamiltonian dynamics can not be simulated exactly, but can
  only be approximated by some discretization using finite time steps.
  This will necessarily introduce numerical errors hence we need a scheme
- that minimzes the impact of these errors.
+ that minimizes the impact of these errors.
  In the 
 \emph on
 leapfrog 
@@ -1188,7 +1188,7 @@ The leapfrog step consists of a half-step for the
 \begin_inset Formula $\Delta\tau,$
 \end_inset
 
- avalue of 
+ a value of 
 \begin_inset Formula $\epsilon$
 \end_inset
 
@@ -1290,7 +1290,7 @@ min(1,\frac{\exp(-H(\boldsymbol{q^{*},\boldsymbol{p^{*}}}))}{\exp(-H(\boldsymbol
 
 \end_inset
 
-In detail , given the number of od leapfrog steps, L, a dynamical transition
+In detail , given the number of of leapfrog steps, L, a dynamical transition
  is performed as follows:
 \end_layout
 
@@ -1304,7 +1304,7 @@ Start from the current state,
 \begin_inset Formula $L$
 \end_inset
 
- leapfrog steps with a stepsize of 
+ leapfrog steps with a step-size of 
 \begin_inset Formula $\epsilon$
 \end_inset
 
@@ -1341,7 +1341,7 @@ otherwise let the new state be the same as the old.
 
 \begin_layout Standard
 It is important to maintain satisfactory acceptance rates by tuning the
- stepsizes 
+ step-sizes 
 \begin_inset Formula $\epsilon$
 \end_inset
 
@@ -1372,12 +1372,12 @@ ask THang
 We track the average acceptance rate of the HMC move proposals, using an
  exponential moving average.
  If the average acceptance larger than a target acceptance rate, we can
- increase the stepsize ,
+ increase the step-size ,
 \begin_inset Formula $\epsilon$
 \end_inset
 
-, to improve the mixing rate of the markov chain.
- If the acceptance rate is too low, the stepsize can be decreased to improve
+, to improve the mixing rate of the Markov chain.
+ If the acceptance rate is too low, the step-size can be decreased to improve
  the acceptance rate but yielding a more conservative mixing rate.
 \end_layout
 
@@ -1471,9 +1471,9 @@ key "bishop2006pattern,neal1996bayesian"
 \end_layout
 
 \begin_layout Standard
-Bayesian learning for neural networks is a dificult problem, due to the
+Bayesian learning for neural networks is a difficult problem, due to the
  typically complex nature of the posterior distribution.
- The hybrid Monte Carlo(HMC) algorithm is particulary suitable for this
+ The hybrid Monte Carlo(HMC) algorithm is particularly suitable for this
  problem, due to its avoidance of random walk behaviour as discussed in
  section 
 \begin_inset CommandInset ref
