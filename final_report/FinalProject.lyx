@@ -1511,8 +1511,8 @@ A neural network can be parametrized by its weights and biases, collectively
 \begin_inset Formula $P(\gamma).$
 \end_inset
 
- We have a set of training cases collectively given by 
-\begin_inset Formula $D=(x^{(1)},y^{(1)}),\dots,(x^{(n)},y^{(n)})$
+ We have a training data-set given by 
+\begin_inset Formula $\mathbf{D}=\{(x^{(1)},y^{(1)}),\dots,(x^{(n)},y^{(n)})\}$
 \end_inset
 
  , consisting of independent pairs of input values, 
@@ -1544,7 +1544,208 @@ The ultimate objective is to predict the target value for new test cases,
 \end_inset
 
 using the information in the training set.
+ To make the prediction we require the posterior distribution for 
+\begin_inset Formula $\boldsymbol{\theta}$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{\gamma}$
+\end_inset
+
+, this is proportional to the product of the prior and the likelihood due
+ to the training cases:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\ \propto\ P(\gamma)P(\theta|\gamma)\prod_{c=1}^{n}P(y^{(c)}\,|\, x^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})\label{eq:probability NN}
+\end{equation}
+
+\end_inset
+
+Predictions on new data-points can then be made by integration with respect
+ to this posterior distribution.
+ The prediction on new data-points is then given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+P(y^{(n+1)}|x^{(n+1)},\boldsymbol{D})\;=\;\int P(y^{(n+1)}|x^{(n+1)},\boldsymbol{\theta},\boldsymbol{\gamma})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}
+\end{equation}
+
+\end_inset
+
+For a regression model, the prediction that minizes the expected squared-error
+ loss is the mean of the predictive distribution.
+ It is given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}
+\end{equation}
+
+\end_inset
+
+Since these integrals take the form of expectation of functions with respect
+ to the posterior distribution, they can be tackled by using a Markov chain
+ Monte Carlo approach.
+ We can approximate the integral with the average value of the function
+ over a sample of values from the posterior.
  
+\end_layout
+
+\begin_layout Standard
+The hybrid Monte Carlo method discussed in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:The-hybrid-Monte"
+
+\end_inset
+
+ is used to generate samples from the posterior.
+ To apply this method, we first need to formulate the desired distribution
+ in terms of a potential energy function.
+ Since the objective is to sample from the posterior distribution for network
+ parameters, the energy function will be a function of these parameters.
+ The parameters 
+\begin_inset Formula $\boldsymbol{\theta}$
+\end_inset
+
+, will play the role of the the 
+\begin_inset Quotes eld
+\end_inset
+
+position
+\begin_inset Quotes erd
+\end_inset
+
+ variables, 
+\begin_inset Formula $\boldsymbol{q},$
+\end_inset
+
+ of an imaginary physical system.
+ The hyperparameters remain fixed throughout one hybrid Monte Carlo update.
+ Hence we can ignore all energy terms depending only on the hyperparameters.
+ For the generic case described by equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:probability NN"
+
+\end_inset
+
+) , the potential energy can be calculated by taking the negative log of
+ the prior and the likelihood due to the trainig cases, as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+E(\boldsymbol{\theta})=F(\boldsymbol{\gamma})-\log P(\mathbf{\theta}|\mathbf{\gamma})-\sum_{c=1}^{n}P(y^{(c)}\,|\, x^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $F(\boldsymbol{\gamma})$
+\end_inset
+
+ is any convenient function of the hyperparameters.
+ The detailed form of the energy function will obviously depend on the network
+ architecture, the prior, and the data model used.
+ For the purpose of this project we put a Gaussian prior with mean zero
+ and standard deviation 
+\begin_inset Formula $\sigma_{p}$
+\end_inset
+
+ on each of the network parameters.
+ We also assume that the targets are a single real value which can be modelled
+ with a Gaussian noise distribution with standard deviation 
+\begin_inset Formula $\sigma_{n}$
+\end_inset
+
+.
+ The hyperparameters are then 
+\begin_inset Formula $\boldsymbol{\gamma}=\{\tau_{p}\,,\,\tau_{n}\}$
+\end_inset
+
+, where 
+\begin_inset Formula $\tau_{p}=\sigma_{p}^{-2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\tau_{n}=\sigma_{n}^{-2}$
+\end_inset
+
+.
+ The variances are expressed in terms of the associated preision for convenience.
+ The resulting potential energy function is :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E(\boldsymbol\theta)\;=\;\tau_{p}\sum_{i=1}^{k}\frac{\theta_{i}^{2}}{2}+\tau\sum_{c=1}^{n}\frac{(y^{(c)}-f(x^{(c)},\theta))^{2}}{2}
+\]
+
+\end_inset
+
+where k is the total number of parameters in the neural net i.e 
+\begin_inset Formula $\boldsymbol{\theta}=\{\theta_{1},\dots,\theta_{k}\}$
+\end_inset
+
+, this includes both the weights and the biases associated with the network.
+\end_layout
+
+\begin_layout Standard
+It can be noted that this energy function is similar to the error function
+ which is minimized for training regularized convenetional networks.
+ However the objective here is not to minimise the total energy , but rather
+ to sample from the canonical distribution represented by the energy.
+\end_layout
+
+\begin_layout Standard
+We can proceed by introducing the momentum variable, 
+\begin_inset Formula $\boldsymbol{p}$
+\end_inset
+
+.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+position
+\begin_inset Quotes erd
+\end_inset
+
+ variable, 
+\begin_inset Formula $\boldsymbol{q}$
+\end_inset
+
+ can be associated with the parameters 
+\begin_inset Formula $\boldsymbol{\theta}$
+\end_inset
+
+ of the network.
+ We then use the hybrid Monte Carlo algorithm to generate samples from the
+ posterior of the parameters.
+ These samples are then used to make 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe talk about GIbbs sampling of hypers
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
