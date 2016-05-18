@@ -1392,6 +1392,13 @@ Some interesting properties of neural networks have been recently investigated.
 
 \begin_layout Section
 Bayesian Optimisation
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Bayesian-Optimisation"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1585,7 +1592,7 @@ For a regression model, the prediction that minizes the expected squared-error
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}
+\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}\label{eq:prediction}
 \end{equation}
 
 \end_inset
@@ -1702,7 +1709,7 @@ where k is the total number of parameters in the neural net i.e
 
 \begin_layout Standard
 It can be noted that this energy function is similar to the error function
- which is minimized for training regularized convenetional networks.
+ which is minimized for training regularized conventional networks.
  However the objective here is not to minimise the total energy , but rather
  to sample from the canonical distribution represented by the energy.
 \end_layout
@@ -1732,7 +1739,129 @@ position
  of the network.
  We then use the hybrid Monte Carlo algorithm to generate samples from the
  posterior of the parameters.
- These samples are then used to make 
+ These samples are then used to approximate the integral in equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:prediction"
+
+\end_inset
+
+) to make predictions on new data-points.
+ 
+\end_layout
+
+\begin_layout Standard
+We plan to use the predictions from the neural network to perform Bayesian
+ Optimisation using the GP-LCB acquisition function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "brochu2010tutorial"
+
+\end_inset
+
+, which is given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+LCB(x) & = & \mu(x)\text{−}K\sigma(x)
+\end{eqnarray}
+
+\end_inset
+
+where 
+\begin_inset Formula $\mu(x)$
+\end_inset
+
+ is the prediction at point 
+\begin_inset Formula $x$
+\end_inset
+
+ as given by equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:muLCB-1"
+
+\end_inset
+
+) , and 
+\begin_inset Formula $\sigma(x)$
+\end_inset
+
+ is the standard deviation at point 
+\begin_inset Formula $x$
+\end_inset
+
+ calculated in equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:sigmaLCB"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+\mu(x) & = & \int f(x,\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}\label{eq:muLCB-1}\\
+\sigma(x) & = & \sqrt{\int(f(x,\boldsymbol{\theta})-\mu(x))^{2}P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}}\label{eq:sigmaLCB}
+\end{eqnarray}
+
+\end_inset
+
+With 
+\begin_inset Formula $N$
+\end_inset
+
+ , samples from the posterior distribution of the parameters,
+\begin_inset Formula $\{\boldsymbol{\theta_{1}},\dots,\boldsymbol{\theta_{N}}\}$
+\end_inset
+
+, we can approximate the required integrals by using MCMC methods to give:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+\mu(x) & = & \frac{1}{N}\sum_{i=1}^{N}f(x,\boldsymbol{\theta_{i}})\label{eq:muLCB-MCMC}\\
+\sigma(x) & = & \sqrt{\frac{1}{N}\sum_{i=1}^{N}(f(x,\boldsymbol{\theta_{i}})-\mu(x))^{2}}\label{eq:sigmaLCB-MCMC}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Results
+\end_layout
+
+\begin_layout Standard
+Some tests were run on the algorithm given above.
+ We show a synthetic sinusoidal function and show the fit of a few samples
+ from the posterior of the neural network.
+ The samples were then averaged according to equations (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:muLCB-MCMC"
+
+\end_inset
+
+) - (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:sigmaLCB-MCMC"
+
+\end_inset
+
+) to generate the overall fit of the neural network.
+ The credible interval was taken to be two standard deviations on either
+ side of the mean.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1740,7 +1869,8 @@ position
 status open
 
 \begin_layout Plain Layout
-Maybe talk about GIbbs sampling of hypers
+Maybe talk about GIbbs sampling of hypers, talk about splitting the parameters
+ into groups which can be handled separately
 \end_layout
 
 \end_inset

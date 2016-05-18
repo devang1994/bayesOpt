@@ -439,7 +439,7 @@ def test_hmc():
     plt.show()
 
 
-def analyse_samples(samples, X_train, y_train, X_test, y_test, hWidths, burnin=0, display=False, title=None):
+def analyse_samples(samples, X_train, y_train, X_test, y_test, hWidths, burnin=0, display=False, title=None,mult=False):
     '''
 
     :param samples:
@@ -448,6 +448,7 @@ def analyse_samples(samples, X_train, y_train, X_test, y_test, hWidths, burnin=0
     :param hWidths:
     :param burnin: discards the first few samples, makes sure the we start accepting after a few gibbs
      sampling steps
+    :param mult : allows to disable new figure, so multiple figures on same plot
     :return:
     '''
 
@@ -495,9 +496,11 @@ def analyse_samples(samples, X_train, y_train, X_test, y_test, hWidths, burnin=0
     # print len(train_errs)
 
     if (display):
-        plt.figure()
+        if not mult:
+            plt.figure()
         sample_plot(X_train, y_train, X_test, y_test, test_pred, test_sd)
-        plt.title(title)
+        if(title!=None):
+            plt.title(title)
         # plt.figure()
         # plt.plot(train_errs, label='train')
         # plt.plot(test_errs, label='test')
@@ -506,14 +509,19 @@ def analyse_samples(samples, X_train, y_train, X_test, y_test, hWidths, burnin=0
     return test_pred, test_sd
 
 def sample_plot(X_train, y_train, X_test, y_test, y_pred_test, y_sd_test):
+
+    plt.plot(X_test, y_pred_test + 2 * y_sd_test, label='Credible', color='blue', alpha=0.7)
+    plt.plot(X_test, y_pred_test - 2 * y_sd_test, label='Interval', color='blue',alpha=0.7)
+    plt.plot(X_test, y_pred_test, label='Prediction', color='green', alpha=0.8)
     plt.plot(X_test, y_test, linewidth=2, color='black', label='Objective')
     plt.plot(X_train, y_train, 'ro', label='Data')
-    plt.plot(X_test, y_pred_test + 2 * y_sd_test, label='Credible', color='blue')
-    plt.plot(X_test, y_pred_test - 2 * y_sd_test, label='Interval', color='blue')
-    plt.plot(X_test, y_pred_test, label='Prediction', color='green')
     plt.axis([-1, 1, -4, 4])
     # plt.plot(X_train,y_pred)
-    plt.legend()
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.legend(loc='best',fontsize='small')
+    plt.savefig('report_images/BNN_simple_fit.eps')
+    plt.savefig('report_images/BNN_simple_fit.png',dpi=300)
 
     # plt.savefig('logs/BNN_logs/BNNv2{}vy{}hW{}.png'.format(precisions, vy, hWidths), dpi=300)
 
