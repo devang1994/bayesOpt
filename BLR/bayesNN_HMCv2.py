@@ -520,8 +520,8 @@ def sample_plot(X_train, y_train, X_test, y_test, y_pred_test, y_sd_test):
     plt.xlabel('x')
     plt.ylabel('y')
     plt.legend(loc='best',fontsize='small')
-    plt.savefig('report_images/BNN_simple_fit.eps')
-    plt.savefig('report_images/BNN_simple_fit.png',dpi=300)
+    # plt.savefig('report_images/BNN_simple_fit.eps')
+    plt.savefig('report_images/BNN_simple_fit.png',dpi=300,bbox_inches='tight')
 
     # plt.savefig('logs/BNN_logs/BNNv2{}vy{}hW{}.png'.format(precisions, vy, hWidths), dpi=300)
 

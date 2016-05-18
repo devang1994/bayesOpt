@@ -23,9 +23,11 @@ def analyse_mult_samples(samples, X_train, y_train,X_test,y_test, hWidths,indice
     plt.xlabel('x')
     plt.ylabel('y')
     plt.legend(loc='best',fontsize='small')
-    plt.savefig('report_images/multiple_samples.png',dpi=300)
-    plt.savefig('report_images/multiple_samples.eps')
-    plt.savefig('report_images/multiple_samples.pdf')
+    plt.axis([-1, 1, -4, 4])
+
+    plt.savefig('report_images/multiple_samples.png',dpi=300,bbox_inches='tight')
+    # plt.savefig('report_images/multiple_samples.eps')
+    # plt.savefig('report_images/multiple_samples.pdf')
 
 
 
@@ -100,7 +102,7 @@ def mixing(sf, vy, show_fit=False, show_post=False):
 
     plt.xlabel('Sample number')
     plt.ylabel('Value')
-    plt.savefig('report_images/trace.png',dpi=300)
+    plt.savefig('report_images/trace.png',dpi=300,bbox_inches='tight')
 
     # plt.savefig('logs/BNN_logs/mixingWeightsPrec10L', dpi=300)
 
@@ -108,7 +110,7 @@ def mixing(sf, vy, show_fit=False, show_post=False):
 
 
     analyse_samples(samples, X_train, y_train,X_test,y_test, hWidths=hWidths, burnin=200, display=True)
-    analyse_mult_samples(samples, X_train, y_train,X_test,y_test, hWidths=hWidths, indices=[900,2200,2900,4200])
+    analyse_mult_samples(samples, X_train, y_train,X_test,y_test, hWidths=hWidths, indices=[900,2200,2900])
 
 
     # analyse_samples((samples[1750,:]).reshape(1,-1),X_train, y_train, hWidths=hWidths, burnin=0, display=True,title='sample=1750')
@@ -131,19 +133,19 @@ def mixing(sf, vy, show_fit=False, show_post=False):
         plt.hist(w1, bins=n)  # bin it into n = N/10 bins
         plt.xlabel('Value')
         plt.ylabel('Occurences')
-        plt.savefig('report_images/posteriorW1.png', dpi=300)
+        plt.savefig('report_images/posteriorW1.png', dpi=300,bbox_inches='tight')
         plt.figure()
 
         plt.hist(w2, bins=n)  # bin it into n = N/10 bins
         plt.xlabel('Value')
         plt.ylabel('Occurences')
-        plt.savefig('report_images/posteriorW200.png', dpi=300)
+        plt.savefig('report_images/posteriorW200.png', dpi=300,bbox_inches='tight')
         plt.figure()
 
         plt.hist(w3, bins=n)  # bin it into n = N/10 bins
         plt.xlabel('Value')
         plt.ylabel('Occurences')
-        plt.savefig('report_images/posteriorW251.png', dpi=300)
+        plt.savefig('report_images/posteriorW251.png', dpi=300,bbox_inches='tight')
 
 
 def mixing_from_pickle():

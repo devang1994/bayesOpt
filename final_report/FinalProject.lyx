@@ -1836,29 +1836,30 @@ With
 
 \end_layout
 
-\begin_layout Subsection
-Results
+\begin_layout Subsubsection
+Verifying correctness
 \end_layout
 
 \begin_layout Standard
+To verify the correctness of the above implementation, we show some preliminary
+ results on a dimensional synthetic sinusoidal dataset given by :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(x)=\sin(7x)+\cos(17x)\;\;\;\;\;\;\;\text{for}\ x\in[-1,1]
+\]
+
+\end_inset
+
 A neural network with 3 hidden layers each of width 50 units was used.
  The 
 \begin_inset Formula $tanh$
 \end_inset
 
  non-linearity was used in the neural network.
- A one dimensional synthetic sinusoidal dataset given by :
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f(x)=\sin(7x)+\cos(17x)\;\;\;\;\;\;\; x\in[-1,1]
-\]
-
-\end_inset
-
-
+ A one 
 \begin_inset Note Note
 status open
 
@@ -2017,7 +2018,7 @@ The overall fit of the neural network, averaged over a large number of samples
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset space \hfill{}
