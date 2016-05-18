@@ -9,8 +9,7 @@ from MAPnet import mlp_synthetic
 
 
 def analyse_mult_samples(samples, X_train, y_train,X_test,y_test, hWidths,indices=[900,2200,2900,4200]):
-
-    plt.figure()
+    plt.figure(figsize=(10, 6))
 
     for index in indices:
         fit, sd=analyse_samples((samples[index, :]).reshape(1, -1), X_train, y_train,
@@ -22,7 +21,7 @@ def analyse_mult_samples(samples, X_train, y_train,X_test,y_test, hWidths,indice
     plt.plot(X_train, y_train, 'ro', label='Training Data')
     plt.xlabel('x')
     plt.ylabel('y')
-    plt.legend(loc='best',fontsize='small')
+    plt.legend(loc='best', fontsize='medium')
     plt.axis([-1, 1, -4, 4])
 
     plt.savefig('report_images/multiple_samples.png',dpi=300,bbox_inches='tight')
@@ -88,15 +87,16 @@ def mixing(sf, vy, show_fit=False, show_post=False):
     # w3 = samples[:, 1200]
     # w4 = samples[:, 200]
 
-    w1 = samples[:, 1]
-    w2 = samples[:, 200]
-    w3 = samples[:, 251]
+    theta_indices = [1, 200, 2501]
+    w1 = samples[:, theta_indices[0]]
+    w2 = samples[:, theta_indices[1]]
+    w3 = samples[:, theta_indices[2]]
     # w4 = samples[:, 200]
 
     plt.figure()
-    plt.plot(w1, label='w1')
-    plt.plot(w2, label='w2')
-    plt.plot(w3, label='w3')
+    plt.plot(w1, label='theta {}'.format(theta_indices[0]))
+    plt.plot(w2, label='theta {}'.format(theta_indices[1]))
+    plt.plot(w3, label='theta {}'.format(theta_indices[2]))
     # plt.title('weight prec {}, noise prec {}'.format(sf, vy))
     plt.legend()
 
@@ -122,27 +122,28 @@ def mixing(sf, vy, show_fit=False, show_post=False):
     if (show_post):
         samples = samples[200:, :]  # burning in
 
-        w1 = samples[:, 1]
-        w2 = samples[:, 200]
-        w3 = samples[:, 251]
+        w1 = samples[:, theta_indices[0]]
+        w2 = samples[:, theta_indices[1]]
+        w3 = samples[:, theta_indices[2]]
 
         N = samples.shape[0]
-        n = N / 10
+        n = N / 100
         plt.figure()
 
-        plt.hist(w1, bins=n)  # bin it into n = N/10 bins
+        plt.hist(w1, bins=n, normed=False)  # bin it into n = N/10 bins
         plt.xlabel('Value')
         plt.ylabel('Occurences')
         plt.savefig('report_images/posteriorW1.png', dpi=300,bbox_inches='tight')
         plt.figure()
 
-        plt.hist(w2, bins=n)  # bin it into n = N/10 bins
+        plt.hist(w2, bins=n, normed=False)  # bin it into n = N/10 bins
+
         plt.xlabel('Value')
         plt.ylabel('Occurences')
         plt.savefig('report_images/posteriorW200.png', dpi=300,bbox_inches='tight')
         plt.figure()
 
-        plt.hist(w3, bins=n)  # bin it into n = N/10 bins
+        plt.hist(w3, bins=n, normed=False)  # bin it into n = N/10 bins
         plt.xlabel('Value')
         plt.ylabel('Occurences')
         plt.savefig('report_images/posteriorW251.png', dpi=300,bbox_inches='tight')

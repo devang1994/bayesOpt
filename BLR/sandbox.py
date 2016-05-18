@@ -5,7 +5,7 @@ import theano
 from math import sqrt
 from sklearn import gaussian_process
 
-theano.config.device = 'gpu'
+# theano.config.device = 'gpu'
 
 
 import GPy
@@ -156,16 +156,33 @@ def funcP1(func, x):
     return func(x) + 1
 
 
+def abcd(x):
+    print locals().keys()
+    print type(locals())
+    print locals()['x']
+
+
+import matplotlib.pyplot as plt
 
 if __name__== '__main__':
     # play_gpy()
 
+    y = range(5)
+    x = y
 
-    func = sqr
+    stds = [1, 2, 2, 1, 1]
+    plt.figure(1)
+    plt.errorbar(x, y, yerr=stds, fmt="o-")
+    # plt.show()
 
-    print funcP1(func, 2)
+    abcd(123)
 
-    print theano.config.device
+    #
+    # func = sqr
+    #
+    # print funcP1(func, 2)
+    #
+    # print theano.config.device
 
     # X = T.fmatrix(name='X')
     #

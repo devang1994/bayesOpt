@@ -227,7 +227,7 @@ def combinedGibbsHMC_BayesNN(n_samples, hWidths, X_train, y_train, scales, shape
 # TODONE when doing Gibbs which sample to initialize next HMC from
 
 def sampler_on_BayesNN(burnin, n_samples, precisions, vy, hWidths, X_train, y_train, init_theta=None,
-                       target_acceptance_rate=0.9,stepsize=0.001,n_steps=50):
+                       target_acceptance_rate=0.9, stepsize=0.001, n_steps=50, seed=12345):
     """
 
     Test dataset is just linspace(-1,1,1000)
@@ -288,7 +288,7 @@ def sampler_on_BayesNN(burnin, n_samples, precisions, vy, hWidths, X_train, y_tr
     sampler = HMC_sampler.new_from_shared_positions(position, NN_energy,
                                                     initial_stepsize=stepsize, stepsize_max=0.5,
                                                     target_acceptance_rate=target_acceptance_rate, stepsize_min=0.00001,
-                                                    n_steps=n_steps)
+                                                    n_steps=n_steps, seed=seed)
 
     # Start with a burn-in process
     # print 'about to sample'
@@ -497,7 +497,7 @@ def analyse_samples(samples, X_train, y_train, X_test, y_test, hWidths, burnin=0
 
     if (display):
         if not mult:
-            plt.figure()
+            plt.figure(figsize=(10, 6))
         sample_plot(X_train, y_train, X_test, y_test, test_pred, test_sd)
         if(title!=None):
             plt.title(title)
@@ -513,13 +513,13 @@ def sample_plot(X_train, y_train, X_test, y_test, y_pred_test, y_sd_test):
     plt.plot(X_test, y_pred_test + 2 * y_sd_test, label='Credible', color='blue', alpha=0.7)
     plt.plot(X_test, y_pred_test - 2 * y_sd_test, label='Interval', color='blue',alpha=0.7)
     plt.plot(X_test, y_pred_test, label='Prediction', color='green', alpha=0.8)
-    plt.plot(X_test, y_test, linewidth=2, color='black', label='Objective')
-    plt.plot(X_train, y_train, 'ro', label='Data')
+    plt.plot(X_test, y_test, linewidth=2, color='black', label='True function')
+    plt.plot(X_train, y_train, 'ro', label='Training data')
     plt.axis([-1, 1, -4, 4])
     # plt.plot(X_train,y_pred)
     plt.xlabel('x')
     plt.ylabel('y')
-    plt.legend(loc='best',fontsize='small')
+    plt.legend(loc='best', fontsize='medium')
     # plt.savefig('report_images/BNN_simple_fit.eps')
     plt.savefig('report_images/BNN_simple_fit.png',dpi=300,bbox_inches='tight')
 

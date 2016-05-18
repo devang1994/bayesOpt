@@ -17,17 +17,18 @@ import cPickle as pickle
 import bayesNNexplorePostfromIp
 import pylab
 import objectives
+import time
 np.random.seed(42)
 
 
-def produce_mu_and_sd(n_samples, hWidths, xtrain, ytrain, xtest, ytest, precisions, vy, burnin=0):
+def produce_mu_and_sd(n_samples, hWidths, xtrain, ytrain, xtest, ytest, precisions, vy, burnin=0, seed=12345):
     train_err, test_err, samples, train_op_samples = sampler_on_BayesNN(burnin=0, n_samples=n_samples,
                                                                         precisions=precisions,
                                                                         vy=vy,
                                                                         X_train=xtrain, y_train=ytrain,
                                                                         hWidths=hWidths,
                                                                         stepsize=0.001,
-                                                                        n_steps=30)
+                                                                        n_steps=30, seed=seed)
     # print 'sampling worked'
 
     ntrain = xtrain.shape[0]
@@ -37,33 +38,50 @@ def produce_mu_and_sd(n_samples, hWidths, xtrain, ytrain, xtest, ytest, precisio
     return test_pred, test_sd
 
 
-def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=2, k=0.2, num_it=20, show_evo=False):
+def bayes_opt(func, xr, hWidths, precisions, vy, numDim, actual_min=0.0, initial_random=2, k=0.2, num_it=20,
+              show_evo=False, seed=12345):
     '''function to do bayesOpt on and number of initial random evals
     noise is artificially added to objective function calls when training
     '''
+
 
     print 'init_rand {}, k {}, num_it {}, func {}'.format(initial_random, k, num_it, func.func_name)
 
     noise_var = 0.01
     ntest = 500
     ntrain = initial_random  # number of initial random function evals
-    x1 = np.random.uniform(low=xr[0], high=xr[1], size=(ntrain, 1))
-    x2 = np.random.uniform(low=xr[2], high=xr[3], size=(ntrain, 1))
-    xtrain = np.hstack((x1, x2))  # shape (ntrain,2)
+    if (numDim == 2):
+        x1 = np.random.uniform(low=xr[0], high=xr[1], size=(ntrain, 1))
+        x2 = np.random.uniform(low=xr[2], high=xr[3], size=(ntrain, 1))
+        xtrain = np.hstack((x1, x2))  # shape (ntrain,2)
+    elif (numDim == 1):
+        xtrain = np.random.uniform(low=xr[0], high=xr[1], size=(ntrain, 1))
+    else:
+        print 'Wrong number of dimensions, not yet implemented'
+        return
+
     input_size = xtrain.shape[1]
     # xtrain = np.random.uniform(low=xr[0], high=xr[1], size=(ntrain, 1))
     # print xtrain.shape
     ytrain = func(xtrain) + np.random.randn(ntrain, 1) * sqrt(noise_var)
     # print ytrain.shape
     # print ytrain
+    if (numDim == 2):
+        x1 = np.linspace(xr[0], xr[1], ntest)
+        x1 = x1.reshape(ntest, 1)
 
-    x1 = np.linspace(xr[0], xr[1], ntest)
-    x1 = x1.reshape(ntest, 1)
+        x2 = np.linspace(xr[2], xr[3], ntest)
+        x2 = x2.reshape(ntest, 1)
 
-    x2 = np.linspace(xr[2], xr[3], ntest)
-    x2 = x2.reshape(ntest, 1)
+        xtest = np.hstack((x1, x2))
+    elif (numDim == 1):
+        xtest = np.linspace(xr[0], xr[1], ntest)
+        xtest = xtest.reshape(ntest, 1)
 
-    xtest = np.hstack((x1, x2))
+    else:
+        print 'Wrong number of dimensions, not yet implemented'
+        return
+
 
 
     ytest = func(xtest)
@@ -79,13 +97,14 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
 
     print 'original min {}'.format(cur_miny)
 
-    best_vals = [cur_miny]
+    best_vals = []
+    best_vals.extend((np.ones(initial_random)) * cur_miny)
 
     for i in range(num_it):
         print 'it:{}'.format(i)
 
         mu, sd = produce_mu_and_sd(n_samples=1000, hWidths=hWidths, xtrain=xtrain, ytrain=ytrain,
-                                   precisions=precisions, vy=vy, burnin=100, xtest=xtest, ytest=ytest)
+                                   precisions=precisions, vy=vy, burnin=100, xtest=xtest, ytest=ytest, seed=seed)
 
         alpha = acquisition_UCB(mu, sd, k=k)
 
@@ -109,7 +128,7 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
         best_vals.append(cur_miny)
         s = sd  # standard deviations
 
-        if (i % 2 == 0 and show_evo):
+        if (i % 4 == 0 and show_evo):
             # plt.figure()
             f, axarr = plt.subplots(2, sharex=True)
 
@@ -132,7 +151,7 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
 
     plt.figure()
     plt.plot(best_vals, '-o')
-    plt.xlabel('Num Iterations')
+    plt.xlabel('Function Evalutation')
     plt.ylabel('Best Value')
     plt.title('{}'.format(func.func_name))
     pylab.grid(True)
@@ -141,37 +160,52 @@ def bayes_opt(func, xr, hWidths, precisions, vy, actual_min=0.0, initial_random=
     best_vals = np.asarray(best_vals)
     plt.plot(np.abs(best_vals - actual_min), '-o')
     plt.ylabel('Optimality Gap')
-    plt.xlabel('Num Iterations')
+    plt.xlabel('Function Evalutation')
     plt.title('{}'.format(func.func_name))
     pylab.grid(True)
-    plt.show()
     return best_vals
 
 
 if __name__ == '__main__':
     # func = objectives.objectiveGramacyLee
     # xr = [0.5, 2.5]
+    # numDim = 1
 
     # func=objectives.objectiveForrester
     # xr=[0,1]
     # actual_min=-6.02074
+    # numDim = 1
 
     # func = objectives.brannin_hoo
     # xr = [-5, 10, 0, 15]  # generalized to multiD (2d)
     # actual_min = 0.397887
+    # numDim = 2
 
     # func = objectives.rosenbrock_2D
     # xr = [-2, 2, -2, 2]  # generalized to multiD (2d)
     # actual_min = 0
+    # numDim = 2
+
+    # func = objectives.modified_rescaled_brannin_hoo
+    # xr = [0, 1, 0, 1]  # generalized to multiD (2d)
+    # actual_min = -0.5214
 
 
-    func = objectives.modified_rescaled_brannin_hoo
-    xr = [0, 1, 0, 1]  # generalized to multiD (2d)
-    actual_min = -0.5214
+    func = objectives.objectiveSinCos
+    xr = [0, 1]  # generalized to multiD (2d)
+    actual_min = -1.96729
+    numDim = 1
+    init_random = 2
+    k = 10
 
-
-
+    numDim = len(xr) / 2
+    t0 = time.time()
 
     # print 'lower minstepsize brannin with 30, evo, k=10 '
-    bayes_opt(func, xr, initial_random=5, num_it=8, k=10, hWidths=[50, 50, 50], precisions=[1, 1, 1, 1], vy=100,
-              show_evo=False, actual_min=actual_min)
+    bVals = bayes_opt(func, xr, initial_random=init_random, num_it=5, k=k, hWidths=[50, 50, 50],
+                      precisions=[1, 1, 1, 1], vy=100,
+                      show_evo=True, actual_min=actual_min, numDim=numDim, seed=12345)
+
+    t1 = time.time()
+    print "execution took {} s".format(t0 - t1)
+    plt.show()
