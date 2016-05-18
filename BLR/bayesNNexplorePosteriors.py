@@ -98,7 +98,7 @@ def mixing(sf, vy, show_fit=False, show_post=False):
     # plt.title('weight prec {}, noise prec {}'.format(sf, vy))
     plt.legend()
 
-    plt.xlabel('Num Iterations')
+    plt.xlabel('Sample number')
     plt.ylabel('Value')
     plt.savefig('report_images/trace.png',dpi=300)
 
@@ -125,7 +125,7 @@ def mixing(sf, vy, show_fit=False, show_post=False):
         w3 = samples[:, 251]
 
         N = samples.shape[0]
-        n = N / 20
+        n = N / 10
         plt.figure()
 
         plt.hist(w1, bins=n)  # bin it into n = N/10 bins
