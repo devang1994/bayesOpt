@@ -46,6 +46,7 @@ def bayes_opt(func, xr, hWidths, precisions, vy, numDim, actual_min=0.0, initial
 
 
     print 'init_rand {}, k {}, num_it {}, func {}'.format(initial_random, k, num_it, func.func_name)
+    np.random.seed(seed)
 
     noise_var = 0.01
     ntest = 500
@@ -151,7 +152,7 @@ def bayes_opt(func, xr, hWidths, precisions, vy, numDim, actual_min=0.0, initial
 
     plt.figure()
     plt.plot(best_vals, '-o')
-    plt.xlabel('Function Evalutation')
+    plt.xlabel('Function Evaluation')
     plt.ylabel('Best Value')
     plt.title('{}'.format(func.func_name))
     pylab.grid(True)
@@ -160,7 +161,7 @@ def bayes_opt(func, xr, hWidths, precisions, vy, numDim, actual_min=0.0, initial
     best_vals = np.asarray(best_vals)
     plt.plot(np.abs(best_vals - actual_min), '-o')
     plt.ylabel('Optimality Gap')
-    plt.xlabel('Function Evalutation')
+    plt.xlabel('Function Evaluation')
     plt.title('{}'.format(func.func_name))
     pylab.grid(True)
     return best_vals
@@ -175,6 +176,12 @@ if __name__ == '__main__':
     # xr=[0,1]
     # actual_min=-6.02074
     # numDim = 1
+    # init_random = 2
+    # k = 10
+    # # num_it=18
+    # num_it=18
+    # numDim = len(xr) / 2
+
 
     # func = objectives.brannin_hoo
     # xr = [-5, 10, 0, 15]  # generalized to multiD (2d)
@@ -185,27 +192,59 @@ if __name__ == '__main__':
     # xr = [-2, 2, -2, 2]  # generalized to multiD (2d)
     # actual_min = 0
     # numDim = 2
+    # init_random = 5
+    # k = 10
+    # num_it = 35
+    # numDim = len(xr) / 2
+
+    # func = objectives.sixhumpcamel
+    # xr = [-2, 2, -2, 2]  # generalized to multiD (2d)
+    # actual_min = -1.0316
+    # init_random = 5
+    # k = 10
+    # num_it = 35
+    # numDim = len(xr) / 2
+
+
+    func = objectives.mccormick
+    xr = [-1.5, 4, -3, 4]  # generalized to multiD (2d)
+    actual_min = -1.9133
+    init_random = 5
+    k = 10
+    num_it = 35
+    numDim = len(xr) / 2
 
     # func = objectives.modified_rescaled_brannin_hoo
     # xr = [0, 1, 0, 1]  # generalized to multiD (2d)
     # actual_min = -0.5214
 
 
-    func = objectives.objectiveSinCos
-    xr = [0, 1]  # generalized to multiD (2d)
-    actual_min = -1.96729
-    numDim = 1
-    init_random = 2
-    k = 10
-
-    numDim = len(xr) / 2
-    t0 = time.time()
+    # func = objectives.objectiveSinCos
+    # xr = [0, 1]  # generalized to multiD (2d)
+    # actual_min = -1.96729
+    # init_random = 2
+    # k = 10
+    # # num_it=18
+    # num_it=18
+    # numDim = len(xr) / 2
 
     # print 'lower minstepsize brannin with 30, evo, k=10 '
-    bVals = bayes_opt(func, xr, initial_random=init_random, num_it=5, k=k, hWidths=[50, 50, 50],
-                      precisions=[1, 1, 1, 1], vy=100,
-                      show_evo=True, actual_min=actual_min, numDim=numDim, seed=12345)
+    for seed in range(1000, 1020):
+        print 'SEED {}'.format(seed)
+        t0 = time.time()
 
-    t1 = time.time()
-    print "execution took {} s".format(t0 - t1)
-    plt.show()
+        bVals = bayes_opt(func, xr, initial_random=init_random, num_it=num_it, k=k, hWidths=[50, 50, 50],
+                          precisions=[1, 1, 1, 1], vy=100,
+                          show_evo=True, actual_min=actual_min, numDim=numDim, seed=seed)
+
+        t1 = time.time()
+        time_taken = t1 - t0
+
+        toDump = {'bVals': bVals, 't': time_taken, 'seed': seed, 'k': k, 'init_random': init_random}
+        nameOfFile = 'pickles/seed{}BayesOptLogs{}.pkl'.format(seed, func.func_name)
+
+        pickle.dump(toDump, open(nameOfFile, "wb"))
+        print "execution took {} s".format(t1 - t0)
+
+
+        # plt.show()

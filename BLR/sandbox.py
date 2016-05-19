@@ -163,20 +163,32 @@ def abcd(x):
 
 
 import matplotlib.pyplot as plt
-
+import GPyOpt
+import objectives
 if __name__== '__main__':
     # play_gpy()
 
-    y = range(5)
-    x = y
+    # y = range(5)
+    # x = y
+    #
+    # stds = [1, 2, 2, 1, 1]
+    # plt.figure(1)
+    # plt.errorbar(x, y, yerr=stds, fmt="o-")
+    # # plt.show()
+    #
+    # abcd(123)
+    bounds = [(-2, 2), (-2, 2)]
+    myProblem = GPyOpt.methods.BayesianOptimization(objectives.rosenbrock_2D, bounds)
 
-    stds = [1, 2, 2, 1, 1]
-    plt.figure(1)
-    plt.errorbar(x, y, yerr=stds, fmt="o-")
-    # plt.show()
+    max_iter = 15
 
-    abcd(123)
+    myProblem.run_optimization(max_iter)
 
+    myProblem.x_opt
+
+    myProblem.fx_opt
+
+    myProblem.plot_convergence()
     #
     # func = sqr
     #
