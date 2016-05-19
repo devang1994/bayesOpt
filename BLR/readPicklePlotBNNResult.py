@@ -21,6 +21,7 @@ import time
 def readPickle():
     func_name = 'objectiveForrester'
     func_name_GP = 'GpyOPTforrester'
+    totalFevals = 20
 
     actual_min = -1.96729
     allBvals = np.asarray([])
@@ -28,8 +29,9 @@ def readPickle():
 
     allBvalsGP = np.asarray([])
     timesGP = []
-    for seed in range(1000, 1020):
 
+    for seed in range(1000, 1020):
+        print seed
         # seed=1000
         # toDump = {'bVals': bVals, 't': time_taken, 'seed': seed, 'k': k, 'init_random': init_random}
         nameOfFile = 'pickles/seed{}BayesOptLogs{}.pkl'.format(seed, func_name)
@@ -49,20 +51,28 @@ def readPickle():
 
         times.append(time_taken)
 
-    nameOfFileGP = 'pickles/seed{}BayesOptLogs{}.pkl'.format(seed, func_name_GP)
+        nameOfFileGP = 'pickles/seed{}BayesOptLogs{}.pkl'.format(seed, func_name_GP)
 
-    dumpFile = pickle.load(open(nameOfFile, "rb"))
+        dumpFile = pickle.load(open(nameOfFileGP, "rb"))
 
-    bVals = dumpFile['bVals']
-    time_taken = dumpFile['t']
+        bVals = dumpFile['bVals']
+        time_taken = dumpFile['t']
 
-    bVals = (np.asarray(bVals)).reshape(1, -1)
-    # print bVals.shape
-    if (allBvalsGP.shape[0] == 0):
-        allBvalsGP = np.vstack((bVals))
-        # print 'allb shape{}'.format(allBvals.shape)
-    else:
-        allBvalsGP = np.vstack((allBvalsGP, bVals))
+        bVals = (np.asarray(bVals)).reshape(1, -1)
+
+        print bVals.shape
+        if (bVals.shape[1] != totalFevals):
+            # for when the algorithm converges and does not do full iterations
+            curbest = bVals[0, -1]
+            numNeeded = totalFevals - bVals.shape[1]
+            temp = ((np.ones(numNeeded)).reshape(1, -1)) * curbest
+            # bVals
+
+        if (allBvalsGP.shape[0] == 0):
+            allBvalsGP = np.vstack((bVals))
+            # print 'allb shape{}'.format(allBvals.shape)
+        else:
+            allBvalsGP = np.vstack((allBvalsGP, bVals))
 
     timesGP.append(time_taken)
 
@@ -82,8 +92,9 @@ def readPickle():
     plt.figure()
 
     x = range(1, (mu.shape[0]) + 1)
+    xGP = np.arange(1, (mu.shape[0]) + 1) + 0.1
     plt.errorbar(x, mu, yerr=sd, fmt="o-", label='BNN')
-    plt.errorbar(x, muGP, yerr=sdGP, fmt="o-", label='GP')
+    plt.errorbar(xGP, muGP, yerr=sdGP, fmt="o-", label='GP')
 
     pylab.grid(True)
     plt.xlabel('Function Evaluation')

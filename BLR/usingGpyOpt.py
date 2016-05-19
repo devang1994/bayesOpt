@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     func_name = 'GpyOPTforrester'
 
-    for seed in range(1000, 1020):
+    for seed in range(1000, 1050):
         print 'SEED {}'.format(seed)
         t0 = time.time()
 
