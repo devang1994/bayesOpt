@@ -98,13 +98,30 @@ def readPickle():
 
     print allBvals.shape
 
-    mu = np.mean(allBvals, axis=0)
+    # mu = np.mean(allBvals, axis=0)
+    #
+    # sd =0.5* np.std(allBvals, axis=0)
+    #
+    # muGP = np.mean(allBvalsGP, axis=0)
+    #
+    # sdGP = 0.5*np.std(allBvalsGP, axis=0)
 
-    sd = np.std(allBvals, axis=0)
+    mu=np.median(allBvals, axis=0)
 
-    muGP = np.mean(allBvalsGP, axis=0)
 
-    sdGP = np.std(allBvalsGP, axis=0)
+    lower=mu-(np.percentile(allBvals,25, axis=0))
+    upper=np.percentile(allBvals,75, axis=0)-mu
+    sd=[lower, upper]
+    muGP = np.median(allBvalsGP, axis=0)
+
+    lowerGP =muGP- np.percentile(allBvalsGP, 25, axis=0)
+    upperGP = np.percentile(allBvalsGP, 75, axis=0)-muGP
+    sdGP=[lowerGP,upperGP]
+
+
+
+
+
 
     print 'times mean {}'.format(np.mean(times))
     print 'times sd {}'.format(np.std(times))
@@ -112,7 +129,7 @@ def readPickle():
     plt.figure()
 
     x = range(1, (mu.shape[0]) + 1)
-    xGP = np.arange(1, (mu.shape[0]) + 1) + 0.1
+    xGP = np.arange(1, (mu.shape[0]) + 1) + 0.15
     plt.errorbar(x, mu, yerr=sd, fmt="o-", label='BNN')
     plt.errorbar(xGP, muGP, yerr=sdGP, fmt="o-", label='GP')
 
@@ -120,8 +137,45 @@ def readPickle():
     plt.xlabel('Function Evaluation')
     plt.ylabel('Best Value')
     plt.legend(loc='best')
-    plt.savefig('report_images/{}BestVals.png'.format(func_name), dpi=300, bbox_inches='tight')
-    plt.show()
+    plt.savefig('report_images/{}BestValsBoxLike.png'.format(func_name), dpi=300, bbox_inches='tight')
+
+
+    plt.figure()
+    bp=plt.boxplot(allBvals,0,'',patch_artist=True)
+
+
+    # bp1=plt.boxplot(allBvalsGP,0,'',patch_artist=True)
+
+
+    ## add patch_artist=True option to ax.boxplot()
+    ## to get fill color
+    # bp = ax.boxplot(data_to_plot, patch_artist=True)
+
+    ## change outline color, fill color and linewidth of the boxes
+    # for box in bp['boxes']:
+    #     # change outline color
+    #     box.set(color='#7570b3', linewidth=2,alpha=0.0)
+    #     # change fill color
+    #     box.set(facecolor='#1b9e77')
+    #
+    # ## change color and linewidth of the whiskers
+    # for whisker in bp['whiskers']:
+    #     whisker.set(color='#7570b3', linewidth=2)
+    #
+    # ## change color and linewidth of the caps
+    # for cap in bp['caps']:
+    #     cap.set(color='#7570b3', linewidth=2)
+    #
+    # ## change color and linewidth of the medians
+    # for median in bp['medians']:
+    #     median.set(color='#b2df8a', linewidth=2)
+    #
+    # ## change the style of fliers and their fill
+    # for flier in bp['fliers']:
+    #     flier.set(marker='o', color='#e7298a', alpha=0.0)
+
+    pylab.grid(True)
+    # plt.show()
 
 
 if __name__ == '__main__':

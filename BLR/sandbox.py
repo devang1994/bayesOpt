@@ -177,18 +177,18 @@ if __name__== '__main__':
     # # plt.show()
     #
     # abcd(123)
-    bounds = [(-2, 2), (-2, 2)]
-    myProblem = GPyOpt.methods.BayesianOptimization(objectives.rosenbrock_2D, bounds)
-
-    max_iter = 15
-
-    myProblem.run_optimization(max_iter)
-
-    myProblem.x_opt
-
-    myProblem.fx_opt
-
-    myProblem.plot_convergence()
+    # bounds = [(-2, 2), (-2, 2)]
+    # myProblem = GPyOpt.methods.BayesianOptimization(objectives.rosenbrock_2D, bounds)
+    #
+    # max_iter = 15
+    #
+    # myProblem.run_optimization(max_iter)
+    #
+    # myProblem.x_opt
+    #
+    # myProblem.fx_opt
+    #
+    # myProblem.plot_convergence()
     #
     # func = sqr
     #
@@ -211,3 +211,11 @@ if __name__== '__main__':
     # strip_pickler.dump(w_h1)
     # f.close()
 
+    x1 = np.random.normal(0, 1, 50)
+    x2 = np.random.normal(1, 1, 50)
+    x3 = np.random.normal(2, 1, 50)
+    print x1.shape
+    data=[x1, x2, x3]
+    print type(data)
+    plt.boxplot(data)
+    plt.show()

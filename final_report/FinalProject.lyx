@@ -2532,11 +2532,11 @@ status open
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename images/objectiveForresterBestVals.png
+	filename images/objectiveForresterBestValsBoxLike.png
 	lyxscale 20
 	width 50col%
 
@@ -2578,11 +2578,11 @@ key "forrester2008engineering"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename images/rosenbrock_2DBestVals.png
+	filename images/rosenbrock_2DBestValsBoxLike.png
 	lyxscale 20
 	width 50col%
 
@@ -2619,11 +2619,11 @@ key "picheny2013benchmark"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename images/mccormickBestVals.png
+	filename images/mccormickBestValsBoxLike.png
 	lyxscale 20
 	width 50col%
 
@@ -2661,11 +2661,11 @@ key "adorio2005mvf"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename images/sixhumpcamelBestVals.png
+	filename images/sixhumpcamelBestValsBoxLike.png
 	lyxscale 20
 	width 50col%
 
@@ -2708,6 +2708,16 @@ Results of Bayesian Optimisation on some standard test functions.
  Error bars represent the standard deviation of 50 runs.
  In each sub-figure we are minimizing an objective function.
  The vertical axis represents the running minimum function value.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Change
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
