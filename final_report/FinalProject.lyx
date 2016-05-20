@@ -1,5 +1,5 @@
-#LyX 2.0 created this file. For more info see http://www.lyx.org/
-\lyxformat 413
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
 \begin_document
 \begin_header
 \textclass IIBproject
@@ -15,13 +15,13 @@ eqs-within-sections
 \font_roman default
 \font_sans default
 \font_typewriter default
+\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
-
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -32,15 +32,24 @@ eqs-within-sections
 \use_hyperref false
 \papersize default
 \use_geometry true
-\use_amsmath 1
-\use_esint 1
-\use_mhchem 1
-\use_mathdots 0
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
+\cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
+\justification true
 \use_refstyle 0
 \index Index
 \shortcut idx
@@ -1060,7 +1069,7 @@ The length in fictitious time of the trajectories is an adjustable parameter.
 \begin_inset Formula $\boldsymbol{q}$
 \end_inset
 
- to avoid the random walk like effects that would result from randomizing
+ to avoid the random walk like effects that would result from randomising
  the momentum after every short trajectory.
  
 \end_layout
@@ -1164,9 +1173,9 @@ discretization, a single step finds the approximations to the position and
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align}
-p_{i}(\tau+\frac{\epsilon}{2}) & \;=\; p_{i}(\tau)\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau))\label{eq:leapfrog}\\
-q_{i}(\tau+\epsilon) & \;=\; q_{i}(\tau)\;+\;\epsilon\frac{p_{i}(\tau+\frac{\epsilon}{2})}{mi}\\
-p_{i}(\tau+\epsilon) & \;=\; p_{i}(\tau+\frac{\epsilon}{2})\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau+\epsilon))\label{eq:leapfrog end}
+p_{i}(\tau+\frac{\epsilon}{2}) & \;=\;p_{i}(\tau)\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau))\label{eq:leapfrog}\\
+q_{i}(\tau+\epsilon) & \;=\;q_{i}(\tau)\;+\;\epsilon\frac{p_{i}(\tau+\frac{\epsilon}{2})}{mi}\\
+p_{i}(\tau+\epsilon) & \;=\;p_{i}(\tau+\frac{\epsilon}{2})\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau+\epsilon))\label{eq:leapfrog end}
 \end{align}
 
 \end_inset
@@ -1534,7 +1543,7 @@ A neural network can be parametrized by its weights and biases, collectively
  We aim to model the conditional distribution of target values given the
  input values.
  The required conditional probability density is given by 
-\begin_inset Formula $P(y\,|\, x,\theta,\gamma).$
+\begin_inset Formula $P(y\,|\,x,\theta,\gamma).$
 \end_inset
 
 
@@ -1591,7 +1600,7 @@ using the information in the training set.
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\ \propto\ P(\gamma)P(\theta|\gamma)\prod_{c=1}^{n}P(y^{(c)}\,|\, x^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})\label{eq:probability NN}
+P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\ \propto\ P(\gamma)P(\theta|\gamma)\prod_{c=1}^{n}P(y^{(c)}\,|\,x^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})\label{eq:probability NN}
 \end{equation}
 
 \end_inset
@@ -1604,12 +1613,12 @@ Predictions on new data-points can then be made by integration with respect
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-P(y^{(n+1)}|x^{(n+1)},\boldsymbol{D})\;=\;\int P(y^{(n+1)}|x^{(n+1)},\boldsymbol{\theta},\boldsymbol{\gamma})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}
+P(y^{(n+1)}|x^{(n+1)},\boldsymbol{D})\;=\;\int P(y^{(n+1)}|x^{(n+1)},\boldsymbol{\theta},\boldsymbol{\gamma})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\mathbf{\theta}\,d\mathbf{\gamma}
 \end{equation}
 
 \end_inset
 
-For a regression model, the prediction that minizes the expected squared-error
+For a regression model, the prediction that minimizes the expected squared-error
  loss is the mean of the predictive distribution.
  It is given by:
 \end_layout
@@ -1617,7 +1626,7 @@ For a regression model, the prediction that minizes the expected squared-error
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}\label{eq:prediction}
+\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\mathbf{\theta}\,d\mathbf{\gamma}\label{eq:prediction}
 \end{equation}
 
 \end_inset
@@ -1676,7 +1685,7 @@ reference "eq:probability NN"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-E(\boldsymbol{\theta})=F(\boldsymbol{\gamma})-\log P(\mathbf{\theta}|\mathbf{\gamma})-\sum_{c=1}^{n}P(y^{(c)}\,|\, x^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})
+E(\boldsymbol{\theta})=F(\boldsymbol{\gamma})-\log P(\mathbf{\theta}|\mathbf{\gamma})-\sum_{c=1}^{n}P(y^{(c)}\,|\,x^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})
 \end{equation}
 
 \end_inset
@@ -1832,8 +1841,8 @@ reference "eq:sigmaLCB"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray}
-\mu(x) & = & \int f(x,\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}\label{eq:muLCB-1}\\
-\sigma(x) & = & \sqrt{\int(f(x,\boldsymbol{\theta})-\mu(x))^{2}P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}}\label{eq:sigmaLCB}
+\mu(x) & = & \int f(x,\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\mathbf{\theta}\,d\mathbf{\gamma}\label{eq:muLCB-1}\\
+\sigma(x) & = & \sqrt{\int(f(x,\boldsymbol{\theta})-\mu(x))^{2}P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\mathbf{\theta}\,d\mathbf{\gamma}}\label{eq:sigmaLCB}
 \end{eqnarray}
 
 \end_inset
@@ -1981,7 +1990,7 @@ comment on how prediction relates to samples
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset space \hfill{}
@@ -2029,7 +2038,7 @@ height_special "totalheight"
 status open
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Trace plots of three randomly chosen parameters of the neural network 
@@ -2068,7 +2077,7 @@ height_special "totalheight"
 status open
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 The histogram of the parameter 2501 of the neural network.
@@ -2132,7 +2141,7 @@ centering
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 The fit of neural networks from four different samples from the posterior
@@ -2164,7 +2173,7 @@ name "fig:samples fit"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -2188,7 +2197,7 @@ centering
 \end_inset
 
 
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 The overall fit of the neural network, averaged over a large number of samples
@@ -2235,7 +2244,8 @@ Bayesian Optimisation results
 \end_layout
 
 \begin_layout Standard
-The Bayesian neural network model was then used to perform Bayesian optimisation.
+The Bayesian neural network(BNN) model was then used to perform Bayesian
+ optimisation.
  The LCB
 \begin_inset Note Note
 status open
@@ -2268,7 +2278,7 @@ key "forrester2008engineering"
  The function is given by:
 \begin_inset Formula 
 \begin{equation}
-f(x)=(6x-2)^{2}\sin(12x-4)\text{\;\;\;\;\;\;\; for}\ x\in[-1,1]\label{eq:forrester}
+f(x)=(6x-2)^{2}\sin(12x-4)\text{\;\;\;\;\;\;\; for}\ x\in[0,1]\label{eq:forrester}
 \end{equation}
 
 \end_inset
@@ -2327,7 +2337,7 @@ reference "fig:Number-of-TP14"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -2344,7 +2354,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Number of function evaluations = 4
@@ -2383,7 +2393,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Number of function evaluations = 5
@@ -2421,7 +2431,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Number of function evaluations = 8
@@ -2460,7 +2470,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Number of function evaluations = 14
@@ -2484,7 +2494,7 @@ name "fig:Number-of-TP14"
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Bayesian Optimisation on Forrester Function.
@@ -2510,23 +2520,13 @@ name "fig:Bayesian-Opt-forrester-fit"
 \end_inset
 
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Explain better
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -2546,7 +2546,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Forrester Function
@@ -2592,7 +2592,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Rosenbrock(2D) Function
@@ -2633,7 +2633,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 McCormick Function
@@ -2675,7 +2675,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Six Hump Camel Function
@@ -2699,20 +2699,169 @@ key "molga2005test"
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Results of Bayesian Optimisation on some standard test functions.
  Evaluations using a Bayesian network(blue) and a Gaussian Process(green)
  are shown.
- Error bars represent the standard deviation of 50 runs.
  In each sub-figure we are minimizing an objective function.
  The vertical axis represents the running minimum function value.
+ The experiments were repeated 50 times to collect reliable statistics.
+ The circles represent the median of the runs while the top and bottom lines
+ represent the 
+\begin_inset Formula $75^{th}$
+\end_inset
+
+ and 
+\begin_inset Formula $25^{th}$
+\end_inset
+
+ percentile respectively.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Results-BayesOpt-standard"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Following this we evaluate the performance of Bayesian Optimisation on a
+ few standard functions, the results are shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Results-BayesOpt-standard"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Forrester function : 
+\series default
+This function has been described by Forrester et.al
+\begin_inset CommandInset citation
+LatexCommand cite
+key "forrester2008engineering"
+
+\end_inset
+
+.
+ Its global minima is 
+\begin_inset Formula $f(x^{*})=-6.02074$
+\end_inset
+
+ at 
+\begin_inset Formula $x^{*}=0.7572$
+\end_inset
+
+.
+ It is defined on the interval 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+, and has one another local minima in this interval.
+ The Bayesian optimisation process was initialized with two function evaluations
+ at random points in the interval.
+ The BNN model shows competitive performance to a GP based model.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Rosenbrock (2D) function : 
+\series default
+The Rosenbrock function is a very popular function for evaluating the performanc
+e of optimisation algorithms
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dixon1978global"
+
+\end_inset
+
+ .
+ The function is unimodal, and the global minimum lies in a narrow, parabolic
+ valley.
+ However, even though this valley is easy to find, convergence to the minimum
+ is difficult
+\begin_inset CommandInset citation
+LatexCommand cite
+key "picheny2013benchmark"
+
+\end_inset
+
+.
+ We initialise the Bayesian optimisation process with 5 random function
+ evaluations.
+ Its global minima is 
+\begin_inset Formula $f(x1^{*},x2^{*})=0$
+\end_inset
+
+ at 
+\begin_inset Formula $x1^{*}=1\text{ and }x2^{*}=1$
+\end_inset
+
+, it is defined on the set 
+\begin_inset Formula $\{(x1,x2):-2.048≤x1≤2.048,−2.048≤x2≤2.048\}$
+\end_inset
+
+.
+ The BNN model finds the minima after roughly 7 iterations, the GP based
+ model does not always succeed in finding the the optimum point for this
+ function.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+McCormick function : 
+\series default
+The function is very smooth and unimodal and is evaluated on the rectangle
+ 
+\begin_inset Formula $\{(x1,x2):-1.5≤x1≤4.0,−3.0≤x2≤4.0\}$
+\end_inset
+
+.
+ Its global minima is 
+\begin_inset Formula $f(x1^{*},x2^{*})=-1.9133$
+\end_inset
+
+ at 
+\begin_inset Formula $x1^{*}=-0.54719\text{ and }x2^{*}=-1.54719$
+\end_inset
+
+.
+ We again start with 5 random function evaluations to initialize the Bayesian
+ optimisation process.
+ Despite better performance initially, the BNN based model converges at
+ a point slightly greater than the global minima, while the GP finds the
+ global minima.
+ However overall performance remains competitive.
+ 
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-Change
+Check something might be wrong with this function , we get something below
+ the actual minima with GpyOpt.
 \end_layout
 
 \end_inset
@@ -2720,21 +2869,28 @@ Change
 
 \end_layout
 
+\begin_layout Standard
+
+\series bold
+Six Hump Camel function : 
+\series default
+The function is highly multimodal having 6 local minima, out of which two
+ are also global minima.
+ The function is evaluated on the set 
+\begin_inset Formula $\{(x1,x2):-3≤x1≤3,−2≤x2≤2\}$
 \end_inset
 
-
-\end_layout
-
+.
+ The global minima are at 
+\begin_inset Formula $x1^{*}=-0.0898\text{ \& }x2^{*}=0.7126$
 \end_inset
 
+ and at 
+\begin_inset Formula $x1^{*}=0.0898\text{ \& }x2^{*}=-0.7126$
+\end_inset
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Put in actual minimum values
-\end_layout
-
+ , with 
+\begin_inset Formula $f(x1^{*},x2^{*})=-1.0316$
 \end_inset
 
 

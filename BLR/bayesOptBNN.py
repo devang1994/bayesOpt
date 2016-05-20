@@ -200,15 +200,15 @@ if __name__ == '__main__':
     # xr = [0.5, 2.5]
     # numDim = 1
 
-    func = objectives.objectiveForrester
-    xr = [0, 1]
-    actual_min = -6.02074
-    numDim = 1
-    init_random = 2
-    k = 10
-    # num_it=18
-    num_it = 18
-    numDim = len(xr) / 2
+    # func = objectives.objectiveForrester
+    # xr = [0, 1]
+    # actual_min = -6.02074
+    # numDim = 1
+    # init_random = 2
+    # k = 10
+    # # num_it=18
+    # num_it = 18
+    # numDim = len(xr) / 2
 
 
     # func = objectives.brannin_hoo
@@ -225,13 +225,13 @@ if __name__ == '__main__':
     # num_it = 35
     # numDim = len(xr) / 2
 
-    # func = objectives.sixhumpcamel
-    # xr = [-2, 2, -2, 2]  # generalized to multiD (2d)
-    # actual_min = -1.0316
-    # init_random = 5
-    # k = 10
-    # num_it = 35
-    # numDim = len(xr) / 2
+    func = objectives.sixhumpcamel
+    xr = [-2, 2, -2, 2]  # generalized to multiD (2d)
+    actual_min = -1.0316
+    init_random = 5
+    k = 20
+    num_it = 35
+    numDim = len(xr) / 2
 
 
     # func = objectives.mccormick
@@ -257,21 +257,21 @@ if __name__ == '__main__':
     # numDim = len(xr) / 2
 
     # print 'lower minstepsize brannin with 30, evo, k=10 '
-    for seed in range(1000, 1001):
+    for seed in range(1000, 1050):
         print 'SEED {}'.format(seed)
         t0 = time.time()
 
         bVals = bayes_opt(func, xr, initial_random=init_random, num_it=num_it, k=k, hWidths=[50, 50, 50],
                           precisions=[1, 1, 1, 1], vy=100,
-                          show_evo=True, actual_min=actual_min, numDim=numDim, seed=seed)
+                          show_evo=False, actual_min=actual_min, numDim=numDim, seed=seed)
 
         t1 = time.time()
         time_taken = t1 - t0
 
         toDump = {'bVals': bVals, 't': time_taken, 'seed': seed, 'k': k, 'init_random': init_random}
-        nameOfFile = 'pickles/seed{}BayesOptLogs{}.pkl'.format(seed, func.func_name)
+        nameOfFile = 'pickles/k{}seed{}BayesOptLogs{}.pkl'.format(k,seed, func.func_name)
 
-        # pickle.dump(toDump, open(nameOfFile, "wb"))
+        pickle.dump(toDump, open(nameOfFile, "wb"))
         print "execution took {} s".format(t1 - t0)
 
 

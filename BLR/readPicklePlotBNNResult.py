@@ -31,16 +31,16 @@ def readPickle():
 
     # seed1000BayesOptLogsGPyOPTmccormick
     # seed1045BayesOptLogsmccormick
-    # func_name = 'mccormick'
-    # func_name_GP = 'GPyOPTmccormick'
-    # totalFevals = 40
+    func_name = 'mccormick'
+    func_name_GP = 'GPyOPTmccormick'
+    totalFevals = 40
 
     # seed1000BayesOptLogsrosenbrock_2D
     # seed1000BayesOptLogsGPyOPTRosenbrock2D
     # seed1049BayesOptLogsGPyOPTrosenbrock_2D_noisy
-    func_name = 'rosenbrock_2D'
-    func_name_GP = 'GPyOPTrosenbrock_2D_noisy'
-    totalFevals = 40
+    # func_name = 'rosenbrock_2D'
+    # func_name_GP = 'GPyOPTrosenbrock_2D_noisy'
+    # totalFevals = 40
 
     # actual_min = -1.96729
     allBvals = np.asarray([])
@@ -108,7 +108,7 @@ def readPickle():
 
     mu=np.median(allBvals, axis=0)
 
-
+    print mu
     lower=mu-(np.percentile(allBvals,25, axis=0))
     upper=np.percentile(allBvals,75, axis=0)-mu
     sd=[lower, upper]
@@ -122,6 +122,7 @@ def readPickle():
 
 
 
+    print muGP
 
     print 'times mean {}'.format(np.mean(times))
     print 'times sd {}'.format(np.std(times))
@@ -131,13 +132,13 @@ def readPickle():
     x = range(1, (mu.shape[0]) + 1)
     xGP = np.arange(1, (mu.shape[0]) + 1) + 0.15
     plt.errorbar(x, mu, yerr=sd, fmt="o-", label='BNN')
-    plt.errorbar(xGP, muGP, yerr=sdGP, fmt="o-", label='GP')
+    # plt.errorbar(xGP, muGP, yerr=sdGP, fmt="o-", label='GP')
 
     pylab.grid(True)
     plt.xlabel('Function Evaluation')
     plt.ylabel('Best Value')
     plt.legend(loc='best')
-    plt.savefig('report_images/{}BestValsBoxLike.png'.format(func_name), dpi=300, bbox_inches='tight')
+    # plt.savefig('report_images/{}BestValsBoxLike.png'.format(func_name), dpi=300, bbox_inches='tight')
 
 
     plt.figure()
@@ -175,7 +176,7 @@ def readPickle():
     #     flier.set(marker='o', color='#e7298a', alpha=0.0)
 
     pylab.grid(True)
-    # plt.show()
+    plt.show()
 
 
 if __name__ == '__main__':
