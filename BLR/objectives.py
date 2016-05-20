@@ -67,6 +67,18 @@ def rosenbrock_2D(x, a=1, b=100):
     return t
 
 
+def rosenbrock_2D_noisy(x, a=1, b=100, sd=0.1):
+    ntrain = x.shape[0]
+    x1 = x[:, 0]
+    x2 = x[:, 1]
+
+    t = np.square(a - x1) + b * np.square(x2 - np.square(x1))
+    t = t.reshape(ntrain, 1)
+    noise = np.random.normal(0, sd, ntrain).reshape(ntrain, 1)
+    t = t + noise
+    return t
+
+
 def modified_rescaled_brannin_hoo(x, a=(1.0) / (51.95), b=5.1 / (4.0 * pi_sqr), c=5.0 / (pi), r=6.0, s=10.0,
                                   t=1.0 / (8.0 * pi), s1=44.81):
     """

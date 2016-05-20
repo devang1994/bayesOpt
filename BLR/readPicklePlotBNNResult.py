@@ -19,18 +19,37 @@ import time
 
 
 def readPickle():
-    func_name = 'objectiveForrester'
-    func_name_GP = 'GpyOPTforrester'
-    totalFevals = 20
+    # func_name = 'objectiveForrester'
+    # func_name_GP = 'GpyOPTforrester'
+    # totalFevals = 20
 
-    actual_min = -1.96729
+    # seed1000BayesOptLogsGPyOPTcamel
+    # seed1008BayesOptLogssixhumpcamel
+    # func_name = 'sixhumpcamel'
+    # func_name_GP = 'GPyOPTcamel'
+    # totalFevals = 40
+
+    # seed1000BayesOptLogsGPyOPTmccormick
+    # seed1045BayesOptLogsmccormick
+    # func_name = 'mccormick'
+    # func_name_GP = 'GPyOPTmccormick'
+    # totalFevals = 40
+
+    # seed1000BayesOptLogsrosenbrock_2D
+    # seed1000BayesOptLogsGPyOPTRosenbrock2D
+    # seed1049BayesOptLogsGPyOPTrosenbrock_2D_noisy
+    func_name = 'rosenbrock_2D'
+    func_name_GP = 'GPyOPTrosenbrock_2D_noisy'
+    totalFevals = 40
+
+    # actual_min = -1.96729
     allBvals = np.asarray([])
     times = []
 
     allBvalsGP = np.asarray([])
     timesGP = []
 
-    for seed in range(1000, 1020):
+    for seed in range(1000, 1050):
         print seed
         # seed=1000
         # toDump = {'bVals': bVals, 't': time_taken, 'seed': seed, 'k': k, 'init_random': init_random}
@@ -66,7 +85,8 @@ def readPickle():
             curbest = bVals[0, -1]
             numNeeded = totalFevals - bVals.shape[1]
             temp = ((np.ones(numNeeded)).reshape(1, -1)) * curbest
-            # bVals
+            bVals = np.hstack((bVals, temp))
+            print bVals
 
         if (allBvalsGP.shape[0] == 0):
             allBvalsGP = np.vstack((bVals))
@@ -100,6 +120,7 @@ def readPickle():
     plt.xlabel('Function Evaluation')
     plt.ylabel('Best Value')
     plt.legend(loc='best')
+    plt.savefig('report_images/{}BestVals.png'.format(func_name), dpi=300, bbox_inches='tight')
     plt.show()
 
 

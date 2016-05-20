@@ -1541,6 +1541,31 @@ A neural network can be parametrized by its weights and biases, collectively
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+add illustration of neural network from Neal pg17.
+ Prior just show 10 random NN's .
+ Then train using HMC then draw 10 randomNN's 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+tHEANO WAS used
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 The ultimate objective is to predict the target value for new test cases,
  
 \begin_inset Formula $y^{(n+1)},$
@@ -1695,7 +1720,7 @@ where
 \begin_layout Standard
 \begin_inset Formula 
 \[
-E(\boldsymbol\theta)\;=\;\tau_{p}\sum_{i=1}^{k}\frac{\theta_{i}^{2}}{2}+\tau\sum_{c=1}^{n}\frac{(y^{(c)}-f(x^{(c)},\theta))^{2}}{2}
+E(\boldsymbol{\theta})\;=\;\tau_{p}\sum_{i=1}^{k}\frac{\theta_{i}^{2}}{2}+\tau\sum_{c=1}^{n}\frac{(y^{(c)}-f(x^{(c)},\theta))^{2}}{2}
 \]
 
 \end_inset
@@ -2211,38 +2236,275 @@ Bayesian Optimisation results
 
 \begin_layout Standard
 The Bayesian neural network model was then used to perform Bayesian optimisation.
- 
-\end_layout
-
-\begin_layout Standard
-
-\end_layout
-
-\begin_layout Subsection
-Using a hybrid model
-\end_layout
-
-\begin_layout Standard
-A model where the last layer of hidden units are fed to the BLR to obtain
- 
-\end_layout
-
-\begin_layout Subsubsection
-Results 
-\end_layout
-
-\begin_layout Subsection
-Using a full Bayesian neural network
-\end_layout
-
-\begin_layout Standard
+ The LCB
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-add illustration of neural network from Neal pg17.
- Prior just show 10 random NN's .
- Then train using HMC then draw 10 randomNN's 
+elaborate
+\end_layout
+
+\end_inset
+
+ acquisition function was used.
+ To illustrate the process of Bayesian Optimisation, we show some intermediate
+ optimisation results on the one dimensional Forrester function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "forrester2008engineering"
+
+\end_inset
+
+.
+ Its global minima is 
+\begin_inset Formula $f(x^{*})\approx-6.02074$
+\end_inset
+
+ at 
+\begin_inset Formula $x^{*}\approx0.7572$
+\end_inset
+
+.
+ The function is given by:
+\begin_inset Formula 
+\begin{equation}
+f(x)=(6x-2)^{2}\sin(12x-4)\text{\;\;\;\;\;\;\; for}\ x\in[-1,1]\label{eq:forrester}
+\end{equation}
+
+\end_inset
+
+In Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Bayesian-Opt-forrester-fit"
+
+\end_inset
+
+, we show the Bayesian optimisation algorithm in action.
+ We start with four random train points in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Number-of-Tra4"
+
+\end_inset
+
+, then a Bayesian neural network(BNN) model is fit to the data to decide
+ the next proposal point based on the acquisition function.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Number-of-Tra5"
+
+\end_inset
+
+ shows the model after querying the forrester function at the new proposal
+ point (
+\begin_inset Formula $x^{p}=0$
+\end_inset
+
+).
+ Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Number-of-TP8"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Number-of-TP14"
+
+\end_inset
+
+ show the model after a few more function evaluations.
+ The model mirrors the true function reasonably well and finds the true
+ global minima in a reasonable number of function evaluations.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/v2BNNforresterNtrain4.png
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Number of function evaluations = 4
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Number-of-Tra4"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/v2BNNforresterNtrain5.png
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Number of function evaluations = 5
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Number-of-Tra5"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/v2BNNforresterNtrain8.png
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Number of function evaluations = 8
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Number-of-TP8"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/v2BNNforresterNtrain14.png
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Number of function evaluations = 14
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Number-of-TP14"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Bayesian Optimisation on Forrester Function.
+ The posterior mean is the averaged prediction from a large number of samples
+ from the posterior of the Bayesian neural network.
+ The standard deviation of the predcitions of these samples was used to
+ find the 95% confidence interval(95% C.I).
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Bayesian-Opt-forrester-fit"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2252,7 +2514,7 @@ add illustration of neural network from Neal pg17.
 status open
 
 \begin_layout Plain Layout
-tHEANO WAS used
+Explain better
 \end_layout
 
 \end_inset
@@ -2260,20 +2522,212 @@ tHEANO WAS used
 
 \end_layout
 
-\begin_layout Subsubsection
-Markov Chain Monte Carlo methods
-\end_layout
-
-\begin_layout Subsubsection
-Results 
-\end_layout
-
-\begin_layout Subsection
-Results and Discussion
-\end_layout
-
 \begin_layout Standard
-Maybe like this
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/objectiveForresterBestVals.png
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Forrester Function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "forrester2008engineering"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/rosenbrock_2DBestVals.png
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Rosenbrock(2D) Function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "picheny2013benchmark"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/mccormickBestVals.png
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+McCormick Function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "adorio2005mvf"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/sixhumpcamelBestVals.png
+	lyxscale 20
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Six Hump Camel Function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "molga2005test"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Results of Bayesian Optimisation on some standard test functions.
+ Evaluations using a Bayesian network(blue) and a Gaussian Process(green)
+ are shown.
+ Error bars represent the standard deviation of 50 runs.
+ In each sub-figure we are minimizing an objective function.
+ The vertical axis represents the running minimum function value.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Put in actual minimum values
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section

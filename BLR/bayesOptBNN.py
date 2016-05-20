@@ -39,7 +39,7 @@ def produce_mu_and_sd(n_samples, hWidths, xtrain, ytrain, xtest, ytest, precisio
 
 
 def bayes_opt(func, xr, hWidths, precisions, vy, numDim, actual_min=0.0, initial_random=2, k=0.2, num_it=20,
-              show_evo=False, seed=12345):
+              show_evo=False, seed=12345, pickle_evo=False, show_final=False):
     '''function to do bayesOpt on and number of initial random evals
     noise is artificially added to objective function calls when training
     '''
@@ -129,7 +129,15 @@ def bayes_opt(func, xr, hWidths, precisions, vy, numDim, actual_min=0.0, initial
         best_vals.append(cur_miny)
         s = sd  # standard deviations
 
-        if (i % 4 == 0 and show_evo):
+        if (pickle_evo):
+            print 'pickling'
+            interm = {'mu': mu, 'sd': sd}
+            nameOfFile1 = 'pickles_evo/it{}seed{}BayesOptEvo{}.pkl'.format(i, seed, func.func_name)
+            print 'pickling {}'.format(nameOfFile1)
+
+            pickle.dump(interm, open(nameOfFile1, "wb"))
+
+        if (i % 1 == 0 and show_evo):
             # plt.figure()
             f, axarr = plt.subplots(2, sharex=True)
 
@@ -144,26 +152,46 @@ def bayes_opt(func, xr, hWidths, precisions, vy, numDim, actual_min=0.0, initial
             axarr[0].plot(xtest, s, label='sigma', color='blue')
             axarr[0].set_title('BNN with hMC,ntrain:{}'.format(xtrain.shape[0]))
             plt.legend(fontsize='x-small')
-            # plt.draw()
-            # plt.savefig('bayesOptNtrain{}k{}init{}.png'.format(xtrain.shape[0], k, ntrain), dpi=300)
-            # plt.show(block=False)
+
+            plt.figure(figsize=(10, 6))
+
+            plt.plot(xtest, mu, label='Posterior mean')
+            plt.fill(np.concatenate([xtest, xtest[::-1]]),
+                     np.concatenate([mu - 1.9600 * sd,
+                                     (mu + 1.9600 * sd)[::-1]]),
+                     alpha=.3, fc='b', ec='None', label='95% C. I.')
+
+            plt.plot(xtrain, ytrain, 'ro', label='Observations')
+
+            plt.plot(xtest, func(xtest), color='black', label='True Function', linewidth=2.0)
+            plt.legend(loc='best')
+            plt.xlabel('x')
+            plt.ylabel('y')
+            # plt.axis([0, 1, -5, 5])
+
+            plt.savefig('fit_images_forrester/v2BNNforresterNtrain{}.png'.format(xtrain.shape[0]), dpi=300,
+                        bbox_inches='tight')
+
         xtrain = np.vstack((xtrain, next_query))
         ytrain = np.vstack((ytrain, next_y))
 
-    plt.figure()
-    plt.plot(best_vals, '-o')
-    plt.xlabel('Function Evaluation')
-    plt.ylabel('Best Value')
-    plt.title('{}'.format(func.func_name))
-    pylab.grid(True)
+    if (show_final):
+        plt.figure()
+        plt.plot(best_vals, '-o')
+        plt.xlabel('Function Evaluation')
+        plt.ylabel('Best Value')
+        plt.title('{}'.format(func.func_name))
+        pylab.grid(True)
 
-    plt.figure()
-    best_vals = np.asarray(best_vals)
-    plt.plot(np.abs(best_vals - actual_min), '-o')
-    plt.ylabel('Optimality Gap')
-    plt.xlabel('Function Evaluation')
-    plt.title('{}'.format(func.func_name))
-    pylab.grid(True)
+        plt.figure()
+        best_vals = np.asarray(best_vals)
+        plt.plot(np.abs(best_vals - actual_min), '-o')
+        plt.ylabel('Optimality Gap')
+        plt.xlabel('Function Evaluation')
+        plt.title('{}'.format(func.func_name))
+        pylab.grid(True)
+
+
     return best_vals
 
 
@@ -172,15 +200,15 @@ if __name__ == '__main__':
     # xr = [0.5, 2.5]
     # numDim = 1
 
-    # func=objectives.objectiveForrester
-    # xr=[0,1]
-    # actual_min=-6.02074
-    # numDim = 1
-    # init_random = 2
-    # k = 10
-    # # num_it=18
+    func = objectives.objectiveForrester
+    xr = [0, 1]
+    actual_min = -6.02074
+    numDim = 1
+    init_random = 2
+    k = 10
     # num_it=18
-    # numDim = len(xr) / 2
+    num_it = 18
+    numDim = len(xr) / 2
 
 
     # func = objectives.brannin_hoo
@@ -206,13 +234,13 @@ if __name__ == '__main__':
     # numDim = len(xr) / 2
 
 
-    func = objectives.mccormick
-    xr = [-1.5, 4, -3, 4]  # generalized to multiD (2d)
-    actual_min = -1.9133
-    init_random = 5
-    k = 10
-    num_it = 35
-    numDim = len(xr) / 2
+    # func = objectives.mccormick
+    # xr = [-1.5, 4, -3, 4]  # generalized to multiD (2d)
+    # actual_min = -1.9133
+    # init_random = 5
+    # k = 10
+    # num_it = 35
+    # numDim = len(xr) / 2
 
     # func = objectives.modified_rescaled_brannin_hoo
     # xr = [0, 1, 0, 1]  # generalized to multiD (2d)
@@ -229,7 +257,7 @@ if __name__ == '__main__':
     # numDim = len(xr) / 2
 
     # print 'lower minstepsize brannin with 30, evo, k=10 '
-    for seed in range(1000, 1020):
+    for seed in range(1000, 1001):
         print 'SEED {}'.format(seed)
         t0 = time.time()
 
@@ -243,7 +271,7 @@ if __name__ == '__main__':
         toDump = {'bVals': bVals, 't': time_taken, 'seed': seed, 'k': k, 'init_random': init_random}
         nameOfFile = 'pickles/seed{}BayesOptLogs{}.pkl'.format(seed, func.func_name)
 
-        pickle.dump(toDump, open(nameOfFile, "wb"))
+        # pickle.dump(toDump, open(nameOfFile, "wb"))
         print "execution took {} s".format(t1 - t0)
 
 
