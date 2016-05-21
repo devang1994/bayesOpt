@@ -269,7 +269,7 @@ if __name__ == '__main__':
         time_taken = t1 - t0
 
         toDump = {'bVals': bVals, 't': time_taken, 'seed': seed, 'k': k, 'init_random': init_random}
-        nameOfFile = 'pickles/k{}seed{}BayesOptLogs{}.pkl'.format(k,seed, func.func_name)
+        nameOfFile = 'pickles/k{}seed{}init_random{}BayesOptLogs{}.pkl'.format(k,seed, init_random,func.func_name)
 
         pickle.dump(toDump, open(nameOfFile, "wb"))
         print "execution took {} s".format(t1 - t0)

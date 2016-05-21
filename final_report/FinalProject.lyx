@@ -142,7 +142,8 @@ name "sec:Neural-Networks"
 \end_layout
 
 \begin_layout Standard
-Neural networks represent multiple non-linear transforms of the input data
+Neural networks use multiple non-linear transforms to map from an input
+ to an output.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Bengio-et-al-2015-Book"
@@ -150,17 +151,7 @@ key "Bengio-et-al-2015-Book"
 \end_inset
 
  .
- Excellent at Feature Selection 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-can also use radfords book 
-\end_layout
-
-\end_inset
-
-
+ They are know to have excellent feature selection properties due to 2
 \end_layout
 
 \begin_layout Section
@@ -1397,6 +1388,16 @@ Intriguing properties of Neural Networks
 \begin_layout Standard
 Some interesting properties of neural networks have been recently investigated.
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+probably not 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -2893,7 +2894,11 @@ The function is highly multimodal having 6 local minima, out of which two
 \begin_inset Formula $f(x1^{*},x2^{*})=-1.0316$
 \end_inset
 
-
+.
+ On this function, the GP model performs much better than the BNN model.
+ The BNN model gets stuck in a local optima and does not manage to find
+ the optima.
+ 
 \end_layout
 
 \begin_layout Section
