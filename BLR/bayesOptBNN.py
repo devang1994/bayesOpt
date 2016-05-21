@@ -228,8 +228,8 @@ if __name__ == '__main__':
     func = objectives.sixhumpcamel
     xr = [-2, 2, -2, 2]  # generalized to multiD (2d)
     actual_min = -1.0316
-    init_random = 5
-    k = 30
+    init_random = 6
+    k = 40
     num_it = 35
     numDim = len(xr) / 2
 

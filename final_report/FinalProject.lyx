@@ -1,5 +1,5 @@
-#LyX 2.1 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
 \begin_document
 \begin_header
 \textclass IIBproject
@@ -15,13 +15,13 @@ eqs-within-sections
 \font_roman default
 \font_sans default
 \font_typewriter default
-\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -32,24 +32,15 @@ eqs-within-sections
 \use_hyperref false
 \papersize default
 \use_geometry true
-\use_package amsmath 1
-\use_package amssymb 1
-\use_package cancel 1
-\use_package esint 1
-\use_package mathdots 0
-\use_package mathtools 1
-\use_package mhchem 1
-\use_package stackrel 1
-\use_package stmaryrd 1
-\use_package undertilde 1
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 0
 \cite_engine basic
-\cite_engine_type default
-\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
-\justification true
 \use_refstyle 0
 \index Index
 \shortcut idx
@@ -144,14 +135,601 @@ name "sec:Neural-Networks"
 \begin_layout Standard
 Neural networks use multiple non-linear transforms to map from an input
  to an output.
+ They are know to have excellent feature selection properties and define
+ the current state of the art in object recognition and natural language
+ processing tasks
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Bengio-et-al-2015-Book"
 
 \end_inset
 
- .
- They are know to have excellent feature selection properties due to 2
+.
+ For this project we primarily deal with 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+feedforward
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ networks, these networks take in a set of real inputs, 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+, and then compute one or more output values, 
+\begin_inset Formula $f_{k}(\boldsymbol{x})$
+\end_inset
+
+, using some number of layers of 
+\emph on
+hidden
+\emph default
+ units.
+ Here, we illustrate the basic concepts of neural networks by considering
+ a simple network with one hidden layer such as the one shown in Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:An-illustration-NN"
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/neuralNetIllustration.png
+	width 70col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+An illustration of a neural network with one hidden layer.
+ The input units at the bottom are fixed to their value depending on the
+ data point.
+ The values of the hidden units are then computed, followed by the values
+ of the output units.
+ The value for a hidden or output unit is a function of the weighted sum
+ of values it receives from the units that are connected to it via the arrows.
+ More hidden layers can be trivially added between the existing hidden units
+ and the output units
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neal1996bayesian"
+
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:An-illustration-NN"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ The outputs can be calculated as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+f_{k}(\boldsymbol{x}) & = & b_{k}+\sum_{j}v_{jk}h_{j}(x)\\
+h_{j}(\boldsymbol{x)} & = & \tanh(a_{j}+\sum_{i}u_{ij}x_{i})
+\end{eqnarray}
+
+\end_inset
+
+Here, 
+\begin_inset Formula $u_{ij}$
+\end_inset
+
+ is the 
+\emph on
+weight 
+\emph default
+on the connection from the input unit 
+\emph on
+
+\begin_inset Formula $i$
+\end_inset
+
+ 
+\emph default
+to the hidden unit 
+\begin_inset Formula $j$
+\end_inset
+
+; similarly, 
+\begin_inset Formula $v_{jk}$
+\end_inset
+
+ , is the weight on the connection from the hidden unit 
+\begin_inset Formula $j$
+\end_inset
+
+ to the output unit 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ The 
+\begin_inset Formula $a_{j}$
+\end_inset
+
+ and 
+\begin_inset Formula $b_{k}$
+\end_inset
+
+ are the 
+\emph on
+biases
+\emph default
+ of the hidden units and the output units respectively.
+ These weights and networks collectively constitute the set of parameters
+ of the network.
+ 
+\end_layout
+
+\begin_layout Standard
+Each output value, 
+\begin_inset Formula $f_{k}(\boldsymbol{x})$
+\end_inset
+
+, is just a weighted sum of the last hidden unit values, plus a bias.
+ Each hidden unit computes a similar weighted sum of input values, and then
+ passes it though a non-linear 
+\emph on
+activation function.
+ 
+\emph default
+In this project we choose the hyperbolic tangent (tanh) as the activation
+ function, it is an asymmetric function of sigmoidal shape as shown in Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-Hyperbolic-Tangent"
+
+\end_inset
+
+.
+ Its value is close to 
+\begin_inset Formula $-1$
+\end_inset
+
+ for large negative numbers,
+\begin_inset Formula $+1$
+\end_inset
+
+ for large positive numbers and zero for zero argument.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/relu.png
+	lyxscale 30
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The Rectified Linear Activation function
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/tanh.png
+	lyxscale 30
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The Hyperbolic Tangent Activation function
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:The-Hyperbolic-Tangent"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Here we show the rectified linear(ReLU) and the hyperbolic tangent(tanh)
+ activation function.
+ The ReLU function is very popular with deep feedforward networks.
+ Being very close to linear they preserve many properties that make linear
+ models easy to optimize with gradient based methods.
+ However, they are not smooth, the abrupt changes in gradients associated
+ with them can lead to issues when building probabilistic models
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Snoek:2015aa"
+
+\end_inset
+
+.
+ However, tanh functions are smooth over their entire domain and are hence
+ suited for building probabilistic models.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Use of a non-linear activation function allows the overall function defined
+ by the neural network to be non-linear.
+ It allows the hidden units to potentially represent 
+\begin_inset Quotes eld
+\end_inset
+
+hidden features
+\begin_inset Quotes erd
+\end_inset
+
+ in the input that can be useful in computing the appropriate outputs.
+ 
+\end_layout
+
+\begin_layout Standard
+It has been shown that such a network with one hidden layer can approximate
+ any function defined on a compact domain arbitrarily closely, if enough
+ hidden units are used
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Hornik1991251,cybenko1989approximation,funahashi1989approximate"
+
+\end_inset
+
+.
+ Nevertheless, more elaborate network architectures have advantages and
+ are often used.
+ Multiple hidden layers can be easily stacked between the current hidden
+ units and the output units.
+ Such 
+\begin_inset Quotes eld
+\end_inset
+
+deep
+\begin_inset Quotes erd
+\end_inset
+
+ networks are commonly used for a wide variety of machine learning applications.
+ However it should be noted that in feedforward networks, connections are
+ not allowed to form cycles.
+ This is important to allow the value of the output to be computed in a
+ single forward pass, in time proportional to the number of network parameters.
+ 
+\end_layout
+
+\begin_layout Subsection
+Training neural networks
+\end_layout
+
+\begin_layout Standard
+We can define probabilistic models for regression tasks by using network
+ outputs to define the conditional distribution for the targets , 
+\begin_inset Formula $\boldsymbol{y}$
+\end_inset
+
+, for various values of the input vector 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+.
+ For a regression model with real-valued targets, 
+\begin_inset Formula $y_{k}$
+\end_inset
+
+ the conditional distribution of the targets might be defined to be a Gaussian,
+ with 
+\begin_inset Formula $y_{k}$
+\end_inset
+
+ with the mean 
+\begin_inset Formula $f_{k}(\boldsymbol{x})$
+\end_inset
+
+ and a standard deviation of 
+\begin_inset Formula $\sigma_{k}$
+\end_inset
+
+.
+ We often assume the different outputs to be independent, given the input.
+ This gives:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+P(\boldsymbol{y}|\boldsymbol{x}) & = & \prod_{k}\frac{1}{\sqrt{2\pi\sigma_{k}^{2}}}\exp(-\frac{(f_{k}(\boldsymbol{x})-y_{k})^{2}}{2\sigma^{2}})\label{eq:gaussian noise model}
+\end{eqnarray}
+
+\end_inset
+
+The 
+\begin_inset Quotes eld
+\end_inset
+
+noise level
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Formula $\sigma_{k}$
+\end_inset
+
+, might be fixed or treated as a hyperparameter.
+ The weights and biases of the neural network can be learnt on a set of
+ 
+\emph on
+training cases, 
+\emph default
+
+\begin_inset Formula $\mathbf{D}=\{(x^{(1)},y^{(1)}),\dots,(x^{(n)},y^{(n)})\}$
+\end_inset
+
+, giving independent examples of inputs, 
+\begin_inset Formula $\boldsymbol{x}^{(i)}$
+\end_inset
+
+, and associated targets 
+\begin_inset Formula $\boldsymbol{y}^{(i)}$
+\end_inset
+
+.
+ Standard neural network training procedures adjust the weights and biases
+ in the network so as to minimize a measure of 
+\begin_inset Quotes eld
+\end_inset
+
+error
+\begin_inset Quotes erd
+\end_inset
+
+ on the training cases, most commonly, the sum of the squared differences
+ between the network outputs and targets.
+ Minimization of this error measure is equivalent to maximum likelihood
+ estimation of the Gaussian noise model of equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:gaussian noise model"
+
+\end_inset
+
+, since negative log likelihood with this model is proportional to the sum
+ of squared errors.
+ 
+\end_layout
+
+\begin_layout Standard
+A gradient-based approach is commonly used to find the weights and biases
+ that minimize the chosen error function.
+ The derivatives of the error with respect to the weights and biases can
+ be calculated by using the 
+\emph on
+backpropagation
+\emph default
+ algorithm
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bengio-et-al-2015-Book,rumelhart1988learning"
+
+\end_inset
+
+.
+ Typically many local minima are present, but good solutions are often found
+ despite this.
+ 
+\end_layout
+
+\begin_layout Standard
+Neural networks have a large number of parameters which makes overfitting
+ a significant problem when training neural networks.
+ To reduce overfitting a penalty term proportional to the sum of the squares
+ of the weights and biases is often added to the error function.
+ This modification is known as 
+\emph on
+weight decay, 
+\emph default
+since its effect is to bias the training procedure in favour of small weights.
+ Determining the proper magnitude of weight decay is often difficult --
+ too little weight decay, the network may 
+\begin_inset Quotes eld
+\end_inset
+
+overfit
+\begin_inset Quotes erd
+\end_inset
+
+, but too much weight decay, the network will 
+\begin_inset Quotes eld
+\end_inset
+
+underfit
+\begin_inset Quotes erd
+\end_inset
+
+ and ignore the data.
+ Adding weight decay can be interpreted as having a Gaussian prior with
+ mean zero and some standard deviation, 
+\begin_inset Formula $\sigma_{w}$
+\end_inset
+
+, on the weights and biases of the neural network.
+ 
+\end_layout
+
+\begin_layout Standard
+Cross validation is often used to find an appropriate weight penalty
+\begin_inset CommandInset citation
+LatexCommand cite
+key "stone1974cross"
+
+\end_inset
+
+.
+ In its simplest form, the amount of weight decay is chosen to optimise
+ performance on a validation set separate from the cases used to estimate
+ the network parameters.
+ 
+\end_layout
+
+\begin_layout Standard
+In the Bayesian approach to neural network learning, the objective is to
+ find the predictive distribution for the target values in new 
+\begin_inset Quotes eld
+\end_inset
+
+test
+\begin_inset Quotes erd
+\end_inset
+
+ cases, given the input for that case, and the inputs and targets in the
+ training cases(
+\begin_inset Formula $\boldsymbol{D}$
+\end_inset
+
+).
+ The predictive distribution is given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+P(y^{(n+1)}|x^{(n+1)},\boldsymbol{D}) & =\int P(y^{(n+1)}|x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,|\mathbf{D}})d\mathbf{\theta}
+\end{align}
+
+\end_inset
+
+Here, 
+\begin_inset Formula $\theta$
+\end_inset
+
+ represents the network parameters (weights and biases).
+ The posterior density for these parameters is proportional to the product
+ of the prior on them and the likelihood function given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+L(\boldsymbol{\theta|\mathbf{D}}) & =\prod_{c=1}^{n}P(y^{(c)}|x^{(c)},\boldsymbol{\theta})
+\end{align}
+
+\end_inset
+
+The distribution of the target values, 
+\begin_inset Formula $\boldsymbol{y}^{(i)}$
+\end_inset
+
+, given the corresponding inputs, 
+\begin_inset Formula $\boldsymbol{x}^{(i)}$
+\end_inset
+
+, and the parameters of the network is defined by the type of model with
+ which the network is being used.
+ For the regression model, it is given by equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:gaussian noise model"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
@@ -1164,9 +1742,9 @@ discretization, a single step finds the approximations to the position and
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align}
-p_{i}(\tau+\frac{\epsilon}{2}) & \;=\;p_{i}(\tau)\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau))\label{eq:leapfrog}\\
-q_{i}(\tau+\epsilon) & \;=\;q_{i}(\tau)\;+\;\epsilon\frac{p_{i}(\tau+\frac{\epsilon}{2})}{mi}\\
-p_{i}(\tau+\epsilon) & \;=\;p_{i}(\tau+\frac{\epsilon}{2})\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau+\epsilon))\label{eq:leapfrog end}
+p_{i}(\tau+\frac{\epsilon}{2}) & \;=\; p_{i}(\tau)\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau))\label{eq:leapfrog}\\
+q_{i}(\tau+\epsilon) & \;=\; q_{i}(\tau)\;+\;\epsilon\frac{p_{i}(\tau+\frac{\epsilon}{2})}{mi}\\
+p_{i}(\tau+\epsilon) & \;=\; p_{i}(\tau+\frac{\epsilon}{2})\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau+\epsilon))\label{eq:leapfrog end}
 \end{align}
 
 \end_inset
@@ -1381,25 +1959,6 @@ We track the average acceptance rate of the HMC move proposals, using an
  the acceptance rate but yielding a more conservative mixing rate.
 \end_layout
 
-\begin_layout Subsection
-Intriguing properties of Neural Networks 
-\end_layout
-
-\begin_layout Standard
-Some interesting properties of neural networks have been recently investigated.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-probably not 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Bayesian Optimisation
 \begin_inset CommandInset label
@@ -1413,6 +1972,8 @@ name "sec:Bayesian-Optimisation"
 
 \begin_layout Standard
 Bayesian Optimisation is the model based optimisation of black box functions.
+ In this section we will primarily describe Bayesian optimisation with a
+ Gaussian Process prior over the functions.
  
 \end_layout
 
@@ -1544,7 +2105,7 @@ A neural network can be parametrized by its weights and biases, collectively
  We aim to model the conditional distribution of target values given the
  input values.
  The required conditional probability density is given by 
-\begin_inset Formula $P(y\,|\,x,\theta,\gamma).$
+\begin_inset Formula $P(y\,|\, x,\theta,\gamma).$
 \end_inset
 
 
@@ -1601,7 +2162,7 @@ using the information in the training set.
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\ \propto\ P(\gamma)P(\theta|\gamma)\prod_{c=1}^{n}P(y^{(c)}\,|\,x^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})\label{eq:probability NN}
+P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\ \propto\ P(\gamma)P(\theta|\gamma)\prod_{c=1}^{n}P(y^{(c)}\,|\, x^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})\label{eq:probability NN}
 \end{equation}
 
 \end_inset
@@ -1614,7 +2175,7 @@ Predictions on new data-points can then be made by integration with respect
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-P(y^{(n+1)}|x^{(n+1)},\boldsymbol{D})\;=\;\int P(y^{(n+1)}|x^{(n+1)},\boldsymbol{\theta},\boldsymbol{\gamma})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\mathbf{\theta}\,d\mathbf{\gamma}
+P(y^{(n+1)}|x^{(n+1)},\boldsymbol{D})\;=\;\int P(y^{(n+1)}|x^{(n+1)},\boldsymbol{\theta},\boldsymbol{\gamma})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}
 \end{equation}
 
 \end_inset
@@ -1627,7 +2188,7 @@ For a regression model, the prediction that minimizes the expected squared-error
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\mathbf{\theta}\,d\mathbf{\gamma}\label{eq:prediction}
+\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}\label{eq:prediction}
 \end{equation}
 
 \end_inset
@@ -1680,13 +2241,13 @@ reference "eq:probability NN"
 \end_inset
 
 ) , the potential energy can be calculated by taking the negative log of
- the prior and the likelihood due to the trainig cases, as follows:
+ the prior and the likelihood due to the training cases, as follows:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-E(\boldsymbol{\theta})=F(\boldsymbol{\gamma})-\log P(\mathbf{\theta}|\mathbf{\gamma})-\sum_{c=1}^{n}P(y^{(c)}\,|\,x^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})
+E(\boldsymbol{\theta})=F(\boldsymbol{\gamma})-\log P(\mathbf{\theta}|\mathbf{\gamma})-\sum_{c=1}^{n}P(y^{(c)}\,|\, x^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})
 \end{equation}
 
 \end_inset
@@ -1723,7 +2284,8 @@ where
 \end_inset
 
 .
- The variances are expressed in terms of the associated preision for convenience.
+ The variances are expressed in terms of the associated precision for convenienc
+e.
  The resulting potential energy function is :
 \end_layout
 
@@ -1842,8 +2404,8 @@ reference "eq:sigmaLCB"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray}
-\mu(x) & = & \int f(x,\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\mathbf{\theta}\,d\mathbf{\gamma}\label{eq:muLCB-1}\\
-\sigma(x) & = & \sqrt{\int(f(x,\boldsymbol{\theta})-\mu(x))^{2}P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\mathbf{\theta}\,d\mathbf{\gamma}}\label{eq:sigmaLCB}
+\mu(x) & = & \int f(x,\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}\label{eq:muLCB-1}\\
+\sigma(x) & = & \sqrt{\int(f(x,\boldsymbol{\theta})-\mu(x))^{2}P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}}\label{eq:sigmaLCB}
 \end{eqnarray}
 
 \end_inset
@@ -1923,7 +2485,7 @@ reference "fig:The-posterior-parameter"
 \end_inset
 
 ) .
- It can be seen that the markov chains have not converged to a single mode
+ It can be seen that the Markov chains have not converged to a single mode
  and instead move between several modes.
  This can be attributed to the large number of modes that are likely to
  be present in the posterior.
@@ -1970,8 +2532,8 @@ reference "fig:The-overall-fit_prelim"
  side of the mean.
  It can be seen that the predictions follow the true function reasonably
  well.
- The prediction uncertainity is also modelled very well, it is low near
- the training data-points and is higher away from them.
+ The prediction uncertainty is also modelled very well, it is low near the
+ training data-points and is higher away from them.
 \end_layout
 
 \begin_layout Standard
@@ -2039,7 +2601,7 @@ height_special "totalheight"
 status open
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Trace plots of three randomly chosen parameters of the neural network 
@@ -2078,7 +2640,7 @@ height_special "totalheight"
 status open
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 The histogram of the parameter 2501 of the neural network.
@@ -2142,7 +2704,7 @@ centering
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 The fit of neural networks from four different samples from the posterior
@@ -2198,7 +2760,7 @@ centering
 \end_inset
 
 
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 The overall fit of the neural network, averaged over a large number of samples
@@ -2231,7 +2793,7 @@ name "fig:The-overall-fit_prelim"
 status open
 
 \begin_layout Plain Layout
-Maybe talk about GIbbs sampling of hypers, talk about splitting the parameters
+Maybe talk about Gibbs sampling of hypers, talk about splitting the parameters
  into groups which can be handled separately
 \end_layout
 
@@ -2279,7 +2841,7 @@ key "forrester2008engineering"
  The function is given by:
 \begin_inset Formula 
 \begin{equation}
-f(x)=(6x-2)^{2}\sin(12x-4)\text{\;\;\;\;\;\;\; for}\ x\in[0,1]\label{eq:forrester}
+f(x)=(6x-2)^{2}\sin(12x-4)\text{\;\;\;\;\;\;\;\ for}\ x\in[0,1]\label{eq:forrester}
 \end{equation}
 
 \end_inset
@@ -2308,7 +2870,7 @@ reference "fig:Number-of-Tra5"
 
 \end_inset
 
- shows the model after querying the forrester function at the new proposal
+ shows the model after querying the Forrester function at the new proposal
  point (
 \begin_inset Formula $x^{p}=0$
 \end_inset
@@ -2355,7 +2917,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Number of function evaluations = 4
@@ -2394,7 +2956,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Number of function evaluations = 5
@@ -2432,7 +2994,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Number of function evaluations = 8
@@ -2471,7 +3033,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Number of function evaluations = 14
@@ -2495,13 +3057,13 @@ name "fig:Number-of-TP14"
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Bayesian Optimisation on Forrester Function.
  The posterior mean is the averaged prediction from a large number of samples
  from the posterior of the Bayesian neural network.
- The standard deviation of the predcitions of these samples was used to
+ The standard deviation of the predictions of these samples was used to
  find the 95% confidence interval(95% C.I).
  
 \begin_inset CommandInset label
@@ -2547,7 +3109,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Forrester Function
@@ -2593,7 +3155,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Rosenbrock(2D) Function
@@ -2634,7 +3196,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 McCormick Function
@@ -2676,7 +3238,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Six Hump Camel Function
@@ -2700,7 +3262,7 @@ key "molga2005test"
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Results of Bayesian Optimisation on some standard test functions.
@@ -2798,7 +3360,7 @@ key "dixon1978global"
 \end_inset
 
  .
- The function is unimodal, and the global minimum lies in a narrow, parabolic
+ The function is uni-modal, and the global minimum lies in a narrow, parabolic
  valley.
  However, even though this valley is easy to find, convergence to the minimum
  is difficult
@@ -2835,7 +3397,7 @@ key "picheny2013benchmark"
 \series bold
 McCormick function : 
 \series default
-The function is very smooth and unimodal and is evaluated on the rectangle
+The function is very smooth and uni-modal and is evaluated on the rectangle
  
 \begin_inset Formula $\{(x1,x2):-1.5≤x1≤4.0,−3.0≤x2≤4.0\}$
 \end_inset
@@ -2875,7 +3437,7 @@ Check something might be wrong with this function , we get something below
 \series bold
 Six Hump Camel function : 
 \series default
-The function is highly multimodal having 6 local minima, out of which two
+The function is highly multi-modal having 6 local minima, out of which two
  are also global minima.
  The function is evaluated on the set 
 \begin_inset Formula $\{(x1,x2):-3≤x1≤3,−2≤x2≤2\}$
