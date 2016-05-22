@@ -141,8 +141,8 @@ Traditionally machine learning algorithms have focussed on using a set of
 representation learning.
  
 \emph default
-Learned representation often result in much better performace than can be
- obtained with hand-designed representations.
+Learned representation often result in much better performance than can
+ be obtained with hand-designed representations.
  They also allow machine learning systems to rapidly adapt to new tasks,
  with minimal human intervention.
  A representation learning algorithm can discover a good set of features
@@ -188,16 +188,42 @@ Most neural network applications use maximum likelihood estimates for the
  parameters of the neural network, such estimates can be found by minimising
  an error function such as the sum of squared errors between the target
  and predictions.
- It is however possible to estimate the posterior distribution on the parameters
- of the neural networks by using a we
+ The backpropogation algorithm can be used to calculate the gradients of
+ the error with respect to each of the parameters, this can then be used
+ in a gradient based optimisation schedule such as Adam
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kingma2014adam"
+
+\end_inset
+
+.
+ However, for various applications, it is often desirable to estimate the
+ posterior distribution on the parameters of the neural networks.
+ We can use a Bayesian approach to neural network learning to find the posterior
+ distribution of the network parameters by combining a simple prior on the
+ network weights with the likelihoods of points observed in the training
+ data.
+ Such a posterior distribution can give the predictive distributions of
+ the target values in new 
+\begin_inset Quotes eld
+\end_inset
+
+test
+\begin_inset Quotes erd
+\end_inset
+
+ cases, given the input for that case, and the inputs and targets in the
+ training cases.
+ 
 \end_layout
 
 \begin_layout Standard
-In many applications we are tasked with the zeroth order optimization of
- an expensive to evaluate function 
-\emph on
-f
-\emph default
+Bayesian optimisation is used in applications where we require the zeroth
+ order optimisation of an expensive to evaluate function 
+\begin_inset Formula $f$
+\end_inset
+
 .
  Some examples are hyper parameter tuning in expensive machine learning
  algorithms
@@ -218,52 +244,137 @@ key "jones1998efficient"
  based studies.
  Bayesian optimization finds the optimum of 
 \emph on
-f
+
+\begin_inset Formula $f$
+\end_inset
+
+
 \emph default
- is found by using as few queries as possible by managing exploration and
- exploitation
+ by using as few queries as possible by managing exploration and exploitation
 \begin_inset CommandInset citation
 LatexCommand cite
 key "mockus1978application"
 
 \end_inset
 
+.
+ The algorithm relies on querying a distribution over functions defined
+ by a relatively cheap surrogate model.
+ An accurate model for this distribution over functions is critical to the
+ effectiveness of the approach and is typically fit using Gaussian processes
+ (GPs)
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rasmussen2006gaussian"
 
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
-Neural networks have found wide ranging applications in computer vision,
- natural language processing etc.
- They are particularly adept at tasks where it is not clear how to extract
- relevant features 
+In this project we aim to use the predictive distribution described by a
+ Bayesian neural network (BNN) to model the distribution over functions.
+ This can allow the use of the representation learning abilities of neural
+ networks to hopefully learn a very accurate model on the distribution of
+ functions.
+ A prior is defined on the distribution of functions by defining simple
+ priors on the parameters of the neural networks, this provides a very flexible
+ overall prior on the distribution of functions.
+ Generally Gaussian priors are used on the parameters of the network but
+ we can use other stable priors as well to encode prior information about
+ the functions.
+ This provides us the opportunity to model non-smooth functions and other
+ functions with behaviours not easily described by the Gaussian Processes.
+ For instance, Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Functions-Cauchy-prior"
+
+\end_inset
+
+ shows two functions drawn from priors for a network where weights and biases
+ for the output have Cauchy distributions(stable distribution with 
+\begin_inset Formula $\alpha=1$
+\end_inset
+
+) .
+ The weights and biases into the hidden units have independent Gaussian
+ distributions.
+ 
 \end_layout
 
 \begin_layout Standard
-Bayesian Optimisation is a very interesting problem.
- It has been used in ..
- .
- Neural networks can be used for dimensionality reduction and can be used
- for feature selection.
- It is not trivial how to build probabilistic models using Neural Networks.
- Several different options are available and two particular ones were explored
- in this report.
- Using a pragmatic approach ....
- .
- Alternatively a full Bayesian Neural network was used ....
- .
- These functions can be very useful for non-stationary functions.
-\begin_inset Note Note
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/CauchyPrior.png
+	lyxscale 40
+	width 80col%
+
+\end_inset
+
+
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
-talk about how , different priors and energy functions can allow us to very
- quickly adapt to different functions .
- The field of neural networks can contribute a lot to Byes
+
+
+\backslash
+centering
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Functions drawn from Cauchy priors on for networks with step-function hidden
+ units
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neal1996bayesian"
+
+\end_inset
+
+.
+ Function on the left are from a network with 150 hidden units, those on
+ the right from a network with 10000 hidden units.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Functions-Cauchy-prior"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Such a method, can also potentially use the feature selection and dimensionality
+ reduction properties of neural networks to effectively perform Bayesian
+ optimisation for high dimensional functions.
+ 
 \end_layout
 
 \begin_layout Section
