@@ -1,0 +1,176 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\lang british
+Traditionally machine learning algorithms have focussed on using a set of
+ expertly curated features of inputs to make predictions.
+ However in various tasks, especially in computer vision and natural language
+ processing, the design of these features can be very complex.
+ In many situations it can be difficult to know what features should be
+ extracted.
+ Neural networks excel at such tasks as they can discover not only the mapping
+ from the representation to the output but the representation itself.
+ This approach is called 
+\emph on
+representation learning.
+ 
+\emph default
+Learned representation often result in much better performace than can be
+ obtained with hand-designed representations.
+ They also allow machine learning systems to rapidly adapt to new tasks,
+ with minimal human intervention.
+ A representation learning algorithm can discover a good set of features
+ for a complex task in hours to months.
+ Manually designing features for a complex task can require a great deal
+ of human time and effort; it can possibly take decades for an entire community
+ of researchers.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+Such representational learning capabilities have allowed neural networks
+ to reach state of the art performance in several applications including
+ computer vision and natural language processing.
+ They have been used get to human-level performance in several video games
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mnih2015human"
+
+\end_inset
+
+ and have been used in systems to master the game of 
+\begin_inset Quotes eld
+\end_inset
+
+Go
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "silver2016mastering"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+Most neural network applications use maximum likelihood estimates for the
+ parameters of the neural network, such estimates can be found by minimising
+ an error function such as the sum of squared errors between the target
+ and predictions.
+ It is however possible to estimate the posterior distribution on the parameters
+ of the neural networks by using a we
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+In many applications we are tasked with the zeroth order optimization of
+ an expensive to evaluate function 
+\emph on
+f
+\emph default
+.
+ Some examples are hyper parameter tuning in expensive machine learning
+ algorithms
+\begin_inset CommandInset citation
+LatexCommand cite
+key "snoek2012practical"
+
+\end_inset
+
+, experiment design
+\begin_inset CommandInset citation
+LatexCommand cite
+key "jones1998efficient"
+
+\end_inset
+
+, optimizing control strategies in complex systems, and scientific simulation
+ based studies.
+ Bayesian optimization finds the optimum of 
+\emph on
+f
+\emph default
+ is found by using as few queries as possible by managing exploration and
+ exploitation
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mockus1978application"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_body
+\end_document

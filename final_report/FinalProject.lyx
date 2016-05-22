@@ -3,6 +3,11 @@
 \begin_document
 \begin_header
 \textclass IIBproject
+\begin_preamble
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\usepackage{algorithm,algpseudocode}
+\end_preamble
 \use_default_options true
 \begin_modules
 eqs-within-sections
@@ -79,10 +84,27 @@ Devang Agrawal (Queens')
 F-
 \end_layout
 
-\begin_layout Summary
-This project explored the use of neural networks for Bayesian Optimisation.
- No more than 100 words.
- 
+\begin_layout Title
+Bayesian Optimisation using Neural Networks
+\end_layout
+
+\begin_layout Author
+Devang Agrawal (Queens')
+\end_layout
+
+\begin_layout Section*
+Technical Abstract
+\end_layout
+
+\begin_layout Standard
+Bayesian Optimisation has been used for a myriad applications 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -106,6 +128,117 @@ Introduction
 \end_layout
 
 \begin_layout Standard
+Traditionally machine learning algorithms have focussed on using a set of
+ expertly curated features of inputs to make predictions.
+ However in various tasks, especially in computer vision and natural language
+ processing, the design of these features can be very complex.
+ In many situations it can be difficult to know what features should be
+ extracted.
+ Neural networks excel at such tasks as they can discover not only the mapping
+ from the representation to the output but the representation itself.
+ This approach is called 
+\emph on
+representation learning.
+ 
+\emph default
+Learned representation often result in much better performace than can be
+ obtained with hand-designed representations.
+ They also allow machine learning systems to rapidly adapt to new tasks,
+ with minimal human intervention.
+ A representation learning algorithm can discover a good set of features
+ for a complex task in hours to months.
+ Manually designing features for a complex task can require a great deal
+ of human time and effort; it can possibly take decades for an entire community
+ of researchers.
+ 
+\end_layout
+
+\begin_layout Standard
+Such representational learning capabilities have allowed neural networks
+ to reach state of the art performance in several applications including
+ computer vision and natural language processing.
+ They have been used get to human-level performance in several video games
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mnih2015human"
+
+\end_inset
+
+ and have been used in systems to master the game of 
+\begin_inset Quotes eld
+\end_inset
+
+Go
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "silver2016mastering"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Most neural network applications use maximum likelihood estimates for the
+ parameters of the neural network, such estimates can be found by minimising
+ an error function such as the sum of squared errors between the target
+ and predictions.
+ It is however possible to estimate the posterior distribution on the parameters
+ of the neural networks by using a we
+\end_layout
+
+\begin_layout Standard
+In many applications we are tasked with the zeroth order optimization of
+ an expensive to evaluate function 
+\emph on
+f
+\emph default
+.
+ Some examples are hyper parameter tuning in expensive machine learning
+ algorithms
+\begin_inset CommandInset citation
+LatexCommand cite
+key "snoek2012practical"
+
+\end_inset
+
+, experiment design
+\begin_inset CommandInset citation
+LatexCommand cite
+key "jones1998efficient"
+
+\end_inset
+
+, optimizing control strategies in complex systems, and scientific simulation
+ based studies.
+ Bayesian optimization finds the optimum of 
+\emph on
+f
+\emph default
+ is found by using as few queries as possible by managing exploration and
+ exploitation
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mockus1978application"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Neural networks have found wide ranging applications in computer vision,
+ natural language processing etc.
+ They are particularly adept at tasks where it is not clear how to extract
+ relevant features 
+\end_layout
+
+\begin_layout Standard
 Bayesian Optimisation is a very interesting problem.
  It has been used in ..
  .
@@ -119,6 +252,18 @@ Bayesian Optimisation is a very interesting problem.
  Alternatively a full Bayesian Neural network was used ....
  .
  These functions can be very useful for non-stationary functions.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+talk about how , different priors and energy functions can allow us to very
+ quickly adapt to different functions .
+ The field of neural networks can contribute a lot to Byes
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -1971,9 +2116,394 @@ name "sec:Bayesian-Optimisation"
 \end_layout
 
 \begin_layout Standard
-Bayesian Optimisation is the model based optimisation of black box functions.
+Bayesian optimisation is a natural framework for model-based global optimisation
+ of noisy expensive black-box functions.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Bayesian optimisation is the model based optimisation of black box functions.
  In this section we will primarily describe Bayesian optimisation with a
  Gaussian Process prior over the functions.
+ We then briefly describe Bayesian Optimisation using a Bayesian neural
+ network based prior.
+\end_layout
+
+\begin_layout Plain Layout
+An enormous body of scientific literature has been devoted to the problem
+ of optimizing a nonlinear function 
+\begin_inset Formula $f(\boldsymbol{x})$
+\end_inset
+
+ over a compact set 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ The problem can be formulated concisely as follows:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+\min_{x\in A\subset\mathbb{R^{d}}}f(\boldsymbol{x})\label{eq:minimisation}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Bayesian optimisation is typically used for global optimisation of functions
+ with expensive evaluations.
+ 
+\end_layout
+
+\end_inset
+
+It relies on querying a distribution over functions defined by a relatively
+ cheap surrogate model.
+ An accurate model for the distribution over functions is critical to the
+ effectiveness of the approach, and is typically fit using Gaussian processes(GP
+s).
+ In this work, we will also explore the use of neural-networks as an alternative
+ to GPs to model the distribution over functions.
+ 
+\end_layout
+
+\begin_layout Standard
+In this work, we will restrict to using Bayesian optimisation to solve global
+ minimisation problems of the form :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boldsymbol{x^{*}}=\argmin_{x\in\chi}f(\boldsymbol{x})
+\]
+
+\end_inset
+
+where we take 
+\begin_inset Formula $\chi$
+\end_inset
+
+ to be a compact subset of 
+\begin_inset Formula $\mathbb{R}^{D}$
+\end_inset
+
+.
+ Maximisation problems can be trivially converted to minimisation problems
+ by negating the objective function.
+\end_layout
+
+\begin_layout Standard
+Bayesian optimisation constructs a probabilistic model for 
+\begin_inset Formula $f(\boldsymbol{x})$
+\end_inset
+
+, and then exploits this model to make decisions about where in 
+\begin_inset Formula $\chi$
+\end_inset
+
+ to next evaluate the function.
+ The essential philosophy is to use all the information available from previous
+ evaluations of 
+\begin_inset Formula $f(\boldsymbol{x})$
+\end_inset
+
+ and not simply rely on the local gradient and Hessian approximations.
+ This results in a procedure that can optimize difficult non-convex functions
+ with relatively few evaluations, at the cost of performing more computation
+ to determine the next point to try.
+ When function evaluations are expensive to perform, such as in the case
+ where real experiments need to performed, then it is easy to justify some
+ extra computation to smartly determine what evaluations to make.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Acquisition functions 
+\emph default
+are very important in Bayesian optimisation, they allow us to construct
+ a utility function from the model posterior.
+ This allows us to determine the next point to evaluate.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+add algorithms box
+\end_layout
+
+\end_inset
+
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:An-example-bayesOpt"
+
+\end_inset
+
+ shows the Bayesian optimisation algorithm on a toy 1D maximisation problem.
+ The algorithm successfully balances exploration and exploitation based
+ on the model to find the maximum in very few function evaluations.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/BayesOptToy.png
+	lyxscale 50
+	width 80col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+An example of using Bayesian Optimisation on a toy 1D maximization problem
+\begin_inset CommandInset citation
+LatexCommand cite
+key "brochu2010tutorial"
+
+\end_inset
+
+.
+ The figures show a Gaussian process(GP) approximation of the objective
+ function over four iterations of sampled values of the objective function.
+ The figure also shows the acquisition function in the lower shaded plots.
+ Since its a maximisation problem, the acquisition function is high where
+ the GP predicts a high objective (exploitation) and and where the prediction
+ uncertainty is high(exploration).
+ We successively evaluate the function at the maximum values of the acquisition
+ function to get close to the true maximum at 
+\begin_inset Formula $t=4$
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:An-example-bayesOpt"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang french
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithmic}[1] 
+\backslash
+For{t=1,2,...}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+State{Find $x_{t}$ by optimising the acquisition function $a$ : $
+\backslash
+boldsymbol{x}_{t}=
+\backslash
+argmin_{x}a(
+\backslash
+boldsymbol{x})$} 
+\backslash
+State{Augment the dataset $
+\backslash
+boldsymbol{D}_{t}=
+\backslash
+{
+\backslash
+boldsymbol{D}_{t-1},((
+\backslash
+boldsymbol{x}{}_{t},f(
+\backslash
+boldsymbol{x}{}_{t})
+\backslash
+}$} 
+\backslash
+EndFor 
+\backslash
+end{algorithmic}
+\end_layout
+
+\end_inset
+
+
+\lang french
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Bayesian Optimisation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Acquisition Functions for Bayesian Optimisation
+\end_layout
+
+\begin_layout Standard
+We assume a prior on the function 
+\begin_inset Formula $f(\boldsymbol{x})$
+\end_inset
+
+.
+ We assume that our observations are of the form 
+\begin_inset Formula $\boldsymbol{D}=\{\boldsymbol{x}_{n},y_{n}\}_{n=1}^{N}$
+\end_inset
+
+, where 
+\begin_inset Formula $y_{n}\sim\mathcal{N}(f(x_{n}),\nu)$
+\end_inset
+
+and 
+\begin_inset Formula $\nu$
+\end_inset
+
+ is the variance of the noise introduced into the function observations.
+ The prior and the observations induce a posterior over the functions.
+ The acquisition function denoted by 
+\begin_inset Formula $a\,:\,\chi\rightarrow\mathbb{{R}}^{+},$
+\end_inset
+
+ determines what point in 
+\begin_inset Formula $\chi$
+\end_inset
+
+ to evaluate next via a proxy optimization 
+\begin_inset Formula $\boldsymbol{x}_{next}=\argmin_{x}a(\boldsymbol{x})$
+\end_inset
+
+.
+ Several different acquisition functions have been proposed
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hoffman2011portfolio,brochu2010tutorial"
+
+\end_inset
+
+, for this project we use the GP upper confidence bound.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+GP Upper Confidence Bound(GP-UCB) 
+\series default
+It exploits the idea of exploiting lower confidence bounds (upper, when
+ considering maximisation) to construct acquisition functions that minimize
+ regret over the course of their optimization
+\begin_inset CommandInset citation
+LatexCommand cite
+key "srinivas2009gaussian"
+
+\end_inset
+
+.
+ These acquisition functions have the form
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+a_{LCB}(x,\boldsymbol{D},\theta)=\mu(\boldsymbol{x};\,\boldsymbol{D},\theta)-\kappa\sigma(\boldsymbol{x};\,\boldsymbol{D},\theta)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\theta$
+\end_inset
+
+ represents the hyperparameters of the surrogate model being used (GP or
+ Bayesian neural network) , and 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ is a tunable parameter to balance exploitation against exploration.
+ 
+\end_layout
+
+\begin_layout Standard
+This form of an acquisition function is very well suited for the project
+ since it provides a very convenient way to explicitly balance exploration
+ and exploitation via the tunable parameter, 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ .
+ It is also very easy to evaluate for Bayesian neural networks using samples
+ from the posterior of the neural network using an MCMC based approach.
  
 \end_layout
 
@@ -1982,28 +2512,319 @@ High Dimensional Bayesian Optimisation
 \end_layout
 
 \begin_layout Standard
-An original goal of this project was to explore Bayesian Optimisation in
- high dimensions .
- This has not been thoroughly explored in the available literature.
- However two good papers have tried to tackle this problem.
- 
-\end_layout
-
-\begin_layout Subsubsection
-Rembo
-\end_layout
-
-\begin_layout Standard
-Developed by Ziyu wang ..
- 
-\end_layout
-
-\begin_layout Subsubsection
-Add-GP-UCB
+Bayesian optimisation with neural networks can also potentially deal with
+ high dimensional global optimisation problems.
+ Through multiple non-linear transforms neural networks can potentially
+ find a non-linear lower dimensional manifold in a high dimensional spaces
+ which encapsulates most of the variance of the objective function.
+ A neural network based model may be able to take advantage of such structure
+ for Bayesian optimisation.
+ Running Bayesian optimisation on a high-dimensional problem is however
+ very computationally expensive, requiring highly optimized and parallelized
+ code.
+ The efficacy of a Bayesian optimisation framework utilizing neural networks
+ on a high dimensional problem, will be addressed in future work.
 \end_layout
 
 \begin_layout Standard
-Was developed at CMU by ..
+Currently there are two known methods for performing Bayesian optimisation
+ on high dimensional problems, we briefly review them here.
+\end_layout
+
+\begin_layout Subsubsection
+High dimensional Bayesian Optimisation via Random Embeddings
+\end_layout
+
+\begin_layout Standard
+Random Embeddings Bayesian Optimisation (REMBO) has been developed by Ziyu
+ Wang et.al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wang2013bayesian"
+
+\end_inset
+
+ for performing Bayesian optimisation on functions with low effective dimensiona
+lity.
+ 
+\end_layout
+
+\begin_layout Standard
+The effective dimensionality of a function (
+\begin_inset Formula $d_{e}$
+\end_inset
+
+) can be defined as :
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Definition 1
+\series default
+: A function 
+\begin_inset Formula $f\,:\,\mathbb{R}^{D}\rightarrow\mathbb{R}$
+\end_inset
+
+ is said to have 
+\series bold
+\emph on
+effective dimensionality
+\series default
+\emph default
+ 
+\begin_inset Formula $d_{e}$
+\end_inset
+
+ , with 
+\begin_inset Formula $d_{e}<D$
+\end_inset
+
+, if there exists a linear sub-space 
+\begin_inset Formula $\mathcal{T}$
+\end_inset
+
+ of dimension 
+\begin_inset Formula $d_{e}$
+\end_inset
+
+ such that for all 
+\begin_inset Formula $x_{T}\in\mathcal{T}\subset\mathbb{R}^{D}\text{ and }\boldsymbol{x}_{\perp}\in\mathcal{T}^{\perp}\subset\mathbb{R}^{D}$
+\end_inset
+
+ , we have 
+\begin_inset Formula $f(x)=f(x_{T}+x_{\perp})=f(x_{T})$
+\end_inset
+
+, where 
+\begin_inset Formula $\mathcal{T}^{\perp}$
+\end_inset
+
+ denotes the orthogonal complement of 
+\begin_inset Formula $\mathcal{T}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mathcal{T}$
+\end_inset
+
+ is the 
+\series bold
+effective subspace 
+\series default
+of 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{T}^{\perp}$
+\end_inset
+
+the 
+\series bold
+constant subspace.
+\end_layout
+
+\begin_layout Standard
+This definition simply states that the function does not change along the
+ coordinates 
+\begin_inset Formula $x_{\perp}$
+\end_inset
+
+ , and which is why 
+\begin_inset Formula $\mathcal{T}^{\perp}$
+\end_inset
+
+ is referred to as the constant subspace.
+ 
+\end_layout
+
+\begin_layout Standard
+For this algorithm, it is assumed that high dimensional functions have a
+ small effective dimensionality and hence the function remains almost constant
+ while moving along most dimensions.
+ 
+\end_layout
+
+\begin_layout Standard
+This method performs Bayesian optimisation in a random low dimensional embedding
+ in the original high dimensional space.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:REMBO"
+
+\end_inset
+
+ illustrates this method by using a 
+\begin_inset Formula $D=2$
+\end_inset
+
+ dimensional function where only 
+\begin_inset Formula $d_{e}=1$
+\end_inset
+
+ dimension is important.
+ Optimisation is performed in the embedding 
+\begin_inset Formula $x1=x2$
+\end_inset
+
+, since it is guaranteed to include the optimum.
+ Importantly, it should be noted, that the method is not restricted to cases
+ with axis aligned intrinsic dimensions.
+ 
+\end_layout
+
+\begin_layout Standard
+However this method is restricted to functions for which the low effective
+ dimensionality assumption holds, the performance is limited in functions
+ which do not have low effective dimensionality.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/Untitled 2.png
+	lyxscale 20
+	width 80col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+This function in 
+\begin_inset Formula $D=2$
+\end_inset
+
+ dimensions only has 
+\begin_inset Formula $d_{e}=1$
+\end_inset
+
+ effective dimension: the vertical axis indicated with the word important
+ on the right hand side figure.
+ Hence, the 1-dimensional embedding includes the 2-dimensional function’s
+ optimizer.
+ It is more efficient to search for the optimum along the 1-dimensional
+ random embedding than in the original 2-dimensional space
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wang2013bayesian"
+
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:REMBO"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+High Dimensional Bayesian Optimisation via Additive Models
+\end_layout
+
+\begin_layout Standard
+This method was developed by Kandasamy et.al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kandasamy:2015aa"
+
+\end_inset
+
+, it makes the assumption that the objective function 
+\begin_inset Formula $f$
+\end_inset
+
+ decomposes into the following additive form :
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset Formula 
+\begin{equation}
+f(x)=f^{(1)}(x^{(1)})+f^{(2)}(x^{(2)})+\dots+f^{(M)}(x^{(M)})\label{eq:additive}
+\end{equation}
+
+\end_inset
+
+
+\lang british
+Here each 
+\begin_inset Formula $x^{(j)}\in\mathcal{X}^{(j)}=[0,1]^{d_{j}}$
+\end_inset
+
+ are lower dimensional components.
+ Each 
+\begin_inset Formula $\mathcal{X}^{(j)}$
+\end_inset
+
+ is referred to as a group and the grouping of different dimensions into
+ these groups 
+\begin_inset Formula $\{\mathcal{X}^{j}\}_{j=1}^{M}$
+\end_inset
+
+as the 
+\begin_inset Quotes eld
+\end_inset
+
+decomposition
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It is important to note that the groups are disjoint.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+This method shows excellent performance when the function is indeed additive
+ with mutually exclusive lower dimensional components but the performance
+ degrades when the function is not well described by these assumptions.
 \end_layout
 
 \begin_layout Section
@@ -3463,21 +4284,23 @@ The function is highly multi-modal having 6 local minima, out of which two
  
 \end_layout
 
+\begin_layout Subsection
+Potential applications
+\end_layout
+
+\begin_layout Standard
+Such as robotics
+\end_layout
+
 \begin_layout Section
-Conclusions
+Conclusions 
 \end_layout
 
 \begin_layout Standard
 The results are very promising 
 \end_layout
 
-\begin_layout Subsection
-Potential applications/Future work
-\end_layout
-
 \begin_layout Standard
-This system promises to provide better results for high-dimensional functions.
- Add Nilesh's paper to this 
 \begin_inset Newpage newpage
 \end_inset
 
