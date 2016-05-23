@@ -161,6 +161,7 @@ Such representational learning capabilities have allowed neural networks
  to reach state of the art performance in several applications including
  computer vision and natural language processing.
  They have been used to get human-level performance in several video games
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "mnih2015human"
@@ -175,7 +176,7 @@ Go
 \begin_inset Quotes erd
 \end_inset
 
-
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "silver2016mastering"
@@ -193,7 +194,7 @@ Most neural network applications use maximum likelihood estimates for the
  and predictions.
  The backpropogation algorithm can be used to calculate the gradients of
  the error with respect to each of the parameters, this can then be used
- in a gradient based optimisation schedule such as Adam
+ in a gradient based optimisation schedule such as Adam 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "kingma2014adam"
@@ -202,11 +203,11 @@ key "kingma2014adam"
 
 .
  However, for various applications, it is often desirable to estimate the
- posterior distribution on the parameters of the neural networks.
+ posterior distribution of the parameters of the neural networks.
  We can use a Bayesian approach to neural network learning to find the posterior
  distribution of the network parameters by combining a simple prior on the
  network weights with the likelihoods of points observed in the training
- data
+ data 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "neal1996bayesian"
@@ -245,29 +246,29 @@ Bayesian optimisation is used in applications where we require the zeroth
 \end_inset
 
 .
- Some examples are hyper parameter tuning in expensive machine learning
- algorithms
+ Some examples are hyper-parameter tuning in expensive machine learning
+ algorithms 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "snoek2012practical"
 
 \end_inset
 
-, experiment design
+, experiment design 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "jones1998efficient"
 
 \end_inset
 
-, optimizing control strategies in complex systems
+, optimizing control strategies in complex systems 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "cully2015robots"
 
 \end_inset
 
-, and scientific simulation based studies
+, and scientific simulation based studies 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "brochu2010tutorial"
@@ -284,6 +285,7 @@ key "brochu2010tutorial"
 
 \emph default
  by using as few queries as possible by managing exploration and exploitation
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "mockus1978application"
@@ -295,7 +297,7 @@ key "mockus1978application"
  by a relatively cheap surrogate model.
  An accurate model for this distribution over functions is critical to the
  effectiveness of the approach and is typically fit using Gaussian processes
- (GPs)
+ (GPs) 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "rasmussen2006gaussian"
@@ -318,7 +320,7 @@ In this project we aim to use the predictive distribution described by a
  we can use other stable priors as well to encode prior information about
  the functions.
  This provides us the opportunity to model non-smooth functions and other
- functions with behaviours not easily described by the Gaussian Processes.
+ functions with behaviours not easily described by the GPs.
  For instance, Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -333,7 +335,7 @@ reference "fig:Functions-Cauchy-prior"
 
 ) .
  The weights and biases into the hidden units have independent Gaussian
- distributions
+ distributions 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "neal1996bayesian"
@@ -348,7 +350,7 @@ key "neal1996bayesian"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -379,7 +381,7 @@ centering
 
 \begin_layout Plain Layout
 Functions drawn from Cauchy priors on for networks with step-function hidden
- units
+ units 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "neal1996bayesian"
@@ -432,7 +434,7 @@ Neural networks use multiple non-linear transforms to map from an input
  to an output.
  They are know to have excellent feature selection properties and define
  the current state of the art in object recognition and natural language
- processing tasks
+ processing tasks 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Bengio-et-al-2015-Book"
@@ -608,7 +610,7 @@ Each output value,
 \begin_inset Formula $f_{k}(\boldsymbol{x})$
 \end_inset
 
-, is just a weighted sum of the last hidden unit values, plus a bias.
+, is a weighted sum of the last hidden unit values, plus a bias.
  Each hidden unit computes a similar weighted sum of input values, and then
  passes it though a non-linear 
 \emph on
@@ -762,7 +764,7 @@ hidden features
 \begin_layout Standard
 It has been shown that such a network with one hidden layer can approximate
  any function defined on a compact domain arbitrarily closely, if enough
- hidden units are used
+ hidden units are used 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Hornik1991251,cybenko1989approximation,funahashi1989approximate"
@@ -898,7 +900,7 @@ A gradient-based approach is commonly used to find the weights and biases
 \emph on
 backpropagation
 \emph default
- algorithm
+ algorithm 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Bengio-et-al-2015-Book,rumelhart1988learning"
@@ -949,7 +951,7 @@ underfit
 \end_layout
 
 \begin_layout Standard
-Cross validation is often used to find an appropriate weight penalty
+Cross validation is often used to find an appropriate weight penalty 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "stone1974cross"
@@ -985,7 +987,7 @@ test
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align}
-P(y^{(n+1)}|x^{(n+1)},\boldsymbol{D}) & =\int P(y^{(n+1)}|x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,|\mathbf{D}})d\mathbf{\theta}
+P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{D}) & =\int P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta|\mathbf{D}})d\thevec
 \end{align}
 
 \end_inset
@@ -1002,13 +1004,13 @@ Here,
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align}
-L(\boldsymbol{\theta|\mathbf{D}}) & =\prod_{c=1}^{n}P(y^{(c)}|x^{(c)},\boldsymbol{\theta})
+L(\boldsymbol{\theta|\mathbf{D}}) & =\prod_{c=1}^{n}P(y^{(c)}|\xvec^{(c)},\boldsymbol{\theta})
 \end{align}
 
 \end_inset
 
 The distribution of the target values, 
-\begin_inset Formula $\boldsymbol{y}^{(i)}$
+\begin_inset Formula $y^{(i)}$
 \end_inset
 
 , given the corresponding inputs, 
@@ -1040,7 +1042,7 @@ name "sec:Markov-Chain-Monte"
 
 \begin_layout Standard
 Markov chain Monte Carlo(MCMC) methods are a class of algorithms for sampling
- from a desired probability distribution
+ from a desired probability distribution 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "andrieu2003introduction,neal1996bayesian"
@@ -1139,7 +1141,7 @@ reference "eq:carloIntegration"
 \begin_inset Formula $\theta^{(t)}$
 \end_inset
 
- are dependent as long as the independence is not too great
+ are dependent as long as the independence is not too great 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "neal1996bayesian"
@@ -1334,8 +1336,8 @@ name "sub:The-Metropolis-algorithm"
 \end_layout
 
 \begin_layout Standard
-The Metropolis algorithm was introduced by Metropolis et.al in their classic
- paper in 1953
+The Metropolis algorithm was introduced by Metropolis et.al.
+ in their classic paper in 1953 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "metropolis1953equation"
@@ -1343,7 +1345,7 @@ key "metropolis1953equation"
 \end_inset
 
  .
- In the Markov chain defined by the metropolis algorithm, a new state, 
+ In the Markov chain defined by the Metropolis algorithm, a new state, 
 \begin_inset Formula $\theta^{(t+1)}$
 \end_inset
 
@@ -1421,7 +1423,7 @@ If
 , the overall transition probability is then given by:
 \begin_inset Formula 
 \begin{equation}
-T(\theta'|\theta)=S(\theta'\,|\,\theta)min(1,Q(\theta')/Q(\theta))\label{eq:overallTransitionmetropolis}
+T(\theta'|\theta)=S(\theta'\,|\,\theta)\min(1,Q(\theta')/Q(\theta))\label{eq:overallTransitionmetropolis}
 \end{equation}
 
 \end_inset
@@ -1463,10 +1465,10 @@ reference "eq:deTAILed balance"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-T(\theta'|\theta)Q(\theta) & =S(\theta'\,|\,\theta)min(1,Q(\theta')/Q(\theta))Q(\theta)\\
- & =S(\theta'\,|\,\theta)min(Q(\theta),Q(\theta'))\\
- & =S(\theta\,|\,\theta')min(Q(\theta'),Q(\theta))\\
- & =S(\theta\,|\,\theta')min(1,Q(\theta)/Q(\theta'))Q(\theta')\\
+T(\theta'|\theta)Q(\theta) & =S(\theta'\,|\,\theta)\min(1,Q(\theta')/Q(\theta))Q(\theta)\\
+ & =S(\theta'\,|\,\theta)\min(Q(\theta),Q(\theta'))\\
+ & =S(\theta\,|\,\theta')\min(Q(\theta'),Q(\theta))\\
+ & =S(\theta\,|\,\theta')\min(1,Q(\theta)/Q(\theta'))Q(\theta')\\
  & =T(\theta|\theta')Q(\theta')
 \end{align*}
 
@@ -1507,7 +1509,7 @@ with the variance chosen so that the probability of the candidate being
 
 \begin_layout Standard
 Simple forms of the Metropolis algorithm can be very slow when applied to
- problems such as Bayesian learning for neural networks
+ problems such as Bayesian learning for neural networks 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "neal1996bayesian"
@@ -1523,6 +1525,7 @@ reference "sub:The-hybrid-Monte"
 \end_inset
 
 ) , this problem can be alleviated by using the hybrid Monte Carlo algorithm
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "DUANE1987216"
@@ -1546,7 +1549,7 @@ name "sub:The-hybrid-Monte"
 
 \begin_layout Standard
 The hybrid Monte Carlo algorithm was originally developed by Duane et.al.
- for application in quantum chromodynamics
+ for application in quantum chromodynamics 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "DUANE1987216"
@@ -1554,14 +1557,14 @@ key "DUANE1987216"
 \end_inset
 
 .
- Radford Neal in his book on Bayesian Learning for Neural Networks
+ Radford Neal in his book on Bayesian Learning for Neural Networks 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "neal1996bayesian"
 
 \end_inset
 
-successfully applies this technique to Bayesian learning.
+ successfully applies this technique to Bayesian learning.
  The algorithm merges the Metropolis algorithm (reviewed in sec 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1648,7 +1651,7 @@ reference "sub:Using-a-full_BNN"
 \begin_inset Formula $n$
 \end_inset
 
-network parameters.
+ network parameters.
  The probability density for this variable under the canonical distribution
  is defined by :
 \end_layout
@@ -1716,7 +1719,7 @@ phase space
 \begin_inset Formula $\boldsymbol{p}$
 \end_inset
 
-together is then defined to be
+ together is then defined to be
 \end_layout
 
 \begin_layout Standard
@@ -1861,7 +1864,7 @@ where
 \end_inset
 
 .
- Radford Neal in his book
+ Radford Neal in his book 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "neal1996bayesian"
@@ -2165,12 +2168,12 @@ HMC cancels these effects exactly by adding a Metropolis accept/reject stage
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-min(1,\frac{\exp(-H(\boldsymbol{q^{*},\boldsymbol{p^{*}}}))}{\exp(-H(\boldsymbol{q,\boldsymbol{p}}))}
+\min(1,\frac{\exp(-H(\boldsymbol{q^{*},\boldsymbol{p^{*}}}))}{\exp(-H(\boldsymbol{q,\boldsymbol{p}}))}
 \end{equation}
 
 \end_inset
 
-In detail , given the number of of leapfrog steps, L, a dynamical transition
+In detail, given the number of of leapfrog steps, L, a dynamical transition
  is performed as follows:
 \end_layout
 
@@ -2252,7 +2255,7 @@ ask THang
 We track the average acceptance rate of the HMC move proposals, using an
  exponential moving average.
  If the average acceptance larger than a target acceptance rate, we can
- increase the step-size ,
+ increase the step-size, 
 \begin_inset Formula $\epsilon$
 \end_inset
 
@@ -2601,7 +2604,7 @@ and
 \end_inset
 
 .
- Several different acquisition functions have been proposed
+ Several different acquisition functions have been proposed 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "hoffman2011portfolio,brochu2010tutorial"
@@ -2619,7 +2622,7 @@ GP Upper Confidence Bound(GP-UCB)
 \series default
 It exploits the idea of exploiting lower confidence bounds (upper, when
  considering maximisation) to construct acquisition functions that minimize
- regret over the course of their optimization
+ regret over the course of their optimization 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "srinivas2009gaussian"
@@ -2695,6 +2698,7 @@ High dimensional Bayesian Optimisation via Random Embeddings
 \begin_layout Standard
 Random Embeddings Bayesian Optimisation (REMBO) has been developed by Ziyu
  Wang et.al.
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "wang2013bayesian"
@@ -2778,7 +2782,7 @@ of
 \begin_inset Formula $\mathcal{T}^{\perp}$
 \end_inset
 
-the 
+ the 
 \series bold
 constant subspace.
 \end_layout
@@ -2924,6 +2928,7 @@ High Dimensional Bayesian Optimisation via Additive Models
 
 \begin_layout Standard
 This method was developed by Kandasamy et.al.
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Kandasamy:2015aa"
@@ -3006,11 +3011,11 @@ reference "sec:Neural-Networks"
 \end_inset
 
 , used maximum likelihood to determine the network parameters.
- Regularized maximum likelihood can be interpreted as MAP (maximum a posteriori)
+ Regularized maximum likelihood can be interpreted as maximum a posteriori(MAP)
  approach in which the regularizer can be viewed as the logarithm of a prior
  parameter distribution.
  However, a full Bayesian treatment of neural networks, requires us to marginali
-ze over the posterior distribution of parameters
+ze over the posterior distribution of parameters 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "bishop2006pattern,neal1996bayesian"
@@ -3045,8 +3050,8 @@ A neural network can be parametrized by its weights and biases, collectively
 \begin_inset Formula $\boldsymbol{\theta},$
 \end_inset
 
- that define what function from the input to the output is denoted by the
- network.
+ that define what function from the input to the output is represented by
+ the network.
  This function can then be written as 
 \begin_inset Formula $f(\mathbf{x},\boldsymbol{\theta})$
 \end_inset
@@ -3124,10 +3129,10 @@ The ultimate objective is to predict the target value for new test cases,
 \end_inset
 
  given the corresponding inputs, 
-\begin_inset Formula $x^{(n+1)},$
+\begin_inset Formula $\xvec^{(n+1)},$
 \end_inset
 
-using the information in the training set.
+ using the information in the training set.
  To make the prediction we require the posterior distribution for 
 \begin_inset Formula $\boldsymbol{\theta}$
 \end_inset
@@ -3143,7 +3148,7 @@ using the information in the training set.
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\ \propto\ P(\gvec)P(\thevec|\gvec)\prod_{c=1}^{n}P(y^{(c)}\,|\,\gvec^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})\label{eq:probability NN}
+P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\ \propto\ P(\gvec)P(\thevec|\gvec)\prod_{i=1}^{n}P(y^{(i)}\,|\,\gvec^{(i)},\boldsymbol{\theta},\boldsymbol{\gamma})\label{eq:probability NN}
 \end{equation}
 
 \end_inset
@@ -3214,7 +3219,7 @@ position
 \begin_inset Quotes erd
 \end_inset
 
- variables, 
+ variable, 
 \begin_inset Formula $\boldsymbol{q},$
 \end_inset
 
@@ -3293,12 +3298,13 @@ e.
 \begin_layout Standard
 \begin_inset Formula 
 \[
-E(\boldsymbol{\theta})\;=\;\tau_{p}\sum_{i=1}^{k}\frac{\theta_{i}^{2}}{2}+\tau\sum_{c=1}^{n}\frac{(y^{(c)}-f(\xvec^{(c)},\theta))^{2}}{2}
+E(\boldsymbol{\theta})\;=\;\tau_{p}\sum_{i=1}^{k}\frac{\theta_{i}^{2}}{2}+\tau_{n}\sum_{c=1}^{n}\frac{(y^{(c)}-f(\xvec^{(c)},\theta))^{2}}{2}
 \]
 
 \end_inset
 
-where k is the total number of parameters in the neural net i.e 
+where k is the total number of parameters in the neural net i.e.
+ 
 \begin_inset Formula $\boldsymbol{\theta}=\{\theta_{1},\dots,\theta_{k}\}$
 \end_inset
 
@@ -3350,7 +3356,7 @@ reference "eq:prediction"
 
 \begin_layout Standard
 We plan to use the predictions from the neural network to perform Bayesian
- Optimisation using the GP-LCB acquisition function
+ Optimisation using the GP-LCB acquisition function 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "brochu2010tutorial"
@@ -3363,7 +3369,7 @@ key "brochu2010tutorial"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray}
-LCB(\xvec) & = & \mu(\xvec)\text{−}K\sigma(\xvec)
+LCB(\xvec) & = & \mu(\xvec)\text{−}\kappa\sigma(\xvec)
 \end{eqnarray}
 
 \end_inset
@@ -3400,6 +3406,17 @@ reference "eq:sigmaLCB"
 
 ).
  
+\begin_inset Formula $\kappa$
+\end_inset
+
+ is a constant which allows us to explicity decide the tradeoff between
+ exploration and exploitation.
+ A high value of 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ prioritizes exploration by evaluating the function at points with a high
+ variance, while a low
 \end_layout
 
 \begin_layout Standard
@@ -3697,7 +3714,7 @@ name "fig:The-posterior-parameter"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -3802,10 +3819,6 @@ name "fig:The-overall-fit_prelim"
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -3844,7 +3857,7 @@ elaborate
 
  acquisition function was used.
  To illustrate the process of Bayesian optimisation, we show some intermediate
- optimisation results on the one dimensional Forrester function
+ optimisation results on the one dimensional Forrester function 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "forrester2008engineering"
@@ -4335,7 +4348,7 @@ Following this we evaluate the performance of Bayesian optimisation on a
 \emph on
 GPyOpt 
 \emph default
-library as used in
+library as used in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "gonzalez2015bayesian"
@@ -4358,7 +4371,7 @@ reference "fig:Results-BayesOpt-standard"
 \series bold
 Forrester function : 
 \series default
-This function has been described by Forrester et.al
+This function has been described by Forrester et.al 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "forrester2008engineering"
@@ -4392,7 +4405,7 @@ key "forrester2008engineering"
 Rosenbrock (2D) function : 
 \series default
 The Rosenbrock function is a very popular function for evaluating the performanc
-e of optimisation algorithms
+e of optimisation algorithms 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "dixon1978global"
@@ -4403,7 +4416,7 @@ key "dixon1978global"
  The function is uni-modal, and the global minimum lies in a narrow, parabolic
  valley.
  However, even though this valley is easy to find, convergence to the minimum
- is difficult
+ is difficult 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "picheny2013benchmark"
@@ -4503,20 +4516,72 @@ The function is highly multi-modal having 6 local minima, out of which two
  
 \end_layout
 
-\begin_layout Subsection
-Potential applications
-\end_layout
-
-\begin_layout Standard
-Such as robotics 
-\end_layout
-
 \begin_layout Section
 Conclusions 
 \end_layout
 
 \begin_layout Standard
-The results are very promising 
+The project aimed at exploring the use of probabilistic models provided
+ by Bayesian neural networks to model distributions on functions for Bayesian
+ optimisation.
+ 
+\end_layout
+
+\begin_layout Standard
+Priors were defined on functions by assuming a Gaussian distribution on
+ each of the parameters of the neural network.
+ The posterior distribution was found by using the available data from objective
+ function evaluations to train the model.
+ The targets are assumed to be a single real value which can be modelled
+ with a Gaussian noise distribution.
+ A hybrid Monte Carlo approach was used to draw samples from the posterior
+ distribution of the parameters.
+ The samples were used to make a probabilistic model on the predictive distribut
+ion of the neural network.
+ This distribution over functions was then used to perform Bayesian optimisation
+ on the objective function.
+ 
+\end_layout
+
+\begin_layout Standard
+The performance of this Bayesian neural network(BNN) based model for Bayesian
+ optimisation was then compared to one using a Gaussian process (GP) based
+ model on a set of popular benchmark functions.
+ The performance is slightly better than GPs on the Rosenbrock function
+ and slightly worse on the six hump camel function.
+ The performance is very similar on the Forrester function and the McCormick
+ function.
+ Overall the performance of the BNN based model is competitive with the
+ GP based model.
+\end_layout
+
+\begin_layout Standard
+The BNN based model provides much more flexibility than the GP based model
+ on the class of functions it can model.
+ Moreover the priors on the parameters of the network can be chosen to be
+ non Gaussian.
+ For instance, using a Cauchy distribution on the parameters can allow the
+ modelling of non-smooth functions.
+ BNN based models can also potentially exploit the excellent dimensionality
+ reduction properties and feature selection properties of neural networks
+ to perform Bayesian optimisation in high dimensions.
+ These ideas will be more thoroughly explored in future work.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Why can GPs not scale to high Dimensions.
+ Ask thang and nilesh.
+ 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

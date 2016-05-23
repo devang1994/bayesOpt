@@ -31,9 +31,10 @@ def readPickle():
 
     # seed1000BayesOptLogsGPyOPTmccormick
     # seed1045BayesOptLogsmccormick
-    func_name = 'mccormick'
-    func_name_GP = 'GPyOPTmccormick'
-    totalFevals = 40
+
+    # func_name = 'mccormick'
+    # func_name_GP = 'GPyOPTmccormick'
+    # totalFevals = 40
 
     # seed1000BayesOptLogsrosenbrock_2D
     # seed1000BayesOptLogsGPyOPTRosenbrock2D
@@ -41,6 +42,19 @@ def readPickle():
     # func_name = 'rosenbrock_2D'
     # func_name_GP = 'GPyOPTrosenbrock_2D_noisy'
     # totalFevals = 40
+
+
+    # k35seed1049init_random6BayesOptLogssixhumpcamel
+    # k40seed1049init_random6BayesOptLogssixhumpcamel
+
+    func_name='sixhumpcamel'
+
+    prefix='k40'
+    mid='init_random6'
+
+    func_name_GP = 'GPyOPTcamel'
+    totalFevals = 40
+
 
     # actual_min = -1.96729
     allBvals = np.asarray([])
@@ -53,7 +67,7 @@ def readPickle():
         print seed
         # seed=1000
         # toDump = {'bVals': bVals, 't': time_taken, 'seed': seed, 'k': k, 'init_random': init_random}
-        nameOfFile = 'pickles/seed{}BayesOptLogs{}.pkl'.format(seed, func_name)
+        nameOfFile = 'pickles/{}seed{}{}BayesOptLogs{}.pkl'.format(prefix,seed,mid, func_name)
 
         dumpFile = pickle.load(open(nameOfFile, "rb"))
 
@@ -132,7 +146,11 @@ def readPickle():
     x = range(1, (mu.shape[0]) + 1)
     xGP = np.arange(1, (mu.shape[0]) + 1) + 0.15
     plt.errorbar(x, mu, yerr=sd, fmt="o-", label='BNN')
-    # plt.errorbar(xGP, muGP, yerr=sdGP, fmt="o-", label='GP')
+    xGP=xGP[0:40]
+    print xGP.shape
+    print muGP.shape
+    print sdGP[0].shape
+    plt.errorbar(xGP[0:40], muGP, yerr=sdGP, fmt="o-", label='GP')
 
     pylab.grid(True)
     plt.xlabel('Function Evaluation')
@@ -141,8 +159,8 @@ def readPickle():
     # plt.savefig('report_images/{}BestValsBoxLike.png'.format(func_name), dpi=300, bbox_inches='tight')
 
 
-    plt.figure()
-    bp=plt.boxplot(allBvals,0,'',patch_artist=True)
+    # plt.figure()
+    # bp=plt.boxplot(allBvals,0,'',patch_artist=True)
 
 
     # bp1=plt.boxplot(allBvalsGP,0,'',patch_artist=True)
