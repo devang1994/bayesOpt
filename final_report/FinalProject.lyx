@@ -87,20 +87,14 @@ Devang Agrawal (Queens')
 F-
 \end_layout
 
-\begin_layout Title
-Bayesian Optimisation using Neural Networks
-\end_layout
-
-\begin_layout Author
-Devang Agrawal (Queens')
-\end_layout
-
-\begin_layout Section*
-Technical Abstract
-\end_layout
-
 \begin_layout Standard
-Bayesian Optimisation has been used for a myriad applications 
+\begin_inset CommandInset include
+LatexCommand include
+filename "Abstract.lyx"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -517,7 +511,7 @@ An illustration of a neural network with one hidden layer.
  The value for a hidden or output unit is a function of the weighted sum
  of values it receives from the units that are connected to it via the arrows.
  More hidden layers can be trivially added between the existing hidden units
- and the output units
+ and the output units 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "neal1996bayesian"
@@ -728,7 +722,7 @@ Here we show the rectified linear(ReLU) and the hyperbolic tangent(tanh)
  Being very close to linear they preserve many properties that make linear
  models easy to optimize with gradient based methods.
  However, they are not smooth, the abrupt changes in gradients associated
- with them can lead to issues when building probabilistic models
+ with them can lead to issues when building probabilistic models 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Snoek:2015aa"
@@ -2214,7 +2208,7 @@ Accept
  as the new state with probability:
 \begin_inset Formula 
 \[
-min(1,\frac{\exp(-H(\boldsymbol{q^{*},\boldsymbol{p^{*}}}))}{\exp(-H(\boldsymbol{q,\boldsymbol{p}}))}
+\min(1,\frac{\exp(-H(\boldsymbol{q^{*},\boldsymbol{p^{*}}}))}{\exp(-H(\boldsymbol{q,\boldsymbol{p}}))}
 \]
 
 \end_inset
@@ -2456,6 +2450,7 @@ centering
 
 \begin_layout Plain Layout
 An example of using Bayesian Optimisation on a toy 1D maximization problem
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "brochu2010tutorial"
@@ -2500,7 +2495,7 @@ name "fig:An-example-bayesOpt"
 \begin_inset Float algorithm
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset ERT
@@ -2891,7 +2886,7 @@ This function in
  Hence, the 1-dimensional embedding includes the 2-dimensional function’s
  optimizer.
  It is more efficient to search for the optimum along the 1-dimensional
- random embedding than in the original 2-dimensional space
+ random embedding than in the original 2-dimensional space 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "wang2013bayesian"
@@ -3409,14 +3404,19 @@ reference "eq:sigmaLCB"
 \begin_inset Formula $\kappa$
 \end_inset
 
- is a constant which allows us to explicity decide the tradeoff between
+ is a constant which allows us to explicitly decide the tradeoff between
  exploration and exploitation.
  A high value of 
 \begin_inset Formula $\kappa$
 \end_inset
 
  prioritizes exploration by evaluating the function at points with a high
- variance, while a low
+ variance, while a low 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ prioritizes exploitation by evaluating the function primarily based on
+ the prediction mean.
 \end_layout
 
 \begin_layout Standard
@@ -3486,12 +3486,9 @@ f(x)=\sin(7x)+\cos(17x)\;\;\;\;\;\;\;\text{for}\ x\in[-1,1]\label{eq:synthetic_s
 
 \end_inset
 
-A neural network with 3 hidden layers each of width 50 units each was used.
- The 
-\begin_inset Formula $tanh$
-\end_inset
-
- non-linearity was used in the neural network.
+A neural network with 3 hidden layers each of width 50 units was used.
+ The hyperbolic tangent(tanh) activation function was used in the neural
+ network.
  The HMC sampler was used to draw 5000 samples from the posterior distribution.
  Figure 
 \begin_inset CommandInset ref
@@ -3574,23 +3571,10 @@ reference "fig:The-overall-fit_prelim"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-comment on how prediction relates to samples
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset space \hfill{}
@@ -3714,7 +3698,7 @@ name "fig:The-posterior-parameter"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -3744,8 +3728,13 @@ centering
 \begin_inset Caption
 
 \begin_layout Plain Layout
-The fit of neural networks from four different samples from the posterior
- distribution of the network parameters
+Here, we use HMC to draw three well spaced samples from the posterior distributi
+on of the neural network parameters.
+ The neural network has three hidden layers with 50 units in each layer
+ and uses the tanh activation function.
+ The predictions of the neural networks represented by the three samples
+ are shown along with the true function and the training data available
+ for neural network training.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:samples fit"
@@ -3760,10 +3749,6 @@ name "fig:samples fit"
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -3773,7 +3758,7 @@ name "fig:samples fit"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -3805,6 +3790,8 @@ The overall fit of the neural network, averaged over a large number of samples
  The prediction matches the true function reasonably well.
  The uncertainty estimates are also modelled well, they are low near the
  training data-point and high away from them.
+ The neural network has three hidden layers with 50 units in each layer
+ and uses the tanh activation function.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:The-overall-fit_prelim"
@@ -3889,8 +3876,7 @@ reference "fig:Bayesian-Opt-forrester-fit"
 
 \end_inset
 
-, we show the Bayesian optimisation algorithm optimisaing the Forrester
- function.
+, we show the Bayesian optimisation algorithm optimising the Forrester function.
  We start with four random train points in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3898,7 +3884,7 @@ reference "fig:Number-of-Tra4"
 
 \end_inset
 
-, then a Bayesian neural network(BNN) model is fit to the data to decide
+, then a Bayesian neural network (BNN) model is fit to the data to decide
  the next proposal point based on the acquisition function.
  This is done by using a gradient based approach to minimise the acquisition
  function using the derivatives found earlier.
@@ -4099,12 +4085,14 @@ name "fig:Number-of-TP14"
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Bayesian Optimisation on Forrester Function.
- The posterior mean is the averaged prediction from a large number of samples
- from the posterior of the Bayesian neural network.
+Using a Bayesian neural network for Bayesian Optimisation on the Forrester
+ Function.
+ The posterior mean is the averaged prediction from 5000 samples from the
+ posterior of the Bayesian neural network.
  The standard deviation of the predictions of these samples was used to
  find the 95% confidence interval(95% C.I).
- 
+ The neural network has three hidden layers with 50 units in each layer
+ and uses the tanh activation function.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Bayesian-Opt-forrester-fit"
@@ -4151,7 +4139,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Forrester Function
+Forrester Function 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "forrester2008engineering"
@@ -4197,7 +4185,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Rosenbrock(2D) Function
+Rosenbrock(2D) Function 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "picheny2013benchmark"
@@ -4238,7 +4226,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-McCormick Function
+McCormick Function 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "adorio2005mvf"
@@ -4280,7 +4268,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Six Hump Camel Function
+Six Hump Camel Function 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "molga2005test"
@@ -4320,6 +4308,8 @@ Results of Bayesian Optimisation on some standard test functions.
 \end_inset
 
  percentile respectively.
+ The neural network has three hidden layers with 50 units in each layer
+ and uses the tanh activation function.
  
 \begin_inset CommandInset label
 LatexCommand label

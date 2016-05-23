@@ -60,27 +60,69 @@
 \begin_body
 
 \begin_layout Title
-
-\lang british
 Bayesian Optimisation using Neural Networks
 \end_layout
 
 \begin_layout Author
-
-\lang british
 Devang Agrawal (Queens')
 \end_layout
 
 \begin_layout Section*
-
-\lang british
 Technical Abstract
 \end_layout
 
 \begin_layout Standard
+Bayesian optimisation is an effective methodology for the global optimisation
+ of functions with expensive evaluations.
+ For instance, while designing robotic gaits, we may want to optimise the
+ function from the parameters of the robot gait to the speed of the robot.
+ Each function evaluation involves running a physical experiment on the
+ robot which could involve a lot of human effort.
+ Bayesian optimisation allows us to decide which experiment to run next,
+ utilising all the information from previous function evaluations.
+ 
+\end_layout
+
+\begin_layout Standard
+Bayesian optimisation relies on querying a physical distribution over functions
+ defined by a relatively cheap surrogate model.
+ An accurate model for this distribution over functions is critical to the
+ effectiveness of the approach and is typically fit using Gaussian processes
+ (GPs).
+ However GPs can only model a limited set of functions well, scaling them
+ to deal with higher dimensional functions is also very challenging.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 
 \lang british
-Bayesian Optimisation has been used for ..
+ask what other GP limitations.
+ High dimensional
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this project, we explore the use of Bayesian neural networks as an alternativ
+e to GPs to model the distribution over functions.
+ Bayesian neural networks define more flexible priors on functions and can
+ potentially be extended to high dimensional problems.
+ It is also possible to use Bayesian neural networks (BNNs) with non-Gaussian
+ priors (such as Cauchy) on its parameters to model non-smooth functions.
+ 
+\end_layout
+
+\begin_layout Standard
+We compare the performance of this BNN based model for Bayesian optimisation
+ to one using a GP based model.
+ The BNN based model performs competitively with state-of-the-art GP based
+ approaches.
+ 
 \end_layout
 
 \end_body
