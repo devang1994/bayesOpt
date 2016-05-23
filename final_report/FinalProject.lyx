@@ -6,6 +6,9 @@
 \begin_preamble
 \newcommand{\argmin}{\operatornamewithlimits{argmin}}
 \newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\xvec}{\boldsymbol{x}}
+\newcommand{\thevec}{\boldsymbol{\theta}}
+\newcommand{\gvec}{\boldsymbol{\gamma}}
 \usepackage{algorithm,algpseudocode}
 \end_preamble
 \use_default_options true
@@ -141,7 +144,7 @@ Traditionally machine learning algorithms have focussed on using a set of
 representation learning.
  
 \emph default
-Learned representation often result in much better performance than can
+Learned representations often result in much better performance than can
  be obtained with hand-designed representations.
  They also allow machine learning systems to rapidly adapt to new tasks,
  with minimal human intervention.
@@ -157,7 +160,7 @@ Learned representation often result in much better performance than can
 Such representational learning capabilities have allowed neural networks
  to reach state of the art performance in several applications including
  computer vision and natural language processing.
- They have been used get to human-level performance in several video games
+ They have been used to get human-level performance in several video games
 \begin_inset CommandInset citation
 LatexCommand cite
 key "mnih2015human"
@@ -203,7 +206,14 @@ key "kingma2014adam"
  We can use a Bayesian approach to neural network learning to find the posterior
  distribution of the network parameters by combining a simple prior on the
  network weights with the likelihoods of points observed in the training
- data.
+ data
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neal1996bayesian"
+
+\end_inset
+
+.
  Such a posterior distribution can give the predictive distributions of
  the target values in new 
 \begin_inset Quotes eld
@@ -216,6 +226,16 @@ test
  cases, given the input for that case, and the inputs and targets in the
  training cases.
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+mention dim reduction
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -240,8 +260,21 @@ key "jones1998efficient"
 
 \end_inset
 
-, optimizing control strategies in complex systems, and scientific simulation
- based studies.
+, optimizing control strategies in complex systems
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cully2015robots"
+
+\end_inset
+
+, and scientific simulation based studies
+\begin_inset CommandInset citation
+LatexCommand cite
+key "brochu2010tutorial"
+
+\end_inset
+
+.
  Bayesian optimization finds the optimum of 
 \emph on
 
@@ -277,8 +310,7 @@ key "rasmussen2006gaussian"
 In this project we aim to use the predictive distribution described by a
  Bayesian neural network (BNN) to model the distribution over functions.
  This can allow the use of the representation learning abilities of neural
- networks to hopefully learn a very accurate model on the distribution of
- functions.
+ networks to learn a very accurate model on the distribution of functions.
  A prior is defined on the distribution of functions by defining simple
  priors on the parameters of the neural networks, this provides a very flexible
  overall prior on the distribution of functions.
@@ -301,7 +333,14 @@ reference "fig:Functions-Cauchy-prior"
 
 ) .
  The weights and biases into the hidden units have independent Gaussian
- distributions.
+ distributions
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neal1996bayesian"
+
+\end_inset
+
+.
  
 \end_layout
 
@@ -756,7 +795,7 @@ Training neural networks
 \end_layout
 
 \begin_layout Standard
-We can define probabilistic models for regression tasks by using network
+We can define probabilistic models for regression tasks by using the network
  outputs to define the conditional distribution for the targets , 
 \begin_inset Formula $\boldsymbol{y}$
 \end_inset
@@ -770,7 +809,7 @@ We can define probabilistic models for regression tasks by using network
 \begin_inset Formula $y_{k}$
 \end_inset
 
- the conditional distribution of the targets might be defined to be a Gaussian,
+, the conditional distribution of the targets might be defined to be a Gaussian,
  with 
 \begin_inset Formula $y_{k}$
 \end_inset
@@ -990,6 +1029,13 @@ reference "eq:gaussian noise model"
 
 \begin_layout Section
 Markov Chain Monte Carlo methods
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Markov-Chain-Monte"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2931,8 +2977,6 @@ decomposition
 \end_layout
 
 \begin_layout Standard
-
-\lang english
 This method shows excellent performance when the function is indeed additive
  with mutually exclusive lower dimensional components but the performance
  degrades when the function is not well described by these assumptions.
@@ -3001,32 +3045,37 @@ A neural network can be parametrized by its weights and biases, collectively
 \begin_inset Formula $\boldsymbol{\theta},$
 \end_inset
 
- that define what network from input to output is denoted by the network.
+ that define what function from the input to the output is denoted by the
+ network.
  This function can then be written as 
 \begin_inset Formula $f(\mathbf{x},\boldsymbol{\theta})$
 \end_inset
 
-, where x is the input to the network.
+, where 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+ is the input to the network.
  A prior can be defined on the network parameters, this prior can depend
  on some hyperparameters, 
-\begin_inset Formula $\mathbf{\gamma}$
+\begin_inset Formula $\boldsymbol{\gamma}$
 \end_inset
 
 .
  The prior density for the parameters can be written as 
-\begin_inset Formula $P(\theta\,|\,\gamma)$
+\begin_inset Formula $P(\boldsymbol{\theta}\,|\,\boldsymbol{\gamma})$
 \end_inset
 
  and the prior density for the hyperparameters can be written as 
-\begin_inset Formula $P(\gamma).$
+\begin_inset Formula $P(\gvec).$
 \end_inset
 
  We have a training data-set given by 
-\begin_inset Formula $\mathbf{D}=\{(x^{(1)},y^{(1)}),\dots,(x^{(n)},y^{(n)})\}$
+\begin_inset Formula $\mathbf{D}=\{(\xvec^{(1)},y^{(1)}),\dots,(\xvec^{(n)},y^{(n)})\}$
 \end_inset
 
  , consisting of independent pairs of input values, 
-\begin_inset Formula $x^{(i)}$
+\begin_inset Formula $\xvec^{(i)}$
 \end_inset
 
 , and target values, 
@@ -3037,7 +3086,7 @@ A neural network can be parametrized by its weights and biases, collectively
  We aim to model the conditional distribution of target values given the
  input values.
  The required conditional probability density is given by 
-\begin_inset Formula $P(y\,|\, x,\theta,\gamma).$
+\begin_inset Formula $P(y\,|\, x,\thevec,\gvec).$
 \end_inset
 
 
@@ -3094,7 +3143,7 @@ using the information in the training set.
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\ \propto\ P(\gamma)P(\theta|\gamma)\prod_{c=1}^{n}P(y^{(c)}\,|\, x^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})\label{eq:probability NN}
+P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\ \propto\ P(\gvec)P(\thevec|\gvec)\prod_{c=1}^{n}P(y^{(c)}\,|\,\gvec^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})\label{eq:probability NN}
 \end{equation}
 
 \end_inset
@@ -3107,7 +3156,7 @@ Predictions on new data-points can then be made by integration with respect
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-P(y^{(n+1)}|x^{(n+1)},\boldsymbol{D})\;=\;\int P(y^{(n+1)}|x^{(n+1)},\boldsymbol{\theta},\boldsymbol{\gamma})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}
+P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{D})\;=\;\int P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{\theta},\boldsymbol{\gamma})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\thevec}\, d\mathbf{\gvec}
 \end{equation}
 
 \end_inset
@@ -3120,14 +3169,21 @@ For a regression model, the prediction that minimizes the expected squared-error
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}\label{eq:prediction}
+\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\thevec}\, d\boldsymbol{\gamma}\label{eq:prediction}
 \end{equation}
 
 \end_inset
 
 Since these integrals take the form of expectation of functions with respect
  to the posterior distribution, they can be tackled by using a Markov chain
- Monte Carlo approach.
+ Monte Carlo approach as reviewed in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Markov-Chain-Monte"
+
+\end_inset
+
+.
  We can approximate the integral with the average value of the function
  over a sample of values from the posterior.
  
@@ -3163,8 +3219,8 @@ position
 \end_inset
 
  of an imaginary physical system.
- The hyperparameters remain fixed throughout one hybrid Monte Carlo update.
- Hence we can ignore all energy terms depending only on the hyperparameters.
+ The hyperparameters remain fixed throughout the hybrid Monte Carlo updates,
+ hence we can ignore all energy terms depending only on the hyperparameters.
  For the generic case described by equation (
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3179,7 +3235,7 @@ reference "eq:probability NN"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-E(\boldsymbol{\theta})=F(\boldsymbol{\gamma})-\log P(\mathbf{\theta}|\mathbf{\gamma})-\sum_{c=1}^{n}P(y^{(c)}\,|\, x^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})
+E(\boldsymbol{\theta})=F(\gvec)-\log P(\thevec|\gvec)-\sum_{c=1}^{n}P(y^{(c)}\,|\,\xvec^{(c)},\boldsymbol{\theta},\boldsymbol{\gamma})
 \end{equation}
 
 \end_inset
@@ -3191,13 +3247,26 @@ where
  is any convenient function of the hyperparameters.
  The detailed form of the energy function will obviously depend on the network
  architecture, the prior, and the data model used.
- For the purpose of this project we put a Gaussian prior with mean zero
- and standard deviation 
+ Here, we put a Gaussian prior with mean zero and standard deviation 
 \begin_inset Formula $\sigma_{p}$
 \end_inset
 
  on each of the network parameters.
- We also assume that the targets are a single real value which can be modelled
+ As mentioned in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neal1996bayesian"
+
+\end_inset
+
+, this is not necessary for defining Bayesian neural networks, and we can
+ assume different priors (such as the Cauchy distribution) to model functions
+ with different properties(such as non-smooth functions).
+ 
+\end_layout
+
+\begin_layout Standard
+We also assume that the targets are a single real value which can be modelled
  with a Gaussian noise distribution with standard deviation 
 \begin_inset Formula $\sigma_{n}$
 \end_inset
@@ -3224,7 +3293,7 @@ e.
 \begin_layout Standard
 \begin_inset Formula 
 \[
-E(\boldsymbol{\theta})\;=\;\tau_{p}\sum_{i=1}^{k}\frac{\theta_{i}^{2}}{2}+\tau\sum_{c=1}^{n}\frac{(y^{(c)}-f(x^{(c)},\theta))^{2}}{2}
+E(\boldsymbol{\theta})\;=\;\tau_{p}\sum_{i=1}^{k}\frac{\theta_{i}^{2}}{2}+\tau\sum_{c=1}^{n}\frac{(y^{(c)}-f(\xvec^{(c)},\theta))^{2}}{2}
 \]
 
 \end_inset
@@ -3294,17 +3363,17 @@ key "brochu2010tutorial"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray}
-LCB(x) & = & \mu(x)\text{−}K\sigma(x)
+LCB(\xvec) & = & \mu(\xvec)\text{−}K\sigma(\xvec)
 \end{eqnarray}
 
 \end_inset
 
 where 
-\begin_inset Formula $\mu(x)$
+\begin_inset Formula $\mu(\xvec)$
 \end_inset
 
  is the prediction at point 
-\begin_inset Formula $x$
+\begin_inset Formula $\xvec$
 \end_inset
 
  as given by equation (
@@ -3315,11 +3384,11 @@ reference "eq:muLCB-1"
 \end_inset
 
 ) , and 
-\begin_inset Formula $\sigma(x)$
+\begin_inset Formula $\sigma(\xvec)$
 \end_inset
 
  is the standard deviation at point 
-\begin_inset Formula $x$
+\begin_inset Formula $\xvec$
 \end_inset
 
  calculated in equation (
@@ -3336,8 +3405,8 @@ reference "eq:sigmaLCB"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray}
-\mu(x) & = & \int f(x,\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}\label{eq:muLCB-1}\\
-\sigma(x) & = & \sqrt{\int(f(x,\boldsymbol{\theta})-\mu(x))^{2}P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\theta}\, d\mathbf{\gamma}}\label{eq:sigmaLCB}
+\mu(\xvec) & = & \int f(\xvec,\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\thevec d\gvec\label{eq:muLCB-1}\\
+\sigma(\xvec) & = & \sqrt{\int(f(\xvec,\boldsymbol{\theta})-\mu(\xvec))^{2}P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\thevec d\gvec}\label{eq:sigmaLCB}
 \end{eqnarray}
 
 \end_inset
@@ -3346,7 +3415,7 @@ With
 \begin_inset Formula $N$
 \end_inset
 
- , samples from the posterior distribution of the parameters,
+ samples, from the posterior distribution of the parameters,
 \begin_inset Formula $\{\boldsymbol{\theta_{1}},\dots,\boldsymbol{\theta_{N}}\}$
 \end_inset
 
@@ -3356,13 +3425,23 @@ With
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray}
-\mu(x) & = & \frac{1}{N}\sum_{i=1}^{N}f(x,\boldsymbol{\theta_{i}})\label{eq:muLCB-MCMC}\\
-\sigma(x) & = & \sqrt{\frac{1}{N}\sum_{i=1}^{N}(f(x,\boldsymbol{\theta_{i}})-\mu(x))^{2}}\label{eq:sigmaLCB-MCMC}
+\mu(\xvec) & = & \frac{1}{N}\sum_{i=1}^{N}f(\xvec,\boldsymbol{\theta_{i}})\label{eq:muLCB-MCMC}\\
+\sigma(\xvec) & = & \sqrt{\frac{1}{N}\sum_{i=1}^{N}(f(\xvec,\boldsymbol{\theta_{i}})-\mu(\xvec))^{2}}\label{eq:sigmaLCB-MCMC}
 \end{eqnarray}
 
 \end_inset
 
+In Bayesian optimisation, to decide the next point to evaluate the function
+ on, we need to solve an optimisation problem on the acquisition function.
+ For this we require the derivatives of the acquisition function with respect
+ to 
+\begin_inset Formula $\xvec$
+\end_inset
 
+ .
+ This derivative can be easily expressed in terms of samples from the posterior
+ of the neural network.
+ 
 \end_layout
 
 \begin_layout Subsubsection
@@ -3371,7 +3450,7 @@ Verifying correctness
 
 \begin_layout Standard
 To verify the correctness of the above implementation, we show some preliminary
- results on a dimensional synthetic sinusoidal dataset.
+ results on a one dimensional synthetic sinusoidal dataset.
  The dataset was generated by evaluating the function in equation (
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3390,7 +3469,7 @@ f(x)=\sin(7x)+\cos(17x)\;\;\;\;\;\;\;\text{for}\ x\in[-1,1]\label{eq:synthetic_s
 
 \end_inset
 
-A neural network with 3 hidden layers each of width 50 units was used.
+A neural network with 3 hidden layers each of width 50 units each was used.
  The 
 \begin_inset Formula $tanh$
 \end_inset
@@ -3412,17 +3491,26 @@ reference "fig:The-posterior-parameter"
 
 \end_inset
 
- shows the histogram of the of one of the parameters (
+ shows the histogram of the posterior of one of the parameters (
 \begin_inset Formula $\theta_{2501}$
 \end_inset
 
 ) .
  It can be seen that the Markov chains have not converged to a single mode
  and instead move between several modes.
+ This is confirmed by the multi-modal nature of the histogram of one of
+ the parameters in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-posterior-parameter"
+
+\end_inset
+
+.
  This can be attributed to the large number of modes that are likely to
  be present in the posterior.
- The algorithm is trying to explain 20 training data-points with about 5000
- parameters in the neural network.
+ The algorithm is explaining 20 training data-points with about 5000 parameters
+ of the neural network.
  Multiple configurations of the parameters can explain the training data
  very well.
  To confirm this we plot the predictions made by the neural networks represented
@@ -3575,7 +3663,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-The histogram of the parameter 2501 of the neural network.
+The histogram of the posterior of parameter 2501 of the neural network.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -3696,7 +3784,10 @@ centering
 
 \begin_layout Plain Layout
 The overall fit of the neural network, averaged over a large number of samples
- from the neural network
+ from the neural network.
+ The prediction matches the true function reasonably well.
+ The uncertainty estimates are also modelled well, they are low near the
+ training data-point and high away from them.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:The-overall-fit_prelim"
@@ -3739,8 +3830,8 @@ Bayesian Optimisation results
 \end_layout
 
 \begin_layout Standard
-The Bayesian neural network(BNN) model was then used to perform Bayesian
- optimisation.
+The Bayesian neural network(BNN) model, implemented above was then used
+ to perform Bayesian optimisation.
  The LCB
 \begin_inset Note Note
 status open
@@ -3752,7 +3843,7 @@ elaborate
 \end_inset
 
  acquisition function was used.
- To illustrate the process of Bayesian Optimisation, we show some intermediate
+ To illustrate the process of Bayesian optimisation, we show some intermediate
  optimisation results on the one dimensional Forrester function
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -3785,7 +3876,8 @@ reference "fig:Bayesian-Opt-forrester-fit"
 
 \end_inset
 
-, we show the Bayesian optimisation algorithm in action.
+, we show the Bayesian optimisation algorithm optimisaing the Forrester
+ function.
  We start with four random train points in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3795,6 +3887,8 @@ reference "fig:Number-of-Tra4"
 
 , then a Bayesian neural network(BNN) model is fit to the data to decide
  the next proposal point based on the acquisition function.
+ This is done by using a gradient based approach to minimise the acquisition
+ function using the derivatives found earlier.
  Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -4234,8 +4328,22 @@ name "fig:Results-BayesOpt-standard"
 \end_layout
 
 \begin_layout Standard
-Following this we evaluate the performance of Bayesian Optimisation on a
- few standard functions, the results are shown in Figure 
+Following this we evaluate the performance of Bayesian optimisation on a
+ few standard functions.
+ The results are compared to those from a Gaussian process(GP) based model.
+ The 
+\emph on
+GPyOpt 
+\emph default
+library as used in
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gonzalez2015bayesian"
+
+\end_inset
+
+, was used to get the results for GPs.
+ The results are shown in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Results-BayesOpt-standard"
@@ -4400,7 +4508,7 @@ Potential applications
 \end_layout
 
 \begin_layout Standard
-Such as robotics
+Such as robotics 
 \end_layout
 
 \begin_layout Section

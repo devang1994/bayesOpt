@@ -169,7 +169,7 @@ def bayes_opt(func, xr, hWidths, precisions, vy, numDim, actual_min=0.0, initial
             plt.ylabel('y')
             # plt.axis([0, 1, -5, 5])
 
-            plt.savefig('fit_images_forrester/v2BNNforresterNtrain{}.png'.format(xtrain.shape[0]), dpi=300,
+            plt.savefig('fit_images_forrester/v2BNN{}Ntrain{}.png'.format(func.func_name,xtrain.shape[0]), dpi=300,
                         bbox_inches='tight')
 
         xtrain = np.vstack((xtrain, next_query))
@@ -257,6 +257,8 @@ if __name__ == '__main__':
     # numDim = len(xr) / 2
 
     # print 'lower minstepsize brannin with 30, evo, k=10 '
+
+
     for seed in range(1000, 1050):
         print 'SEED {}'.format(seed)
         t0 = time.time()
