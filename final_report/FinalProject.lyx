@@ -2800,7 +2800,7 @@ reference "fig:An-example-bayesOpt"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -2975,7 +2975,7 @@ High Dimensional Bayesian Optimisation
 Bayesian optimisation with neural networks can also potentially deal with
  high dimensional global optimisation problems.
  Through multiple non-linear transforms neural networks can potentially
- find a non-linear lower dimensional manifold in a high dimensional spaces
+ find a non-linear lower dimensional manifold in a high dimensional space
  which encapsulates most of the variance of the objective function.
  A neural network based model may be able to take advantage of such structure
  for Bayesian optimisation.
@@ -3300,7 +3300,7 @@ name "sub:Using-a-full_BNN"
 
 \begin_layout Standard
 In this section, we begin by reviewing Bayesian neural networks, we build
- on the Markov chain Monte Carlo approach we introduced in section 
+ on the Markov chain Monte Carlo approach introduced in section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Markov-Chain-Monte"
@@ -3369,8 +3369,18 @@ key "bishop2006pattern,neal1996bayesian"
 .
  In this section we discuss an implementation of a Bayesian neural network
  in which network parameters are updated using the hybrid Monte Carlo algorithm.
- The hyperparameters are updated separately by using Gibbs sampling.
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The hyperparameters are updated separately by using Gibbs sampling.
+ 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3435,7 +3445,7 @@ A neural network can be parametrized by its weights and biases, collectively
  We aim to model the conditional distribution of target values given the
  input values.
  The required conditional probability density is given by 
-\begin_inset Formula $P(y\,|\,x,\thevec,\gvec).$
+\begin_inset Formula $P(y\,|\,\xvec,\thevec,\gvec).$
 \end_inset
 
 
@@ -3492,7 +3502,7 @@ The ultimate objective is to predict the target value for new test cases,
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\ \propto\ P(\gvec)P(\thevec|\gvec)\prod_{i=1}^{n}P(y^{(i)}\,|\,\gvec^{(i)},\boldsymbol{\theta},\boldsymbol{\gamma})\label{eq:probability NN}
+P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\ \propto\ P(\gvec)P(\thevec|\gvec)\prod_{i=1}^{n}P(y^{(i)}\,|\,\xvec^{(i)},\boldsymbol{\theta},\boldsymbol{\gamma})\label{eq:probability NN}
 \end{equation}
 
 \end_inset
@@ -3610,8 +3620,11 @@ key "neal1996bayesian"
 
 , this is not necessary for defining Bayesian neural networks, and we can
  assume different priors (such as the Cauchy distribution) to model functions
- with different properties(such as non-smooth functions).
- 
+ with different properties (such as non-smooth functions).
+ Also, it is possible to assume a different prior on parameters corresponding
+ to different layers.
+ This can provide extra flexibility in expressing our prior beliefs about
+ the distribution of various parameters of the neural network.
 \end_layout
 
 \begin_layout Standard
@@ -3713,7 +3726,7 @@ key "brochu2010tutorial"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray}
-LCB(\xvec) & = & \mu(\xvec)\text{−}\kappa\sigma(\xvec)
+a_{LCB}(\xvec) & = & \mu(\xvec)\text{−}\kappa\sigma(\xvec)
 \end{eqnarray}
 
 \end_inset
@@ -3781,7 +3794,7 @@ With
 \begin_inset Formula $N$
 \end_inset
 
- samples, from the posterior distribution of the parameters,
+ samples, from the posterior distribution of the parameters, 
 \begin_inset Formula $\{\boldsymbol{\theta_{1}},\dots,\boldsymbol{\theta_{N}}\}$
 \end_inset
 
@@ -3804,7 +3817,7 @@ In Bayesian optimisation, to decide the next point to evaluate the function
 \begin_inset Formula $\xvec$
 \end_inset
 
- .
+.
  This derivative can be easily expressed in terms of samples from the posterior
  of the neural network.
  
@@ -3824,7 +3837,11 @@ reference "eq:synthetic_sinsoidal"
 
 \end_inset
 
-) at 20 random points and adding some noise to the observations.
+) at 20 random points and adding some Gaussian noise(
+\begin_inset Formula $\sigma=0.1$
+\end_inset
+
+) to the observations.
 \end_layout
 
 \begin_layout Standard
@@ -3836,7 +3853,7 @@ f(x)=\sin(7x)+\cos(17x)\;\;\;\;\;\;\;\text{for}\ x\in[-1,1]\label{eq:synthetic_s
 \end_inset
 
 A neural network with 3 hidden layers each of width 50 units was used.
- The hyperbolic tangent(tanh) activation function was used in the neural
+ The hyperbolic tangent (tanh) activation function was used in the neural
  network.
  The HMC sampler was used to draw 5000 samples from the posterior distribution.
  Figure 
@@ -3858,7 +3875,7 @@ reference "fig:The-posterior-parameter"
 \begin_inset Formula $\theta_{2501}$
 \end_inset
 
-) .
+).
  It can be seen that the Markov chains have not converged to a single mode
  and instead move between several modes.
  This is confirmed by the multi-modal nature of the histogram of one of
@@ -3876,8 +3893,8 @@ reference "fig:The-posterior-parameter"
  of the neural network.
  Multiple configurations of the parameters can explain the training data
  very well.
- To confirm this we plot the predictions made by the neural networks represented
- by individual HMC samples.
+ To confirm this, we plot the predictions made by the neural networks represente
+d by individual HMC samples.
  Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -4179,7 +4196,7 @@ Bayesian Optimisation results
 \end_layout
 
 \begin_layout Standard
-The Bayesian neural network(BNN) model, implemented above was then used
+The Bayesian neural network (BNN) model, implemented above was then used
  to perform Bayesian optimisation.
  The lower confidence bound (LCB) acquisition function was used.
  To illustrate the process of Bayesian optimisation, we show some intermediate
