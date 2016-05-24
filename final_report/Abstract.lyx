@@ -73,7 +73,7 @@ Technical Abstract
 
 \begin_layout Standard
 Bayesian optimisation is an effective methodology for the global optimisation
- of functions with expensive evaluations.
+ of black-box functions with expensive evaluations.
  For instance, while designing robotic gaits, we may want to optimise the
  function from the parameters of the robot gait to the speed of the robot.
  Each function evaluation involves running a physical experiment on the

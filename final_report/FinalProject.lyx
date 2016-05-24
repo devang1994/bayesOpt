@@ -125,6 +125,34 @@ Introduction
 \end_layout
 
 \begin_layout Standard
+
+\emph on
+The report is organised into 6 sections.
+ The Introduction (1) describes the Bayesian optimisation method and explains
+ why Bayesian neural networks are well suited for performing Bayesian optimisati
+on.
+ In section (2) we give a brief introduction to neural networks and how
+ they can be used to create probabilistic models.
+ In section (3) we review Markov Chain Monte Carlo methods including the
+ Metropolis algorithm and the hybrid Monte Carlo algorithm.
+ Section (4) serves as a brief introduction to Bayesian optimisation, we
+ also briefly review the existing literature on performing Bayesian optimisation
+ in high dimensions.
+ In Section (5) we review Bayesian neural networks and describe how to use
+ them for Bayesian optimisation, we compare the performance of our method
+ to one using Gaussian processes and report competitive results.
+ The Conclusion (6) presents the main conclusions of the project and suggests
+ some ideas for future work.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Traditionally machine learning algorithms have focussed on using a set of
  expertly curated features of inputs to make predictions.
  However in various tasks, especially in computer vision and natural language
@@ -222,7 +250,7 @@ reference "fig:An-illustration-autoencoder"
 Most neural network applications use maximum likelihood estimates for the
  parameters of the neural network, such estimates can be found by minimising
  an error function such as the sum of squared errors between the target
- and predictions.
+ and predictions, for real-valued outputs.
  The backpropogation algorithm can be used to calculate the gradients of
  the error with respect to each of the parameters, this can then be used
  in a gradient based optimisation schedule such as Adam 
@@ -264,14 +292,14 @@ test
 \end_layout
 
 \begin_layout Standard
-Bayesian optimisation is used in applications where we require the zeroth
- order optimisation of an expensive to evaluate function 
+Bayesian optimisation is an active learning method, in which we try to optimise
+ a black-box function 
 \begin_inset Formula $f$
 \end_inset
 
-.
- Some examples are hyper-parameter tuning in expensive machine learning
- algorithms 
+ which is expensive to evaluate.
+ It has been successfully used in many wide ranging applications such as
+ hyper-parameter tuning in expensive machine learning algorithms 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "snoek2012practical"
@@ -308,8 +336,10 @@ key "brochu2010tutorial"
 
 
 \emph default
- by using as few queries as possible by managing exploration and exploitation
- 
+ by using the information from all the previous evaluations of the function
+ to learn a distribution over functions.
+ The algorithm then endeavours to optimise the function in as few queries
+ as possible by managing exploration and exploitation 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "mockus1978application"
@@ -317,31 +347,38 @@ key "mockus1978application"
 \end_inset
 
 .
- The algorithm relies on querying a distribution over functions defined
- by a relatively cheap surrogate model.
- An accurate model for this distribution over functions is critical to the
- effectiveness of the approach and is typically fit using Gaussian processes
- (GPs) 
+ An accurate and cheap model for the distribution over functions is critical
+ to the effectiveness of the approach, typically Gaussian processes (GPs)
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "rasmussen2006gaussian"
 
 \end_inset
 
-.
+ are used to model this distribution over functions.
  However, GPs can only model a limited class of functions well.
- Using GPs on a high dimensional input is also very challenging restricting
- the dimensionality of the functions which can be optimised by this method
- 
+ The class of functions that can be modelled by the GP depends on its covariance
+ function which encodes the assumptions about the function.
+ A more expressive covariance function can increase the expressivity of
+ the GP, however the predictive distribution at each point is still restricted
+ to be a Gaussian.
+ Moreover, choosing the structural form of the covariance function is a
+ very challenging task and requires significant human intervention.
+ Recently some work has been done on frameworks for automatic kernel structure
+ discovery 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "wang2013bayesian"
+key "duvenaud2013structure"
 
 \end_inset
 
-.
- GPs also scale cubically with the number of observations as they require
- the inversion of a dense covariance matrix.
+, however that framework also has limitations.
+ This problem is exacerbated when using GPs on a high dimensional input
+ space, which restricts the dimensionality of the functions which can be
+ optimized by this method.
+ Another problem with GPs is that they scale cubically with the number of
+ observations as they require the inversion of a dense covariance matrix.
  This can make it challenging to use them on functions which require a moderatel
 y large number of evaluations to optimise.
  
@@ -356,9 +393,14 @@ In this project we aim to use the predictive distribution described by a
  This method also scales linearly with the number of observations and can
  hence allow optimisation when a large number of function evaluations are
  needed.
- Such a method, can also potentially use the feature selection and dimensionalit
-y reduction properties of neural networks to effectively perform Bayesian
- optimisation for high dimensional functions.
+ Neural networks can employ multiple non-linear transforms to extract relevant
+ information from high dimensional inputs.
+ This can allow them to learn an accurate model in a high-dimensional input
+ space to effectively perform Bayesian optimisation.
+ Another possible extension of this approach to perform high dimensional
+ Bayesian optimisation will be to use autoencoders to learn a mapping into
+ a low-dimensional space in which Bayesian optimisation can be performed
+ more easily.
  
 \end_layout
 
@@ -505,7 +547,7 @@ centering
 
 \begin_layout Plain Layout
 An illustration of an autoencoder network with a bottleneck hidden layer.
- Such a network can be used to automoatically learn a low dimensional code
+ Such a network can be used to automatically learn a low dimensional code
  for the input data 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -543,23 +585,7 @@ name "fig:An-illustration-autoencoder"
 status open
 
 \begin_layout Plain Layout
-This report is organised into 9 sections.
- The Introduction (1) describes the motion capture problem being addressed
- and summarises existing work in the field.
- Tracking Framework (2) outlines the processes involved in the entire tracking
- process and Skeleton Definition (3) describes the information required
- to define a skeleton to be tracked as well as the definition of the state
- vector used to define a skeleton’s pose.
- Data Acquisition (4) shows how data is either acquired from the Kinect
- or generated by a simulation of a skeleton with a given pose used for testing.
- Segmentation (5) presents the algorithm for estimating the floor plane
- and segmenting the scene into di↵erent objects, one of which is selected
- for tracking.
- Trackers (6) presents the two tracking algorithms (GMM and Gauss-Newton)
- and their derivations and Performance & Results (7) shows the quantitative
- results of these trackers on simulated data and some subjective results.
- Conclusions (8) presents the main conclusions of the project as well as
- some possibilities for further improvements and 
+move stuff about sections and report sturcture here
 \end_layout
 
 \end_inset
@@ -795,7 +821,7 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -813,6 +839,13 @@ status collapsed
 
 \begin_layout Plain Layout
 The Rectified Linear Activation function
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:The-Rectified-LinearU"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -896,7 +929,29 @@ key "Snoek:2015aa"
 
 \end_inset
 
-Use of a non-linear activation function allows the overall function defined
+ The Rectified linear unit (ReLU) function is also a very popular activation
+ function, being very close to linear, they preserve many properties of
+ that make linear models easy to optimise with gradient based methods.
+ They are particularly popular for training 
+\begin_inset Quotes eld
+\end_inset
+
+deep
+\begin_inset Quotes erd
+\end_inset
+
+ neural network models.
+ However their unsmooth nature, with abrupt changes in their gradient can
+ cause issues when using them to build probabilistic models.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-Rectified-LinearU"
+
+\end_inset
+
+ shows the ReLU activation function.
+ Use of a non-linear activation function allows the overall function defined
  by the neural network to be non-linear.
  It allows the hidden units to potentially represent 
 \begin_inset Quotes eld
@@ -1290,7 +1345,7 @@ reference "eq:carloIntegration"
 \begin_inset Formula $\theta^{(t)}$
 \end_inset
 
- are dependent as long as the independence is not too great 
+ are dependent as long as the dependence is not too great 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "neal1996bayesian"
@@ -3453,7 +3508,7 @@ E(\boldsymbol{\theta})\;=\;\tau_{p}\sum_{i=1}^{k}\frac{\theta_{i}^{2}}{2}+\tau_{
 
 \end_inset
 
-where k is the total number of parameters in the neural net i.e.
+where k is the total number of parameters in the neural network i.e.
  
 \begin_inset Formula $\boldsymbol{\theta}=\{\theta_{1},\dots,\theta_{k}\}$
 \end_inset
@@ -3987,17 +4042,7 @@ Bayesian Optimisation results
 \begin_layout Standard
 The Bayesian neural network(BNN) model, implemented above was then used
  to perform Bayesian optimisation.
- The LCB
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-elaborate
-\end_layout
-
-\end_inset
-
- acquisition function was used.
+ The lower confidence bound (LCB) acquisition function was used.
  To illustrate the process of Bayesian optimisation, we show some intermediate
  optimisation results on the one dimensional Forrester function 
 \begin_inset CommandInset citation
@@ -4698,13 +4743,16 @@ The performance of this Bayesian neural network(BNN) based model for Bayesian
  function.
  Overall the performance of the BNN based model is competitive with the
  GP based model.
+ 
 \end_layout
 
 \begin_layout Standard
 The BNN based model provides much more flexibility than the GP based model
  on the class of functions it can model.
- Moreover the priors on the parameters of the network can be chosen to be
- non Gaussian.
+ It also scales linearly with the number of observations allowing optimisation
+ of functions which require many evaluations.
+ Moreover, the priors on the parameters of the network can be chosen to
+ be non Gaussian.
  For instance, using a Cauchy distribution on the parameters can allow the
  modelling of non-smooth functions.
  BNN based models can also potentially exploit the excellent dimensionality
@@ -4712,21 +4760,6 @@ The BNN based model provides much more flexibility than the GP based model
  to perform Bayesian optimisation in high dimensions.
  These ideas will be more thoroughly explored in future work.
  
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Why can GPs not scale to high Dimensions.
- Ask thang and nilesh.
- 
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -4766,7 +4799,7 @@ The risk assessment submitted at the start of the project identified frequent
  the execution of the project.
  To avoid repetitive stress injury from excessive computer use, frequent
  breaks were taken by the author.
- Several exercises and best practices
+ Several exercises and best practices 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "dugan2011healthy"
