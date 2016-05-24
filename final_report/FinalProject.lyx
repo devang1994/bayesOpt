@@ -1,5 +1,5 @@
-#LyX 2.1 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
 \begin_document
 \begin_header
 \textclass IIBproject
@@ -23,13 +23,13 @@ eqs-within-sections
 \font_roman default
 \font_sans default
 \font_typewriter default
-\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -40,24 +40,15 @@ eqs-within-sections
 \use_hyperref false
 \papersize default
 \use_geometry true
-\use_package amsmath 1
-\use_package amssymb 1
-\use_package cancel 1
-\use_package esint 1
-\use_package mathdots 0
-\use_package mathtools 1
-\use_package mhchem 1
-\use_package stackrel 1
-\use_package stmaryrd 1
-\use_package undertilde 1
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 0
 \cite_engine basic
-\cite_engine_type default
-\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
-\justification true
 \use_refstyle 0
 \index Index
 \shortcut idx
@@ -266,6 +257,9 @@ test
 
  cases, given the input for that case, and the inputs and targets in the
  training cases.
+ Having a predictive distribution on target values is particularly useful
+ for sequential decision making and active learning tasks where it is important
+ to know both, the prediction and the uncertainty associated with it.
  
 \end_layout
 
@@ -443,7 +437,7 @@ centering
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Functions drawn from Cauchy priors on for networks with step-function hidden
@@ -507,7 +501,7 @@ centering
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 An illustration of an autoencoder network with a bottleneck hidden layer.
@@ -661,7 +655,7 @@ centering
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 An illustration of a neural network with one hidden layer.
@@ -815,7 +809,7 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 The Rectified Linear Activation function
@@ -850,7 +844,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 The Hyperbolic Tangent Activation function
@@ -874,7 +868,7 @@ name "fig:The-Hyperbolic-Tangent"
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Here we show the rectified linear(ReLU) and the hyperbolic tangent(tanh)
@@ -2202,9 +2196,9 @@ discretization, a single step finds the approximations to the position and
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align}
-p_{i}(\tau+\frac{\epsilon}{2}) & \;=\;p_{i}(\tau)\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau))\label{eq:leapfrog}\\
-q_{i}(\tau+\epsilon) & \;=\;q_{i}(\tau)\;+\;\epsilon\frac{p_{i}(\tau+\frac{\epsilon}{2})}{mi}\\
-p_{i}(\tau+\epsilon) & \;=\;p_{i}(\tau+\frac{\epsilon}{2})\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau+\epsilon))\label{eq:leapfrog end}
+p_{i}(\tau+\frac{\epsilon}{2}) & \;=\; p_{i}(\tau)\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau))\label{eq:leapfrog}\\
+q_{i}(\tau+\epsilon) & \;=\; q_{i}(\tau)\;+\;\epsilon\frac{p_{i}(\tau+\frac{\epsilon}{2})}{mi}\\
+p_{i}(\tau+\epsilon) & \;=\; p_{i}(\tau+\frac{\epsilon}{2})\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau+\epsilon))\label{eq:leapfrog end}
 \end{align}
 
 \end_inset
@@ -2607,7 +2601,7 @@ centering
 \end_inset
 
 
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 An example of using Bayesian Optimisation on a toy 1D maximization problem
@@ -2707,7 +2701,7 @@ end{algorithmic}
 
 \lang french
 
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Bayesian Optimisation
@@ -3031,7 +3025,7 @@ centering
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 This function in 
@@ -3247,7 +3241,7 @@ A neural network can be parametrized by its weights and biases, collectively
  We aim to model the conditional distribution of target values given the
  input values.
  The required conditional probability density is given by 
-\begin_inset Formula $P(y\,|\,x,\thevec,\gvec).$
+\begin_inset Formula $P(y\,|\, x,\thevec,\gvec).$
 \end_inset
 
 
@@ -3317,7 +3311,7 @@ Predictions on new data-points can then be made by integration with respect
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{D})\;=\;\int P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{\theta},\boldsymbol{\gamma})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\mathbf{\thevec}\,d\mathbf{\gvec}
+P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{D})\;=\;\int P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{\theta},\boldsymbol{\gamma})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\thevec}\, d\mathbf{\gvec}
 \end{equation}
 
 \end_inset
@@ -3330,7 +3324,7 @@ For a regression model, the prediction that minimizes the expected squared-error
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\mathbf{\thevec}\,d\boldsymbol{\gamma}\label{eq:prediction}
+\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\thevec}\, d\boldsymbol{\gamma}\label{eq:prediction}
 \end{equation}
 
 \end_inset
@@ -3583,8 +3577,8 @@ reference "eq:sigmaLCB"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray}
-\mu(\xvec) & = & \int f(\xvec,\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\thevec d\gvec\label{eq:muLCB-1}\\
-\sigma(\xvec) & = & \sqrt{\int(f(\xvec,\boldsymbol{\theta})-\mu(\xvec))^{2}P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\thevec d\gvec}\label{eq:sigmaLCB}
+\mu(\xvec) & = & \int f(\xvec,\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\thevec d\gvec\label{eq:muLCB-1}\\
+\sigma(\xvec) & = & \sqrt{\int(f(\xvec,\boldsymbol{\theta})-\mu(\xvec))^{2}P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\thevec d\gvec}\label{eq:sigmaLCB}
 \end{eqnarray}
 
 \end_inset
@@ -3783,7 +3777,7 @@ height_special "totalheight"
 status open
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Trace plots of three randomly chosen parameters of the neural network 
@@ -3822,7 +3816,7 @@ height_special "totalheight"
 status open
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 The histogram of the posterior of parameter 2501 of the neural network.
@@ -3886,7 +3880,7 @@ centering
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Here, we use HMC to draw three well spaced samples from the posterior distributi
@@ -3943,7 +3937,7 @@ centering
 \end_inset
 
 
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 The overall fit of the neural network, averaged over a large number of samples
@@ -4103,7 +4097,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Number of function evaluations = 4
@@ -4142,7 +4136,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Number of function evaluations = 5
@@ -4180,7 +4174,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Number of function evaluations = 8
@@ -4219,7 +4213,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Number of function evaluations = 14
@@ -4243,7 +4237,7 @@ name "fig:Number-of-TP14"
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Using a Bayesian neural network for Bayesian Optimisation on the Forrester
@@ -4297,7 +4291,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Forrester Function 
@@ -4343,7 +4337,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Rosenbrock(2D) Function 
@@ -4384,7 +4378,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 McCormick Function 
@@ -4426,7 +4420,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Six Hump Camel Function 
@@ -4450,7 +4444,7 @@ key "molga2005test"
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_inset Caption
 
 \begin_layout Plain Layout
 Results of Bayesian Optimisation on some standard test functions.
