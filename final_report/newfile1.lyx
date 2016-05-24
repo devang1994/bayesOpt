@@ -203,5 +203,185 @@ Such a method, can also potentially use the feature selection and dimensionality
  
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+Gibbs Sampling
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Gibbs sampling, 
+\emph default
+is one of the simplest Markov chain Monte Carlo method.
+ It is used for training 
+\begin_inset Quotes eld
+\end_inset
+
+Restricted Boltzmann machines
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "salakhutdinov2007restricted"
+
+\end_inset
+
+, to sample from ditributions over stochastic hidden units.
+ They are widely used for a large variety of statistical problems.
+\end_layout
+
+\begin_layout Standard
+Gibbs sampling is applicable when we wish to sample from a distribution
+ over a multi-dimensional parameter, 
+\begin_inset Formula $\thevec=\{\theta_{1},\dots,\theta_{p}\}$
+\end_inset
+
+.
+ We assume that sampling from the entire distribution given by 
+\begin_inset Formula $Q(\thevec)$
+\end_inset
+
+is infeasible, but we assume that we can generate a value from the conditional
+ distribution (under 
+\begin_inset Formula $Q$
+\end_inset
+
+) for one component of 
+\begin_inset Formula $\thevec$
+\end_inset
+
+ given all other components of 
+\begin_inset Formula $\thevec$
+\end_inset
+
+.
+ This allows us to simulate a Markov chain in which 
+\begin_inset Formula $\thevec^{(t+1)}$
+\end_inset
+
+ is generated from 
+\begin_inset Formula $\thevec^{(t)}$
+\end_inset
+
+ as follows:
+\end_layout
+
+\begin_layout Standard
+Pick 
+\begin_inset Formula $\theta_{1}^{(t+1)}\text{ }$
+\end_inset
+
+ from the distribution of 
+\begin_inset Formula $\theta_{1}$
+\end_inset
+
+ given 
+\begin_inset Formula $\theta_{2}^{(t)},\theta_{3}^{(t)},\dots,\theta_{p}^{(t)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pick 
+\begin_inset Formula $\theta_{2}^{(t+1)}$
+\end_inset
+
+ from the distribution of 
+\begin_inset Formula $\theta_{2}$
+\end_inset
+
+ given 
+\begin_inset Formula $\theta_{1}^{(t+1)},\theta_{3}^{(t)},\dots,\theta_{p}^{(t)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vdots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pick 
+\begin_inset Formula $\theta_{j}^{(t+1)}$
+\end_inset
+
+ from the distribution of 
+\begin_inset Formula $\theta_{j}$
+\end_inset
+
+ given 
+\begin_inset Formula $\theta_{1}^{(t+1)},\dots,\theta_{j-1}^{(t+1)},\theta_{j+1}^{(t)},\dots,\theta_{p}^{(t)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vdots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pick 
+\begin_inset Formula $\theta_{p}^{(t+1)}$
+\end_inset
+
+ from the distribution of 
+\begin_inset Formula $\theta_{p}$
+\end_inset
+
+ given 
+\begin_inset Formula $\theta_{1}^{(t+1)},\theta_{2}^{(t+1)}\dots,\theta_{p-1}^{(t+1)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Note that the new value for 
+\begin_inset Formula $\theta_{j}$
+\end_inset
+
+ is used immediately when picking a new value for 
+\begin_inset Formula $\theta_{j+1}$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+Such transitions will leave the desired distribution, 
+\begin_inset Formula $Q$
+\end_inset
+
+, invariant if all the steps making up each transition leave 
+\begin_inset Formula $Q$
+\end_inset
+
+ invariant.
+ 
+\end_layout
+
 \end_body
 \end_document
