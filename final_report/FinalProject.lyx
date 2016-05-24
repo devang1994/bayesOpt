@@ -104,6 +104,47 @@ filename "Abstract.lyx"
 
 \end_layout
 
+\begin_layout Section*
+Acknowledgement
+\end_layout
+
+\begin_layout Standard
+First, I would like to thank my supervisor, Professor Zoubin Ghahramani,
+ for all the advice and encouragement he has provided during the course
+ of this project.
+ His openness to new ideas, and his ability to provide insightful criticism
+ have made it a delightful experience working with him.
+ I would like to thank Thang Bui, Nilesh Tripuraneni and Amar Shah for providing
+ intelligent ideas and helping me throughout the execution of the project.
+ This project will not have been possible without their able mentorship.
+ I would like to thank my Director of Studies, Dr Andrew Gee for being a
+ constant source of support during my time at Cambridge.
+ 
+\end_layout
+
+\begin_layout Standard
+I would like to thank Dr Adrian Weller and Dr David Barrett for their helpful
+ discussions during the course of the project.
+ I would like to thank Professor Radford Neal for laying down most of the
+ foundational work on which this project is based.
+ I would like to thank my family and friends for their loving support throughout
+ the course of the project.
+\end_layout
+
+\begin_layout Standard
+Finally, I would like to thank the Cambridge Commonwealth European and Internati
+onal trust for awarding me the Manmohan Singh Undergraduate scholarship
+ which has enabled me to study at Cambridge.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset CommandInset toc
 LatexCommand tableofcontents
@@ -122,34 +163,6 @@ LatexCommand tableofcontents
 
 \begin_layout Section
 Introduction
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-The report is organised into 6 sections.
- The Introduction (1) describes the Bayesian optimisation method and explains
- why Bayesian neural networks are well suited for performing Bayesian optimisati
-on.
- In section (2) we give a brief introduction to neural networks and how
- they can be used to create probabilistic models.
- In section (3) we review Markov Chain Monte Carlo methods including the
- Metropolis algorithm and the hybrid Monte Carlo algorithm.
- Section (4) serves as a brief introduction to Bayesian optimisation, we
- also briefly review the existing literature on performing Bayesian optimisation
- in high dimensions.
- In Section (5) we review Bayesian neural networks and describe how to use
- them for Bayesian optimisation, we compare the performance of our method
- to one using Gaussian processes and report competitive results.
- The Conclusion (6) presents the main conclusions of the project and suggests
- some ideas for future work.
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace medskip
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -582,15 +595,29 @@ name "fig:An-illustration-autoencoder"
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
-move stuff about sections and report structure here
+The Introduction (1) describes the Bayesian optimisation method and explains
+ why Bayesian neural networks are well suited for performing Bayesian optimisati
+on
 \end_layout
 
 \end_inset
 
-
+The report is organised into 6 sections.
+ In section (2) we give a brief introduction to neural networks and how
+ they can be used to create probabilistic models.
+ In section (3) we review Markov Chain Monte Carlo methods including the
+ Metropolis algorithm and the hybrid Monte Carlo algorithm.
+ Section (4) serves as a brief introduction to Bayesian optimisation, we
+ also briefly review the existing literature on performing Bayesian optimisation
+ in high dimensions.
+ In Section (5) we review Bayesian neural networks and describe how to use
+ them for Bayesian optimisation, we compare the performance of our method
+ to one using Gaussian processes and report competitive results.
+ The Conclusion (6) presents the main conclusions of the project and suggests
+ some ideas for future work.
 \end_layout
 
 \begin_layout Section
