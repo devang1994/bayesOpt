@@ -1,5 +1,5 @@
-#LyX 2.0 created this file. For more info see http://www.lyx.org/
-\lyxformat 413
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
 \begin_document
 \begin_header
 \textclass article
@@ -12,13 +12,13 @@
 \font_roman default
 \font_sans default
 \font_typewriter default
+\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
-
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -28,15 +28,24 @@
 \use_hyperref false
 \papersize default
 \use_geometry false
-\use_amsmath 1
-\use_esint 1
-\use_mhchem 1
-\use_mathdots 1
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
+\cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
+\justification true
 \use_refstyle 1
 \index Index
 \shortcut idx
@@ -91,9 +100,13 @@ Bayesian optimisation relies on querying a physical distribution over functions
  (GPs).
  However GPs can only model a limited set of functions well, scaling them
  to deal with higher dimensional functions is also very challenging.
- 
+ Moreover, GPs scale cubically with observations, which can make them very
+ hard to run on objectives whose optimisation requires many evaluations.
+ Such functions are especially likely in high dimensional problems where
+ a significant amount of exploration might be needed.
+  
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -114,6 +127,9 @@ e to GPs to model the distribution over functions.
  potentially be extended to high dimensional problems.
  It is also possible to use Bayesian neural networks (BNNs) with non-Gaussian
  priors (such as Cauchy) on its parameters to model non-smooth functions.
+ This model also scales linearly with the number of observations which can
+ allow it to optimise functions whose optimisation requires a large number
+ of evalutations.
  
 \end_layout
 
