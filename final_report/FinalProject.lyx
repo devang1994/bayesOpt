@@ -1,5 +1,5 @@
-#LyX 2.0 created this file. For more info see http://www.lyx.org/
-\lyxformat 413
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
 \begin_document
 \begin_header
 \textclass IIBproject
@@ -23,13 +23,13 @@ eqs-within-sections
 \font_roman default
 \font_sans default
 \font_typewriter default
+\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
-
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -40,15 +40,24 @@ eqs-within-sections
 \use_hyperref false
 \papersize default
 \use_geometry true
-\use_amsmath 1
-\use_esint 1
-\use_mhchem 1
-\use_mathdots 0
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
+\cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
+\justification true
 \use_refstyle 0
 \index Index
 \shortcut idx
@@ -113,7 +122,7 @@ First, I would like to thank my supervisor, Professor Zoubin Ghahramani,
  for all the advice and encouragement he has provided during the course
  of this project.
  His openness to new ideas, and his ability to provide insightful criticism
- have made it a delightful experience working with him.
+ have made working with him a delightful experience.
  I would like to thank Thang Bui, Nilesh Tripuraneni and Amar Shah for providing
  intelligent ideas and helping me throughout the execution of the project.
  This project will not have been possible without their able mentorship.
@@ -127,8 +136,8 @@ I would like to thank Dr Adrian Weller and Dr David Barrett for their helpful
  discussions during the course of the project.
  I would like to thank Professor Radford Neal for laying down most of the
  foundational work on which this project is based.
- I would like to thank my family and friends for their loving support throughout
- the course of the project.
+ I would like to thank my family and friends for their love and support
+ throughout the course of the project.
 \end_layout
 
 \begin_layout Standard
@@ -224,6 +233,7 @@ key "silver2016mastering"
 autoencoder
 \emph default
  network is an excellent example of a representation learning algorithm
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "hinton2006reducing"
@@ -377,7 +387,14 @@ key "rasmussen2006gaussian"
  the GP, however the predictive distribution at each point is still restricted
  to be a Gaussian.
  Moreover, choosing the structural form of the covariance function is a
- very challenging task and requires significant human intervention.
+ very challenging task and requires significant human intervention 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "duvenaud2014automatic"
+
+\end_inset
+
+.
  Recently some work has been done on frameworks for automatic kernel structure
  discovery 
 \begin_inset CommandInset citation
@@ -391,15 +408,18 @@ key "duvenaud2013structure"
  space, which restricts the dimensionality of the functions which can be
  optimized by this method.
  Another problem with GPs is that they scale cubically with the number of
- observations as they require the inversion of a dense covariance matrix.
+ observations, as they require the inversion of a dense covariance matrix.
  This can make it challenging to use them on functions which require a moderatel
 y large number of evaluations to optimise.
+ High dimensional functions and functions defined on a very large domain
+ can often give rise to situations where a large number of function evaluations
+ are needed for optimisation.
  
 \end_layout
 
 \begin_layout Standard
 In this project we aim to use the predictive distribution described by a
- Bayesian neural network (BNN) to model the distribution over functions
+ Bayesian neural network (BNN) to model the distribution over functions,
  to perform Bayesian optimisation.
  This provides a very flexible prior on the functions and can model a much
  wider class of functions.
@@ -410,8 +430,8 @@ In this project we aim to use the predictive distribution described by a
  information from high dimensional inputs.
  This can allow them to learn an accurate model in a high-dimensional input
  space to effectively perform Bayesian optimisation.
- Another possible extension of this approach to perform high dimensional
- Bayesian optimisation will be to use autoencoders to learn a mapping into
+ Another possible extension of this approach to performing high dimensional
+ Bayesian optimisation could be to use autoencoders to learn a mapping into
  a low-dimensional space in which Bayesian optimisation can be performed
  more easily.
  
@@ -448,7 +468,7 @@ reference "fig:Functions-Cauchy-prior"
 \begin_inset Formula $\alpha=1$
 \end_inset
 
-) .
+).
  The weights and biases into the hidden units have independent Gaussian
  distributions 
 \begin_inset CommandInset citation
@@ -492,7 +512,7 @@ centering
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Functions drawn from Cauchy priors on for networks with step-function hidden
@@ -556,7 +576,7 @@ centering
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 An illustration of an autoencoder network with a bottleneck hidden layer.
@@ -608,7 +628,7 @@ on
 The report is organised into 6 sections.
  In section (2) we give a brief introduction to neural networks and how
  they can be used to create probabilistic models.
- In section (3) we review Markov Chain Monte Carlo methods including the
+ In section (3) we review Markov chain Monte Carlo methods including the
  Metropolis algorithm and the hybrid Monte Carlo algorithm.
  Section (4) serves as a brief introduction to Bayesian optimisation, we
  also briefly review the existing literature on performing Bayesian optimisation
@@ -634,7 +654,7 @@ name "sec:Neural-Networks"
 \begin_layout Standard
 Neural networks use multiple non-linear transforms to map from an input
  to an output.
- They are know to have excellent feature selection properties and define
+ They are known to have excellent feature selection properties and define
  the current state of the art in object recognition and natural language
  processing tasks 
 \begin_inset CommandInset citation
@@ -708,7 +728,7 @@ centering
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 An illustration of a neural network with one hidden layer.
@@ -862,7 +882,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 The Rectified Linear Activation function
@@ -904,7 +924,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 The Hyperbolic Tangent Activation function
@@ -928,7 +948,7 @@ name "fig:The-Hyperbolic-Tangent"
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Here we show the rectified linear(ReLU) and the hyperbolic tangent(tanh)
@@ -957,8 +977,8 @@ key "Snoek:2015aa"
 \end_inset
 
  The Rectified linear unit (ReLU) function is also a very popular activation
- function, being very close to linear, they preserve many properties of
- that make linear models easy to optimise with gradient based methods.
+ function, being very close to linear, they preserve many properties that
+ make linear models easy to optimise with gradient based methods.
  They are particularly popular for training 
 \begin_inset Quotes eld
 \end_inset
@@ -967,7 +987,8 @@ deep
 \begin_inset Quotes erd
 \end_inset
 
- neural network models.
+ neural network models, where their trainability allows the network to achieve
+ an excellent performance.
  However their un-smooth nature, with abrupt changes in their gradient can
  cause issues when using them to build probabilistic models.
  Figure 
@@ -993,7 +1014,7 @@ hidden features
 \end_layout
 
 \begin_layout Standard
-It has been shown that such a network with one hidden layer can approximate
+It has been shown that a neural network with one hidden layer can approximate
  any function defined on a compact domain arbitrarily closely, if enough
  hidden units are used 
 \begin_inset CommandInset citation
@@ -1029,7 +1050,7 @@ Training neural networks
 
 \begin_layout Standard
 We can define probabilistic models for regression tasks by using the network
- outputs to define the conditional distribution for the targets , 
+ outputs to define the conditional distribution for the targets, 
 \begin_inset Formula $\boldsymbol{y}$
 \end_inset
 
@@ -1042,12 +1063,12 @@ We can define probabilistic models for regression tasks by using the network
 \begin_inset Formula $y_{k}$
 \end_inset
 
-, the conditional distribution of the targets might be defined to be a Gaussian,
+, the conditional distribution of the targets might be defined to be Gaussian,
  with 
 \begin_inset Formula $y_{k}$
 \end_inset
 
- with the mean 
+ having a mean 
 \begin_inset Formula $f_{k}(\boldsymbol{x})$
 \end_inset
 
@@ -1207,7 +1228,7 @@ test
 \end_inset
 
  cases, given the input for that case, and the inputs and targets in the
- training cases(
+ training cases (
 \begin_inset Formula $\boldsymbol{D}$
 \end_inset
 
@@ -1224,7 +1245,7 @@ P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{D}) & =\int P(y^{(n+1)}|\xvec^{(n+1)},\bol
 \end_inset
 
 Here, 
-\begin_inset Formula $\theta$
+\begin_inset Formula $\thevec$
 \end_inset
 
  represents the network parameters (weights and biases).
@@ -1289,14 +1310,14 @@ key "andrieu2003introduction,neal1996bayesian"
  In theory they can take account of multiple modes and the possibility that
  the main contribution to the integral may come from areas not in the vicinity
  of any mode.
- In practise though it can under certain circumstances they can take a very
- long time to converge to the desired distribution.
+ In practise though, they can under certain circumstances take a very long
+ time to converge to the desired distribution.
  This is the main disadvantage of using MCMC methods.
  
 \end_layout
 
 \begin_layout Standard
-In Bayesian learning we often encounter situations where we need to evaluate
+In Bayesian learning, we often encounter situations where we need to evaluate
  the expectation of a function 
 \begin_inset Formula $f(\theta)$
 \end_inset
@@ -1306,7 +1327,7 @@ In Bayesian learning we often encounter situations where we need to evaluate
 \begin_inset Formula $Q(\theta)$
 \end_inset
 
- , the expectation can be expressed as 
+, the expectation can be expressed as 
 \end_layout
 
 \begin_layout Standard
@@ -1354,7 +1375,7 @@ where
 \begin_inset Formula $Q$
 \end_inset
 
- is a complicated distribution , generating such independent values is often
+ is a complicated distribution, generating such independent values is often
  infeasible.
  However it is often possible to generate a series of dependent values.
  The Monte Carlo integration formula of equation (
@@ -1611,7 +1632,7 @@ Generate a candidate state,
 
 , from a proposal distribution.
  The proposal distribution may depend on the current state, its density
- is by 
+ is given by 
 \begin_inset Formula $S(\theta^{*}\,|\,\theta^{(t)})$
 \end_inset
 
@@ -1626,7 +1647,7 @@ Generate a candidate state,
 
 \begin_layout Enumerate
 If 
-\begin_inset Formula $Q(\theta^{*})\geq Q(\theta^{t})$
+\begin_inset Formula $Q(\theta^{*})\geq Q(\theta^{(t)})$
 \end_inset
 
 , accept the candidate state; otherwise accept the candidate state with
@@ -1652,7 +1673,7 @@ T(\theta'|\theta)=S(\theta'\,|\,\theta)\min(1,Q(\theta')/Q(\theta))\label{eq:ove
 
 \begin_layout Enumerate
 If the candidate state is accepted, let 
-\begin_inset Formula $\theta^{t+1}=\theta^{*}$
+\begin_inset Formula $\theta^{(t+1)}=\theta^{*}$
 \end_inset
 
 .
@@ -1708,13 +1729,13 @@ Many choices are available for the proposal distribution of the Metropolis
 \begin_inset Formula $\theta^{(t)},$
 \end_inset
 
-with the variance chosen so that the probability of the candidate being
+ with the variance chosen so that the probability of the candidate being
  accepted is reasonably high.
  Very low acceptance rates can be bad as they lead to successive samples
  being highly dependent.
  When sampling from a complex, high-dimensional distribution, the standard
  deviation of of the proposal distributions typically has to be very small
- to compared to the extent of 
+ compared to the extent of 
 \begin_inset Formula $Q.$
 \end_inset
 
@@ -1783,7 +1804,7 @@ key "neal1996bayesian"
 
 \end_inset
 
- successfully applies this technique to Bayesian learning.
+ successfully applies this technique to Bayesian learning for neural networks.
  The algorithm merges the Metropolis algorithm (reviewed in sec 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1826,7 +1847,7 @@ Boltzmann
  The algorithm can be used to sample from any distribution for a set of
  real-valued variables for which the derivatives of the probability density
  can be computed.
- For describing the formulation of this algorithm it is convenient to retain
+ For describing the formulation of this algorithm, it is convenient to retain
  the physical terminology even in non-physical contexts.
  The problem can then be described in terms of an energy function for a
  fictitious physical system.
@@ -1999,8 +2020,8 @@ masses
 
  associated with each component.
  It is possible to adjust the masses for each component to improve efficiency,
- however for the rest of the report and project we take all of them to be
- one.
+ however for the rest of the report and project, we take all of them to
+ be one.
  
 \end_layout
 
@@ -2063,7 +2084,7 @@ The overall dynamics of the system with fixed total energy can be expressed
 \begin_inset Formula 
 \begin{align}
 \frac{dq_{i}}{d\tau} & =+\frac{\partial H}{\partial p_{i}}=\frac{p_{i}}{q_{i}}\\
-dq_{i} & =-\frac{\partial H}{\partial q_{i}}=-\frac{\partial E}{\partial q_{i}}
+\frac{dp_{i}}{d\tau} & =-\frac{\partial H}{\partial q_{i}}=-\frac{\partial E}{\partial q_{i}}
 \end{align}
 
 \end_inset
@@ -2097,8 +2118,7 @@ key "neal1996bayesian"
 \end_inset
 
  invariant.
- Evolution under the Hamiltonian dynamics will not sample ergodically from
- 
+ Evolution under Hamiltonian dynamics will not sample ergodically from 
 \begin_inset Formula $P(\boldsymbol{q,\boldsymbol{p}})$
 \end_inset
 
@@ -2122,7 +2142,7 @@ key "neal1996bayesian"
 \begin_inset Formula $\boldsymbol{p}$
 \end_inset
 
- are independent , 
+ are independent, 
 \begin_inset Formula $\boldsymbol{p}$
 \end_inset
 
@@ -2266,9 +2286,9 @@ discretization, a single step finds the approximations to the position and
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align}
-p_{i}(\tau+\frac{\epsilon}{2}) & \;=\; p_{i}(\tau)\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau))\label{eq:leapfrog}\\
-q_{i}(\tau+\epsilon) & \;=\; q_{i}(\tau)\;+\;\epsilon\frac{p_{i}(\tau+\frac{\epsilon}{2})}{mi}\\
-p_{i}(\tau+\epsilon) & \;=\; p_{i}(\tau+\frac{\epsilon}{2})\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau+\epsilon))\label{eq:leapfrog end}
+p_{i}(\tau+\frac{\epsilon}{2}) & \;=\;p_{i}(\tau)\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau))\label{eq:leapfrog}\\
+q_{i}(\tau+\epsilon) & \;=\;q_{i}(\tau)\;+\;\epsilon\frac{p_{i}(\tau+\frac{\epsilon}{2})}{mi}\\
+p_{i}(\tau+\epsilon) & \;=\;p_{i}(\tau+\frac{\epsilon}{2})\;-\;\frac{\epsilon}{2}\frac{\partial E}{\partial q_{i}}(\mathbf{q}(\tau+\epsilon))\label{eq:leapfrog end}
 \end{align}
 
 \end_inset
@@ -2692,7 +2712,7 @@ end{algorithmic}
 
 \lang french
 
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Bayesian Optimisation
@@ -2780,7 +2800,7 @@ reference "fig:An-example-bayesOpt"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -2804,7 +2824,7 @@ centering
 \end_inset
 
 
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 An example of using Bayesian Optimisation on a toy 1D maximization problem
@@ -2820,7 +2840,7 @@ key "brochu2010tutorial"
  function over four iterations of sampled values of the objective function.
  The figure also shows the acquisition function in the lower shaded plots.
  Since its a maximisation problem, the acquisition function is high where
- the GP predicts a high objective (exploitation) and and where the prediction
+ the GP predicts a high objective (exploitation) and where the prediction
  uncertainty is high(exploration).
  We successively evaluate the function at the maximum values of the acquisition
  function to get close to the true maximum at 
@@ -3155,7 +3175,7 @@ centering
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 This function in 
@@ -3415,7 +3435,7 @@ A neural network can be parametrized by its weights and biases, collectively
  We aim to model the conditional distribution of target values given the
  input values.
  The required conditional probability density is given by 
-\begin_inset Formula $P(y\,|\, x,\thevec,\gvec).$
+\begin_inset Formula $P(y\,|\,x,\thevec,\gvec).$
 \end_inset
 
 
@@ -3485,7 +3505,7 @@ Predictions on new data-points can then be made by integration with respect
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{D})\;=\;\int P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{\theta},\boldsymbol{\gamma})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\thevec}\, d\mathbf{\gvec}
+P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{D})\;=\;\int P(y^{(n+1)}|\xvec^{(n+1)},\boldsymbol{\theta},\boldsymbol{\gamma})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\mathbf{\thevec}\,d\mathbf{\gvec}
 \end{equation}
 
 \end_inset
@@ -3498,7 +3518,7 @@ For a regression model, the prediction that minimizes the expected squared-error
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\mathbf{\thevec}\, d\boldsymbol{\gamma}\label{eq:prediction}
+\hat{y}^{(n+1)}\;=\;\int f(x^{(n+1)},\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\mathbf{\thevec}\,d\boldsymbol{\gamma}\label{eq:prediction}
 \end{equation}
 
 \end_inset
@@ -3751,8 +3771,8 @@ reference "eq:sigmaLCB"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray}
-\mu(\xvec) & = & \int f(\xvec,\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\thevec d\gvec\label{eq:muLCB-1}\\
-\sigma(\xvec) & = & \sqrt{\int(f(\xvec,\boldsymbol{\theta})-\mu(\xvec))^{2}P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\, d\thevec d\gvec}\label{eq:sigmaLCB}
+\mu(\xvec) & = & \int f(\xvec,\boldsymbol{\theta})P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\thevec d\gvec\label{eq:muLCB-1}\\
+\sigma(\xvec) & = & \sqrt{\int(f(\xvec,\boldsymbol{\theta})-\mu(\xvec))^{2}P(\boldsymbol{\theta,\boldsymbol{\gamma}\,|\,\mathbf{D}})\,d\thevec d\gvec}\label{eq:sigmaLCB}
 \end{eqnarray}
 
 \end_inset
@@ -3951,7 +3971,7 @@ height_special "totalheight"
 status open
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Trace plots of three randomly chosen parameters of the neural network 
@@ -3990,7 +4010,7 @@ height_special "totalheight"
 status open
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 The histogram of the posterior of parameter 2501 of the neural network.
@@ -4054,7 +4074,7 @@ centering
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Here, we use HMC to draw three well spaced samples from the posterior distributi
@@ -4111,7 +4131,7 @@ centering
 \end_inset
 
 
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 The overall fit of the neural network, averaged over a large number of samples
@@ -4261,7 +4281,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Number of function evaluations = 4
@@ -4300,7 +4320,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Number of function evaluations = 5
@@ -4338,7 +4358,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Number of function evaluations = 8
@@ -4377,7 +4397,7 @@ status open
 \end_inset
 
 
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Number of function evaluations = 14
@@ -4401,7 +4421,7 @@ name "fig:Number-of-TP14"
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Using a Bayesian neural network for Bayesian Optimisation on the Forrester
@@ -4455,7 +4475,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Forrester Function 
@@ -4501,7 +4521,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Rosenbrock(2D) Function 
@@ -4542,7 +4562,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 McCormick Function 
@@ -4584,7 +4604,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Six Hump Camel Function 
@@ -4608,7 +4628,7 @@ key "molga2005test"
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Results of Bayesian Optimisation on some standard test functions.
