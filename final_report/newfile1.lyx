@@ -271,7 +271,7 @@ is infeasible, but we assume that we can generate a value from the conditional
  as follows:
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
 Pick 
 \begin_inset Formula $\theta_{1}^{(t+1)}\text{ }$
 \end_inset
@@ -287,7 +287,7 @@ Pick
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
 Pick 
 \begin_inset Formula $\theta_{2}^{(t+1)}$
 \end_inset
@@ -301,9 +301,6 @@ Pick
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \[
 \vdots
@@ -314,7 +311,7 @@ Pick
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
 Pick 
 \begin_inset Formula $\theta_{j}^{(t+1)}$
 \end_inset
@@ -328,9 +325,6 @@ Pick
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \[
 \vdots
@@ -341,7 +335,7 @@ Pick
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
 Pick 
 \begin_inset Formula $\theta_{p}^{(t+1)}$
 \end_inset
