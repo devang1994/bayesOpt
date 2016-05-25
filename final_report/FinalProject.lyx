@@ -1776,7 +1776,7 @@ Gibbs Sampling
 \emph on
 Gibbs sampling, 
 \emph default
-is one of the simplest Markov chain Monte Carlo method
+is one of the simplest Markov chain Monte Carlo method 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "geman1984stochastic"
