@@ -1,5 +1,5 @@
-#LyX 2.1 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
 \begin_document
 \begin_header
 \textclass PhDThesisLyX
@@ -19,14 +19,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\title{How to write your PhD Thesis in LyX}
-\author{Krishna Kumar}
+\title{Bayesian Optimisation using Neural Networks}
+\author{Devang Agrawal}
 \dept{Department of Engineering}
 \university{University of Cambridge}
 \crest{\includegraphics[width=0.25\textwidth]{Figs/University_Crest}}
-\degree{Doctor of Philosophy}
-\college{King's College}
-\degreedate{2013}
+\degree{Master of Engineering}
+\college{Queens' College}
+\degreedate{2016}
 \end_preamble
 \options a4paper,12pt,numbered,times
 \use_default_options false
@@ -38,13 +38,13 @@
 \font_roman default
 \font_sans default
 \font_typewriter default
-\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -55,24 +55,15 @@
 \use_hyperref false
 \papersize default
 \use_geometry false
-\use_package amsmath 0
-\use_package amssymb 0
-\use_package cancel 1
-\use_package esint 0
-\use_package mathdots 1
-\use_package mathtools 1
-\use_package mhchem 1
-\use_package stackrel 1
-\use_package stmaryrd 1
-\use_package undertilde 1
+\use_amsmath 0
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
 \cite_engine basic
-\cite_engine_type default
-\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
-\justification true
 \use_refstyle 0
 \index Index
 \shortcut idx
@@ -474,22 +465,6 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
-\begin_inset FloatList figure
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FloatList table
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -583,7 +558,7 @@ status open
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\bibname}{References}
+\renewcommand{\bibname}{References}
 \end_inset
 
 
@@ -592,8 +567,9 @@ status open
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "References/references"
-options "plainnat"
+btprint "btPrintAll"
+bibfiles "/scratch/da368/bayesOpt/final_report/bibliography"
+options "plain"
 
 \end_inset
 
@@ -605,26 +581,6 @@ options "plainnat"
 \begin_inset CommandInset include
 LatexCommand include
 filename "Appendix1/Appendix1.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand include
-filename "Appendix2/Appendix2.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset index_print
-LatexCommand printindex
-type "idx"
 
 \end_inset
 

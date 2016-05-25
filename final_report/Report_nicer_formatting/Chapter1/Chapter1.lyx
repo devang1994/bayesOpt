@@ -62,377 +62,501 @@
 \begin_body
 
 \begin_layout Chapter
-Getting Started
-\end_layout
-
-\begin_layout Section
-What is Loren Ipsum?
+Introduction 
 \end_layout
 
 \begin_layout Standard
-Lorem Ipsum is simply dummy text of the printing and typesetting industry
- (see Section
+
+\lang british
+Traditionally machine learning algorithms have focussed on using a set of
+ expertly curated features of inputs to make predictions.
+ However in various tasks, especially in computer vision and natural language
+ processing, the design of these features can be very complex.
+ In many situations it can be difficult to know what features should be
+ extracted.
+ Neural networks excel at such tasks as they can discover not only the mapping
+ from the representation to the output but the representation itself.
+ This approach is called 
+\emph on
+representation learning.
+ 
+\emph default
+Learned representations often result in much better performance than can
+ be obtained with hand-designed representations.
+ They also allow machine learning systems to rapidly adapt to new tasks,
+ with minimal human intervention.
+ A representation learning algorithm can discover a good set of features
+ for a complex task in hours to months.
+ Manually designing features for a complex task can require a great deal
+ of human time and effort; it can possibly take decades for an entire community
+ of researchers.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+Such representational learning capabilities have allowed neural networks
+ to reach state of the art performance in several applications including
+ computer vision and natural language processing.
+ They have been used to get human-level performance in several video games
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mnih2015human"
+
+\end_inset
+
+ and have been used in systems to master the game of 
+\begin_inset Quotes eld
+\end_inset
+
+Go
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "silver2016mastering"
+
+\end_inset
+
+.
+ An 
+\emph on
+autoencoder
+\emph default
+ network is an excellent example of a representation learning algorithm
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hinton2006reducing"
+
+\end_inset
+
+.
+ An autoencoder is the combination of an 
+\emph on
+encoder
+\emph default
+ function that converts the input data into a diﬀerent representation, and
+ a 
+\emph on
+decoder
+\emph default
+ function that converts the new representation back into the original format.
+ Autoencoders are trained to preserve as much information as possible when
+ an input is run through the encoder and then the decoder.
+ By having a 
+\emph on
+bottleneck 
+\emph default
+hidden layer as illustrated in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:1.3"
+reference "fig:An-illustration-autoencoder"
 
+\end_inset
+
+, the algorithm can automatically learn a low dimensional code to efficiently
+ represent the input data.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+Most neural network applications use maximum likelihood estimates for the
+ parameters of the neural network, such estimates can be found by minimising
+ an error function such as the sum of squared errors between the target
+ and predictions, for real-valued outputs.
+ The backpropogation algorithm can be used to calculate the gradients of
+ the error with respect to each of the parameters, this can then be used
+ in a gradient based optimisation schedule such as Adam 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kingma2014adam"
+
+\end_inset
+
+.
+ However, for various applications, it is often desirable to estimate the
+ posterior distribution of the parameters of the neural networks.
+ We can use a Bayesian approach to neural network learning to find the posterior
+ distribution of the network parameters by combining a simple prior on the
+ network weights with the likelihoods of points observed in the training
+ data 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neal1996bayesian"
+
+\end_inset
+
+.
+ Such a posterior distribution can give the predictive distributions of
+ the target values in new 
+\begin_inset Quotes eld
+\end_inset
+
+test
+\begin_inset Quotes erd
+\end_inset
+
+ cases, given the input for that case, and the inputs and targets in the
+ training cases.
+ Having a predictive distribution on target values is particularly useful
+ for sequential decision making and active learning tasks where it is important
+ to know both, the prediction and the uncertainty associated with it.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+Bayesian optimisation is an active learning method, in which we try to optimise
+ a black-box function 
+\begin_inset Formula $f$
+\end_inset
+
+ which is expensive to evaluate.
+ It has been successfully used in many wide ranging applications such as
+ hyper-parameter tuning in expensive machine learning algorithms 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "snoek2012practical"
+
+\end_inset
+
+, experiment design 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "jones1998efficient"
+
+\end_inset
+
+, optimizing control strategies in complex systems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cully2015robots"
+
+\end_inset
+
+, and scientific simulation based studies 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "brochu2010tutorial"
+
+\end_inset
+
+.
+ Bayesian optimization finds the optimum of 
+\emph on
+
+\begin_inset Formula $f$
+\end_inset
+
+
+\emph default
+ by using the information from all the previous evaluations of the function
+ to learn a distribution over functions.
+ The algorithm then endeavours to optimise the function in as few queries
+ as possible by managing exploration and exploitation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mockus1978application"
+
+\end_inset
+
+.
+ An accurate and cheap model for the distribution over functions is critical
+ to the effectiveness of the approach, typically Gaussian processes (GPs)
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rasmussen2006gaussian"
+
+\end_inset
+
+ are used to model this distribution over functions.
+ However, GPs can only model a limited class of functions well.
+ The class of functions that can be modelled by the GP depends on its covariance
+ function which encodes the assumptions about the function.
+ A more expressive covariance function can increase the expressivity of
+ the GP, however the predictive distribution at each point is still restricted
+ to be a Gaussian.
+ Moreover, choosing the structural form of the covariance function is a
+ very challenging task and requires significant human intervention 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "duvenaud2014automatic"
+
+\end_inset
+
+.
+ Recently some work has been done on frameworks for automatic kernel structure
+ discovery 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "duvenaud2013structure"
+
+\end_inset
+
+, however that framework also has limitations.
+ This problem is exacerbated when using GPs on a high dimensional input
+ space, which restricts the dimensionality of the functions which can be
+ optimized by this method.
+ Another problem with GPs is that they scale cubically with the number of
+ observations, as they require the inversion of a dense covariance matrix.
+ This can make it challenging to use them on functions which require a moderatel
+y large number of evaluations to optimise.
+ High dimensional functions and functions defined on a very large domain
+ can often give rise to situations where a large number of function evaluations
+ are needed for optimisation.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+In this project we aim to use the predictive distribution described by a
+ Bayesian neural network (BNN) to model the distribution over functions,
+ to perform Bayesian optimisation.
+ This provides a very flexible prior on the functions and can model a much
+ wider class of functions.
+ This method also scales linearly with the number of observations and can
+ hence allow optimisation when a large number of function evaluations are
+ needed.
+ Neural networks can employ multiple non-linear transforms to extract relevant
+ information from high dimensional inputs.
+ This can allow them to learn an accurate model in a high-dimensional input
+ space to effectively perform Bayesian optimisation.
+ Another possible extension of this approach to performing high dimensional
+ Bayesian optimisation could be to use autoencoders to learn a mapping into
+ a low-dimensional space in which Bayesian optimisation can be performed
+ more easily.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+A prior is defined on the distribution of functions by defining simple priors
+ on the parameters of the neural networks, this provides a very flexible
+ overall prior on the distribution of functions.
+ Generally Gaussian priors are used on the parameters of the network, it
+ is known that in the limit of the number of hidden units going to infinity,
+ the priors over the functions implied by the priors converges to a Gaussian
+ process 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neal1996bayesian"
+
+\end_inset
+
+.
+ It is also possible to use other other stable priors to encode prior informatio
+n about the functions.
+ This provides us the opportunity to model non-smooth functions and other
+ functions whose behaviours not easily described by the GPs.
+ For instance, Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Functions-Cauchy-prior"
+
+\end_inset
+
+ shows two functions drawn from priors for a network where weights and biases
+ for the output have Cauchy distributions(stable distribution with 
+\begin_inset Formula $\alpha=1$
 \end_inset
 
 ).
- Lorem Ipsum has been the industry's standard dummy text ever since the
- 1500s, when an unknown printer took a galley of type and scrambled it to
- make a type specimen book 
+ The weights and biases into the hidden units have independent Gaussian
+ distributions 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "AAB95,Con78"
+key "neal1996bayesian"
 
 \end_inset
 
 .
- It has survived not only five centuries, but also the leap into electronic
- typesetting, remaining essentially unchanged.
- It was popularised in the 1960s with the release of Letraset sheets containing
- Lorem Ipsum passages, and more recently with desktop publishing software
- like Aldus PageMaker including versions of Lorem Ipsum
-\begin_inset Index idx
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\lang british
+\begin_inset Graphics
+	filename ../../images/CauchyPrior.png
+	lyxscale 40
+	width 80col%
+
+\end_inset
+
+
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
-Loren Ipsum
+
+
+\backslash
+centering
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\lang british
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\lang british
+Functions drawn from Cauchy priors on for networks with step-function hidden
+ units 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neal1996bayesian"
 
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-E^{2}=(m_{0}c^{2})^{2}+(pc)^{2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "E"
-description "Energy"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "m0"
-description "intrinsic rest mass"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "c"
-description "speed of light"
-
-\end_inset
-
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "p"
-description "momentum"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Fourier Series
-\end_layout
-
-\begin_layout Standard
-For a function 
-\begin_inset Formula $f(x)$
-\end_inset
-
- you can write the Fourier Series:
-\begin_inset Formula 
-\[
-f(x)=\sum_{-\infty}^{\infty}c_{n}e^{inx},
-\]
-
-\end_inset
-
-where the coefficients 
-\begin_inset Formula $c_{n}$
-\end_inset
-
-are given by 
-\begin_inset Formula 
-\[
-c_{n}=\frac{1}{2\pi}\int_{-\pi}^{\pi}f(x)e^{inx}dx
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Maxwell's Equations
-\end_layout
-
-\begin_layout Standard
-There are four of the buggers, and I like them in terms of total charge
- and current:
-\begin_inset Formula 
-\[
-\begin{array}{cc}
-\nabla.\mathbf{E}=\frac{\rho}{\varepsilon_{0}} & \nabla\times\mathbf{E}=-\frac{\partial\mathbf{B}}{\partial t}\\
-\nabla.\mathbf{B}=0 & \nabla\times\mathbf{B}=\mu_{o}\mathbf{J}+\mu_{0}\varepsilon_{0}\frac{\partial\mathbf{E}}{\partial t}
-\end{array}
-\]
-
-\end_inset
-
-Where 
-\series bold
-B 
-\series default
-is the magnetic field, 
-\series bold
-E 
-\series default
-is the electric field and 
-\series bold
-J 
-\series default
-is the total current density.
- Also, 
-\begin_inset Formula $\varepsilon_{0}$
-\end_inset
-
- is the permittivity of free space (electric constant) and 
-\begin_inset Formula $\mu_{0}$
-\end_inset
-
- is the permeability of free space (magnetic constant).
+ Function on the left are from a network with 150 hidden units, those on
+ the right from a network with 10000 hidden units.
  
-\end_layout
-
-\begin_layout Standard
-It's good to know what these mean in words and integral forms, so:
-\end_layout
-
-\begin_layout Itemize
-
-\emph on
-Gauss' Law: 
-\emph default
-Electric flux through any closed surface is proportional to the enclosed
- electric charge:
-\begin_inset Formula 
-\[
-\Phi=\oint_{S}\mathbf{E}\, d\mathbf{A}=\frac{Q_{enc}}{\varepsilon_{0}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-
-\emph on
-Gauss' Magnetic Law: 
-\emph default
-Magnetic monopoles don't exist:
-\begin_inset Formula 
-\[
-\oint_{S}\mathbf{B}\, d\mathbf{A}=0
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-
-\emph on
-Faraday's Law of Induction:
-\emph default
- The induced electromotive force in any closed circuit is equal to the rate
- of change of the magnetic flux through the circuit:
-\begin_inset Formula 
-\[
-\epsilon=-\frac{d\Phi_{B}}{dt}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-
-\emph on
-Ampere's Law: 
-\emph default
-The relation between integrated magnetic field and current flowing:
-\begin_inset Formula 
-\[
-\oint_{S}\mathbf{B}\, d\mathbf{\ell}=\mu_{0}I_{enc}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-That should be enough to get you started.
- 
-\end_layout
-
-\begin_layout Section
-Why do we use Loren Ipsum?
-\end_layout
-
-\begin_layout Standard
-It is a long established fact that a reader will be distracted by the readable
- content of a page when looking at its layout.
- The point of using Lorem Ipsum is that it has a more-or-less normal distributio
-n of letters, as opposed to using `Content here, content here', making it
- look like readable English.
- Many desktop publishing packages and web page editors now use Lorem Ipsum
- as their default model text, and a search for `lorem ipsum' will uncover
- many web sites still in their infancy.
- Various versions have evolved over the years, sometimes by accident, sometimes
- on purpose (injected humour and the like).
-\end_layout
-
-\begin_layout Section
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:1.3"
+name "fig:Functions-Cauchy-prior"
 
 \end_inset
 
-Where does it come from?
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Contrary to popular belief, Lorem Ipsum is not simply random text.
- It has roots in a piece of classical Latin literature from 45 BC, making
- it over 2000 years old.
- Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia,
- looked up one of the more obscure Latin words, consectetur, from a Lorem
- Ipsum passage, and going through the cites of the word in classical literature,
- discovered the undoubtable source.
- Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum
- et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC.
- This book is a treatise on the theory of ethics, very popular during the
- Renaissance.
- The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from
- a line in section 1.10.32.
+
+\lang british
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\lang british
+\begin_inset Graphics
+	filename ../../images/Autoencoder_structure.png
+	width 80col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\lang british
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\lang british
+An illustration of an autoencoder network with a bottleneck hidden layer.
+ Such a network can be used to automatically learn a low dimensional code
+ for the input data 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hinton2006reducing"
+
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:An-illustration-autoencoder"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-The standard chunk of Lorem Ipsum used since the 1500s is reproduced below
- for those interested.
- Sections 1.10.32 and 1.10.33 from ``de Finibus Bonorum et Malorum" by Cicero
- are also reproduced in their exact original form, accompanied by English
- versions from the 1914 translation by H.
- Rackham
+
+\lang british
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+
+\lang british
+The Introduction (1) describes the Bayesian optimisation method and explains
+ why Bayesian neural networks are well suited for performing Bayesian optimisati
+on
 \end_layout
 
-\begin_layout Standard
-``Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
- tempor incididunt ut labore et dolore magna aliqua.
- Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
- ut aliquip ex ea commodo consequat.
- Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
- eu fugiat nulla pariatur.
- Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
- deserunt mollit anim id est laborum."
-\end_layout
+\end_inset
 
-\begin_layout Standard
-Section 1.10.32 of ``de Finibus Bonorum et Malorum", written by Cicero in
- 45 BC: ``Sed ut perspiciatis unde omnis iste natus error sit voluptatem
- accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
- illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
- Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
- sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
- Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
- adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore
- et dolore magnam aliquam quaerat voluptatem.
- Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit
- laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum
- iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae
- consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-\end_layout
-
-\begin_layout Standard
-1914 translation by H.
- Rackham: ``But I must explain to you how all this mistaken idea of denouncing
- pleasure and praising pain was born and I will give you a complete account
- of the system, and expound the actual teachings of the great explorer of
- the truth, the master-builder of human happiness.
- No one rejects, dislikes, or avoids pleasure itself, because it is pleasure,
- but because those who do not know how to pursue pleasure rationally encounter
- consequences that are extremely painful.
- Nor again is there anyone who loves or pursues or desires to obtain pain
- of itself, because it is pain, but because occasionally circumstances occur
- in which toil and pain can procure him some great pleasure.
- To take a trivial example, which of us ever undertakes laborious physical
- exercise, except to obtain some advantage from it? But who has any right
- to find fault with a man who chooses to enjoy a pleasure that has no annoying
- consequences, or one who avoids a pain that produces no resultant pleasure?"
-\end_layout
-
-\begin_layout Standard
-Section 1.10.33 of ``de Finibus Bonorum et Malorum", written by Cicero in
- 45 BC: ``At vero eos et accusamus et iusto odio dignissimos ducimus qui
- blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
- et quas molestias excepturi sint occaecati cupiditate non provident, similique
- sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum
- fuga.
- Et harum quidem rerum facilis est et expedita distinctio.
- Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit
- quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda
- est, omnis dolor repellendus.
- Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus
- saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
- Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptati
-bus maiores alias consequatur aut perferendis doloribus asperiores repellat."
-\end_layout
-
-\begin_layout Standard
-1914 translation by H.
- Rackham: ``On the other hand, we denounce with righteous indignation and
- dislike men who are so beguiled and demoralized by the charms of pleasure
- of the moment, so blinded by desire, that they cannot foresee the pain
- and trouble that are bound to ensue; and equal blame belongs to those who
- fail in their duty through weakness of will, which is the same as saying
- through shrinking from toil and pain.
- These cases are perfectly simple and easy to distinguish.
- In a free hour, when our power of choice is untrammelled and when nothing
- prevents our being able to do what we like best, every pleasure is to be
- welcomed and every pain avoided.
- But in certain circumstances and owing to the claims of duty or the obligations
- of business it will frequently occur that pleasures have to be repudiated
- and annoyances accepted.
- The wise man therefore always holds in these matters to this principle
- of selection: he rejects pleasures to secure other greater pleasures, or
- else he endures pains to avoid worse pains." 
+The report is organised into 6 sections.
+ In section (2) we give a brief introduction to neural networks and how
+ they can be used to create probabilistic models.
+ In section (3) we review Markov chain Monte Carlo methods including the
+ Metropolis algorithm and the hybrid Monte Carlo algorithm.
+ Section (4) serves as a brief introduction to Bayesian optimisation, we
+ also briefly review the existing literature on performing Bayesian optimisation
+ in high dimensions.
+ In Section (5) we review Bayesian neural networks and describe how to use
+ them for Bayesian optimisation, we compare the performance of our method
+ to one using Gaussian processes and report competitive results.
+ The Conclusion (6) presents the main conclusions of the project and suggests
+ some ideas for future work.
 \end_layout
 
 \end_body
