@@ -109,3 +109,48 @@ def plot_acquisitionV2(bounds, input_dim, model, Xdata, Ydata, acquisition_funct
         savefig(filename, dpi=300, bbox_inches='tight')
     else:
         plt.show()
+
+
+def plot_acquisitionV2_2D(bounds, input_dim, model, Xdata, Ydata, acquisition_function, suggested_sample, xtest, ytest,
+                       filename=None):
+
+
+
+
+
+    X1 = np.linspace(bounds[0][0], bounds[0][1], 200)
+    X2 = np.linspace(bounds[1][0], bounds[1][1], 200)
+    x1, x2 = np.meshgrid(X1, X2)
+    X = np.hstack((x1.reshape(200*200,1),x2.reshape(200*200,1)))
+    acqu = acquisition_function(X)
+    acqu_normalized = (-acqu - min(-acqu))/(max(-acqu - min(-acqu)))
+    acqu_normalized = acqu_normalized.reshape((200,200))
+    m, v = model.predict(X)
+    plt.figure(figsize=(15,5))
+    plt.subplot(1, 3, 1)
+    plt.contourf(X1, X2, m.reshape(200,200),100)
+    plt.plot(Xdata[:,0], Xdata[:,1], 'r.', markersize=10, label=u'Observations')
+    plt.colorbar()
+    plt.xlabel('X1')
+    plt.ylabel('X2')
+    plt.title('Posterior mean')
+    plt.axis((bounds[0][0],bounds[0][1],bounds[1][0],bounds[1][1]))
+    ##
+    plt.subplot(1, 3, 2)
+    plt.plot(Xdata[:,0], Xdata[:,1], 'r.', markersize=10, label=u'Observations')
+    plt.contourf(X1, X2, np.sqrt(v.reshape(200,200)),100)
+    plt.colorbar()
+    plt.xlabel('X1')
+    plt.ylabel('X2')
+    plt.title('Posterior sd.')
+    plt.axis((bounds[0][0],bounds[0][1],bounds[1][0],bounds[1][1]))
+    ##
+    plt.subplot(1, 3, 3)
+    plt.contourf(X1, X2, acqu_normalized,100)
+    plt.colorbar()
+    plt.plot(suggested_sample[:,0],suggested_sample[:,1],'k.', markersize=10)
+    plt.xlabel('X1')
+    plt.ylabel('X2')
+    plt.title('Acquisition function')
+    plt.axis((bounds[0][0],bounds[0][1],bounds[1][0],bounds[1][1]))
+    if filename!=None:savefig(filename)

@@ -39,7 +39,6 @@ def run_optV2(seed, func, bounds, max_iter):
     # myBopt.plot_convergence()
 
     myBopt.plot_acquisition()
-    plt.show()
     a, b = myBopt.get_evaluations()
 
     # bestVals = make_bestVals(b)
@@ -55,11 +54,26 @@ if __name__ == '__main__':
     # bounds = [(-2, 2), (-2, 2)]
     # max_iter = 34
 
-    f_sim = GPyOpt.fmodels.experiments2d.sixhumpcamel(sd=.1)
+    f_sim = GPyOpt.fmodels.experiments2d.mccormick(sd=.1)
     func=f_sim.f
-    func_name= 'GPyOPTcamel'
-    bounds = [(-2, 2),(-2,2)]
+    func_name= 'GPyOPTmccormick'
+    bounds = [(-1.5, 4),(-3,4)]
     max_iter=34
+    f_true = GPyOpt.fmodels.experiments2d.mccormick(bounds=bounds)
 
+
+
+
+    # f_sim = GPyOpt.fmodels.experiments2d.sixhumpcamel(sd=.1)
+    # func=f_sim.f
+    # func_name= 'GPyOPTcamel'
+    # bounds = [(-2, 2), (-2, 2)]
+    # # bounds =[(-2, 2), (-1, 1)]
+    # f_true = GPyOpt.fmodels.experiments2d.sixhumpcamel(bounds=bounds)
+    # max_iter=34
 
     run_optV2(1000,func,bounds,max_iter)
+
+    f_true.plot()
+
+    plt.show()

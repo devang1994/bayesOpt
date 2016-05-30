@@ -169,7 +169,7 @@ def bayes_opt(func, xr, hWidths, precisions, vy, numDim, actual_min=0.0, initial
             plt.ylabel('y')
             # plt.axis([0, 1, -5, 5])
 
-            plt.savefig('fit_images_forrester/v2BNN{}Ntrain{}.png'.format(func.func_name,xtrain.shape[0]), dpi=300,
+            plt.savefig('fit_images_nonsmooth/v2BNN{}Ntrain{}.png'.format(func.func_name,xtrain.shape[0]), dpi=300,
                         bbox_inches='tight')
 
         xtrain = np.vstack((xtrain, next_query))
@@ -225,14 +225,26 @@ if __name__ == '__main__':
     # num_it = 35
     # numDim = len(xr) / 2
 
-    func = objectives.sixhumpcamel
-    xr = [-2, 2, -2, 2]  # generalized to multiD (2d)
-    actual_min = -1.0316
-    init_random = 6
-    k = 40
-    num_it = 35
-    numDim = len(xr) / 2
+    # func = objectives.sixhumpcamel
+    # xr = [-2, 2, -2, 2]  # generalized to multiD (2d)
+    # actual_min = -1.0316
+    # init_random = 6
+    # k = 40
+    # num_it = 35
+    # numDim = len(xr) / 2
+    #
 
+
+
+    func = objectives.nonSmooth1d
+    xr = [0, 1]
+    actual_min = -1
+    numDim = 1
+    init_random = 2
+    k = 10
+    num_it=18
+    # num_it = 1
+    numDim = len(xr) / 2
 
     # func = objectives.mccormick
     # xr = [-1.5, 4, -3, 4]  # generalized to multiD (2d)
@@ -259,19 +271,21 @@ if __name__ == '__main__':
     # print 'lower minstepsize brannin with 30, evo, k=10 '
 
 
-    for seed in range(1000, 1050):
+    for seed in range(1000, 1001):
         print 'SEED {}'.format(seed)
         t0 = time.time()
 
         bVals = bayes_opt(func, xr, initial_random=init_random, num_it=num_it, k=k, hWidths=[50, 50, 50],
                           precisions=[1, 1, 1, 1], vy=100,
-                          show_evo=False, actual_min=actual_min, numDim=numDim, seed=seed)
+                          show_evo=True, actual_min=actual_min, numDim=numDim, seed=seed,show_final=True)
+
+        plt.show()
 
         t1 = time.time()
         time_taken = t1 - t0
 
         toDump = {'bVals': bVals, 't': time_taken, 'seed': seed, 'k': k, 'init_random': init_random}
-        nameOfFile = 'pickles/k{}seed{}init_random{}BayesOptLogs{}.pkl'.format(k,seed, init_random,func.func_name)
+        nameOfFile = 'pickles_unsmooth/k{}seed{}init_random{}BayesOptLogs{}.pkl'.format(k,seed, init_random,func.func_name)
 
         pickle.dump(toDump, open(nameOfFile, "wb"))
         print "execution took {} s".format(t1 - t0)

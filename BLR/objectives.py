@@ -166,7 +166,23 @@ def mccormick(x):
     t = (t1 + t2).reshape(ntrain, 1)
     return t
 
+def nonSmooth1d(x):
 
+    # return (np.sin(x * 7) + np.cos(x * 17))
+    out=(np.ones(x.shape[0])).reshape(-1,1)
+    for i in range(x.shape[0]):
+        if(0<=x[i]<0.25):
+            out[i]=1
+        elif(0.25<=x[i]<0.4):
+            out[i] = -0.5
+        elif(0.4<=x[i]<0.5):
+            out[i] = -1
+        elif (0.5 <= x[i] <= 1):
+            out[i] = 1
+        else:
+            out[i]=-100
+
+    return out
 
 
 "minimise (sin(10 *pi * x) / (2 * x)) + (x - 1)^4 x between 0.5 and 2.5 "
@@ -175,7 +191,7 @@ def mccormick(x):
 '' \
 '' \
 'minimise (-1)*((x-1)^2)*sin(3x+5/x+1) x between [5,10] '
-
+import matplotlib.pyplot as plt
 if __name__ == '__main__':
     # print brannin_hoo(np.asarray([[-pi, 12.275],
     #                               [9.42478, 2.475],
@@ -184,4 +200,15 @@ if __name__ == '__main__':
     # print np.asarray([[-pi, 12.275],
     #                   [9.42478, 2.475],
     #                   [3, 3]]).shape
+
+    a = (np.arange(0, 1, 0.01).reshape(-1,1))
+    print a.shape
+    b = nonSmooth1d(a)
+
+    print b.shape
+    print b
+
+    print np.hstack((a,b))
+    plt.plot(a[:],b[:])
+    plt.show()
     pass

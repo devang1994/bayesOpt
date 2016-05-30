@@ -59,7 +59,6 @@ def plot_acquisition(X, m, sd, Xdata, Ydata, acqu, filename=None):
     else:
         plt.show()
 
-
 def read_pickle_makePlots():
     func = objectives.objectiveForrester
     i = 0
@@ -87,6 +86,9 @@ def read_pickle_makePlots():
     plot_acquisition(xtest, input_dim, mu, sd, iterBopt.X,
                      iterBopt.Y, iterBopt.acquisition_func.acquisition_function, iterBopt.suggested_sample,
                      filename)
+
+
+
 
 
 if __name__ == '__main__':
